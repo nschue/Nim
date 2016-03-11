@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Nim</string>
+    <string name="currentPlayerString">Player</string>
+</resources>
