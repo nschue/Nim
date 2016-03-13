@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Nim</string>
     <string name="currentPlayerString">Player</string>
+    <string name="playButtonString">Play</string>
+    <string name="optionsButtonString">Options</string>
+    <string name="extraButtonString">Extras</string>
+    <string name="howToPlayButtonString">How to Play</string>
+    <string name="creditsButtonString">Credits</string>
+    <string name="scoreboardButtonString">Scoreboard</string>
+    <string name="backButtonString">Back</string>
+    <string name="title_activity_options">Options</string>
+    <string name="sendButtonString">Send</string>
 </resources>

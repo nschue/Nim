@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Main layout for game activity -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/backgroundColor"
+    android:background="@color/boardColor"
     tools:context=".Game">
 
+<!-- Displays the current player -->
     <TextView
         android:id="@+id/currentPlayerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textColor="@color/textColor"
         android:textSize="30dp"
         android:text="@string/currentPlayerString"/>
 
-    <Button
-        android:id="@+id/endTurnButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:background="@drawable/button"
-        android:padding="10dp"
-        android:text="End Turn"/>
-        <!--android:onClick="onEndTurnClick"-->
-</RelativeLayout>
+<!-- End turn button declaration -->
+            <Button
+                android:id="@+id/endTurnButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:padding="10dp"
+                android:text="End Turn"/>
+                <!--android:onClick="onEndTurnClick"-->
+    </RelativeLayout>
+
