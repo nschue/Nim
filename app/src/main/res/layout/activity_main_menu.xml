@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/outerRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#000E0E"
+    tools:context="com.example.cam.nim.MainMenu">
+
+    <!-- For the menu logo -->
+    <ImageView
+        android:id="@+id/iconMenu"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="20dp"/>
+    <!-- For the play game button -->
+    <Button
+        android:id="@+id/playMenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@drawable/button"
+        android:text="@string/playButtonString"
+        android:textColor="#FFFFFF"
+        android:onClick="play"
+        android:layout_centerHorizontal="true" />
+    <!-- Spaces the items -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="6dp"/>
+
+    <!--Options button-->
+    <Button
+        android:id="@+id/optionsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@drawable/button"
+        android:text="@string/optionsButtonString"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Spaces the items -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="6dp"/>
+
+    <!-- Extras button: Condenses the view scoreboard and how to play -->
+    <Button
+        android:id="@+id/extrasButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@drawable/button"
+        android:text="@string/extraButtonString"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true" />
+
+</LinearLayout>
