@@ -10,4 +10,19 @@
     <string name="backButtonString">Back</string>
     <string name="title_activity_options">Options</string>
     <string name="sendButtonString">Send</string>
+    <string name="playAganistComputer">Play with a Computer</string>
+    <string name="playWithFriend">Play with a Friend</string>
+
+    <string-array name="rowArray">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+
 </resources>
