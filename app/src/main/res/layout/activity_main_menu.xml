@@ -11,8 +11,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#000E0E"
-    tools:context="com.example.cam.nim.MainMenu">
+    tools:context="com.example.cam.nim.MainMenu"
+    android:background="#000E0E">
+
 
     <!-- For the menu logo -->
     <ImageView
@@ -33,7 +34,7 @@
         android:background="@drawable/button"
         android:text="@string/playButtonString"
         android:textColor="#FFFFFF"
-        android:onClick="play"
+        android:onClick="onClick"
         android:layout_centerHorizontal="true" />
     <!-- Spaces the items -->
     <View
@@ -49,7 +50,8 @@
         android:background="@drawable/button"
         android:text="@string/optionsButtonString"
         android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"/>
 
     <!-- Spaces the items -->
     <View
@@ -65,6 +67,7 @@
         android:background="@drawable/button"
         android:text="@string/extraButtonString"
         android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"/>
 
 </LinearLayout>

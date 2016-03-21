@@ -26,6 +26,14 @@
         <activity
             android:name=".Options"
             android:label="@string/title_activity_options"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Menu"
+            android:label="@string/Preferences"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".HowToPlay"
+            android:label="@string/title_activity_how_to_play"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

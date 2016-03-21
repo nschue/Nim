@@ -2,9 +2,9 @@ package com.example.cam.nim;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.view.*;
+import android.widget.Button;
 
 public class MainMenu extends Activity {
 
@@ -13,18 +13,31 @@ public class MainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
     }
-
-    public void play(View view){
-        Intent playIntent = new Intent(this,GameStatus.class);
-    }
-
-    public void options(View view){
-        Intent optionsIntent = new Intent(this,Options.class);
-    }
-    public void extra(View view){
-        Intent extraIntent = new Intent(this,Extra.class);
-        startActivity(extraIntent);
-        finish();
-
+  //launches the activites based on the button selections
+    public void onClick(View view) {
+        switch(view.getId())
+        {
+            case(R.id.playMenuButton):
+            {
+                Intent playIntent = new Intent(this,Menu.class);
+                startActivity(playIntent);
+                finish();
+                break;
+            }
+            case(R.id.extrasButton):
+            {
+                Intent extraIntent = new Intent(this,Extra.class);
+                startActivity(extraIntent);
+                finish();
+                break;
+            }
+            case(R.id.optionsButton):
+            {
+                Intent optionsButton = new Intent(this,Options.class);
+                startActivity(optionsButton);
+                finish();
+                break;
+            }
+        }
     }
 }
