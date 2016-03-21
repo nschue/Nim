@@ -11,8 +11,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#000E0E"
-    tools:context="com.example.cam.nim.MainMenu">
+    tools:context="com.example.cam.nim.MainMenu"
+    android:background="#000E0E">
+
 
     <!-- For the menu logo -->
     <ImageView

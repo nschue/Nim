@@ -8,6 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:gravity="center"
+    android:background="#000E0E"
     tools:context="com.example.cam.nim.Extra">
 <!--Screen Title -->
     <TextView
@@ -20,16 +22,18 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="5dp"></View>
+        android:layout_height="6dp"></View>
 
     <!-- How to play Button -->
 
     <Button
+        android:id="@+id/howToPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:text="@string/howToPlayButtonString"
         android:padding="5dp"
+        android:onClick="onClick"
         android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"/>
 
@@ -37,15 +41,16 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="5dp"></View>
+        android:layout_height="6dp"></View>
     <!--Scoreboard button-->
 
     <Button
+        android:id="@+id/Scoreboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:text="@string/scoreboardButtonString"
-        android:padding="5dp"
+        android:padding="6dp"
         android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"/>
 
@@ -55,6 +60,7 @@
         android:layout_height="5dp"></View>
     <!--Credits button-->
     <Button
+        android:id="@+id/Credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
@@ -69,6 +75,7 @@
         android:layout_height="5dp"></View>
     <!--Credits button-->
     <Button
+        android:id="@+id/Back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button"

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Nim</string>
-    <string name="currentPlayerString">Player</string>
+    <string name="PlayerString">Player</string>
     <string name="playButtonString">Play</string>
     <string name="optionsButtonString">Options</string>
     <string name="extraButtonString">Extras</string>
@@ -12,7 +12,19 @@
     <string name="sendButtonString">Send</string>
     <string name="playAganistComputer">Play with a Computer</string>
     <string name="playWithFriend">Play with a Friend</string>
-
+    <string name="computerString">Computer</string>
+    <string name="stringFirst">Select who is first:</string>
+    <string name="Preferences">Preferences</string>
+    <string name="selectRows">Select Rows:</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
+    <string name="Audio">Audio</string>
+    <string name="okay">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="ComputerMoveSpeed">Computer Move Speed</string>
+    <string name="HowToPlayString">Choose as many pieces from any one row.\n To win take the last piece.  </string>
+    <string name="rowPrompt">Select Rows:</string>
+    <!--Selections of Rows-->
     <string-array name="rowArray">
         <item>3</item>
         <item>4</item>
@@ -23,6 +35,8 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_how_to_play">HowToPlay</string>
 
 
 </resources>
