@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.Button;
 
 public class MainMenu extends Activity {
 
@@ -19,7 +18,7 @@ public class MainMenu extends Activity {
         {
             case(R.id.playMenuButton):
             {
-                Intent playIntent = new Intent(this,Menu.class);
+                Intent playIntent = new Intent(this,Options.class);
                 startActivity(playIntent);
                 finish();
                 break;

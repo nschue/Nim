@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Menu"
+            android:name=".Options"
             android:label="@string/Preferences"
             android:theme="@android:style/Theme.Dialog" />
             <meta-data

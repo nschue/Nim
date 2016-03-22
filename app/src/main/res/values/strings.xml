@@ -9,24 +9,32 @@
     <string name="scoreboardButtonString">Scoreboard</string>
 
     <string name="title_activity_options">Options</string>
+    <string name="Oponent">Oponent</string>
 
-    <string name="playAganistComputer">Play with a Computer</string>
-    <string name="playWithFriend">Play with a Friend</string>
+    <string name="friendString">Friend</string>
     <string name="computerString">Computer</string>
-    <string name="stringFirst">Select who is first:</string>
+    <string name="stringFirst">Select Player One:</string>
     <string name="Preferences">Preferences</string>
     <string name="selectRows">Select Rows:</string>
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="Audio">Audio</string>
-    <string name="okay">OK</string>
+    <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="ComputerMoveSpeed">Computer Move Speed</string>
     <string name="HowToPlayString">Choose as many pieces from any one row.\n To win take the last piece.  </string>
     <string name="creditsString">Developed by Team 10. </string>
 
+    <string name="difficultyPrompt">Select Difficulty</string>
+    <string-array name="DifficultyArray">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
 
-    <string name="rowPrompt">Select Rows:</string>
+
+
+    <string name="rowPrompt">Select Rows</string>
 
     <!--Selections of Rows-->
     <string-array name="rowArray">
