@@ -37,13 +37,6 @@ public class MainMenu extends Activity {
                 break;
             }
 
-            /*case(R.id.optionsButton):
-            {
-                Intent optionsButton = new Intent(this,Options.class);
-                startActivity(optionsButton);
-                finish();
-                break;
-            }*/
         }
     }
 }

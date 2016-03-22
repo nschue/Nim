@@ -23,10 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Options"
-            android:label="@string/title_activity_options"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Menu"
             android:label="@string/Preferences"
             android:theme="@android:style/Theme.Dialog" />
