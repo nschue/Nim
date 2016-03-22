@@ -22,7 +22,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Extra" />
         <activity
             android:name=".Options"
             android:label="@string/title_activity_options"
@@ -31,10 +30,23 @@
             android:name=".Menu"
             android:label="@string/Preferences"
             android:theme="@android:style/Theme.Dialog" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cam.nim.Game" />
+
         <activity
             android:name=".HowToPlay"
             android:label="@string/title_activity_how_to_play"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Credits"
+            android:label="@string/title_activity_credits"
+            android:parentActivityName=".MainMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cam.nim.MainMenu" />
+        </activity>
     </application>
 
 </manifest>

@@ -3,13 +3,13 @@
     <string name="PlayerString">Player</string>
     <string name="playButtonString">Play</string>
     <string name="optionsButtonString">Options</string>
-    <string name="extraButtonString">Extras</string>
+
     <string name="howToPlayButtonString">How to Play</string>
     <string name="creditsButtonString">Credits</string>
     <string name="scoreboardButtonString">Scoreboard</string>
-    <string name="backButtonString">Back</string>
+
     <string name="title_activity_options">Options</string>
-    <string name="sendButtonString">Send</string>
+
     <string name="playAganistComputer">Play with a Computer</string>
     <string name="playWithFriend">Play with a Friend</string>
     <string name="computerString">Computer</string>
@@ -23,7 +23,11 @@
     <string name="cancel">Cancel</string>
     <string name="ComputerMoveSpeed">Computer Move Speed</string>
     <string name="HowToPlayString">Choose as many pieces from any one row.\n To win take the last piece.  </string>
+    <string name="creditsString">Developed by Team 10. </string>
+
+
     <string name="rowPrompt">Select Rows:</string>
+
     <!--Selections of Rows-->
     <string-array name="rowArray">
         <item>3</item>
@@ -37,6 +41,7 @@
     </string-array>
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_how_to_play">HowToPlay</string>
+    <string name="title_activity_credits">Credits</string>
 
 
 </resources>

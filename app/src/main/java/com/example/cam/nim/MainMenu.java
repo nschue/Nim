@@ -24,20 +24,26 @@ public class MainMenu extends Activity {
                 finish();
                 break;
             }
-            case(R.id.extrasButton):
+            case(R.id.Scoreboard):
             {
-                Intent extraIntent = new Intent(this,Extra.class);
-                startActivity(extraIntent);
+
+                break;
+            }
+            case(R.id.Credits):
+            {
+                Intent creditsButton = new Intent(this,Credits.class);
+                startActivity(creditsButton);
                 finish();
                 break;
             }
-            case(R.id.optionsButton):
+
+            /*case(R.id.optionsButton):
             {
                 Intent optionsButton = new Intent(this,Options.class);
                 startActivity(optionsButton);
                 finish();
                 break;
-            }
+            }*/
         }
     }
 }
