@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/stringFirst"/>
-
+    <!--Player Selection Radio Group -->
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,25 +48,24 @@
             android:layout_height="wrap_content"
             android:id="@+id/radioEnable"
             android:text="@string/enable"
-            android:onClick="onAudioRado"
+            android:onClick="onAudioRadio"
             android:padding="10dp"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radioDisable"
-            android:onCLick="onAudioRadio"
+            android:onClick="onAudioRadio"
             android:text="@string/disable"
             android:padding="10dp"/>
     </RadioGroup>
-
+<!-- For Row selection-->
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:prompt="@string/rowPrompt"
-        android:entries="@array/rowArray"
         android:id="@+id/spinnerRows">
     </Spinner>
-
+<!-- label for computer speed seekbar -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +80,7 @@
         android:minHeight="3dip"
         android:maxHeight="3dip"
         android:max="2"/>
-
+<!--Container for the buttons to be horizontial -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

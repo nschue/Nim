@@ -40,8 +40,8 @@
     <View
         android:layout_width="0dp"
         android:layout_height="6dp"/>
-
-    <!--Options button-->
+    <!--
+        Options button
     <Button
         android:id="@+id/optionsButton"
         android:layout_width="wrap_content"
@@ -52,22 +52,40 @@
         android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"/>
+         -->
+
+    <!-- Spacing -->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="6dp"></View>
+    <!--Scoreboard button-->
+
+    <Button
+        android:id="@+id/Scoreboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="@string/scoreboardButtonString"
+        android:padding="6dp"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"/>
 
     <!-- Spaces the items -->
     <View
         android:layout_width="0dp"
         android:layout_height="6dp"/>
 
-    <!-- Extras button: Condenses the view scoreboard and how to play -->
+    <!-- Credits -->
     <Button
-        android:id="@+id/extrasButton"
+        android:id="@+id/Credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:background="@drawable/button"
-        android:text="@string/extraButtonString"
+        android:text="@string/creditsButtonString"
+        android:padding="5dp"
         android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:layout_centerHorizontal="true"/>
 
 </LinearLayout>
