@@ -8,32 +8,66 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 /*
-Class:Menu
+Class:Options
 The activity creates the dialog box for menu to setup the game
  */
-public class Menu extends Activity {
+public class Options extends Activity {
     private GameInfo gameInfo;
-    private Spinner rowSpinner;
+    private Spinner rowSpinner,difficultySpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_options);
         this.gameInfo = new GameInfo();
-        setUpSpinner();
-        onSpinnerItemSelected();
+        setUpRowSpinner();
+        setUpDifficultySpinner();
+
+        onRowSpinnerItemSelected();
+        onRowSpinnerNoItemSelected();
+
+        onDifficultySpinnerSelection();
+        onDifficultySpinnerNoSelection();
 
     }
 
-    public void setUpSpinner()
+    public void setUpRowSpinner()
     {
-        rowSpinner = (Spinner) findViewById(R.id.spinnerRows);
+        rowSpinner = (Spinner) findViewById(R.id.spinnerRows); // finds the spinner ID
+        // Sets the items  defined in the string.xml and layout of the spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.rowArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rowSpinner.setAdapter(adapter);
-        onSpinnerItemSelected();
-        onSpinnerNoItemSelected();
     }
+    public void setUpDifficultySpinner()
+    {
+        difficultySpinner = (Spinner) findViewById(R.id.spinnerDiffculty); // finds the spinner ID
+        // Sets the items  defined in the string.xml and layout of the spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.DifficultyArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        difficultySpinner.setAdapter(adapter);
+
+    }
+    public void onDifficultySpinnerSelection()
+    {
+        switch(difficultySpinner.getSelectedItem().toString())
+        {
+            case("Easy"):
+
+                break;
+            case("Medium"):
+                break;
+            case("Hard"):
+                break;
+        }
+
+    }
+    public void onDifficultySpinnerNoSelection()
+    {
+
+    }
+
+    //Takes the player back to the main menu if the player clicks the back button
     @Override
     public void onBackPressed()
     {
@@ -42,8 +76,8 @@ public class Menu extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-
-    public void onSpinnerItemSelected() {
+    //Sets the row amount based on the player choice
+    public void onRowSpinnerItemSelected() {
 
         switch (Integer.parseInt(rowSpinner.getSelectedItem().toString()))
         {
@@ -76,8 +110,8 @@ public class Menu extends Activity {
                 break;
         }
     }
-
-    public void onSpinnerNoItemSelected(){
+    //Sets the row amount to 5 if no row amount is chosen
+    public void onRowSpinnerNoItemSelected(){
         if(rowSpinner.getSelectedItem() == null)
             this.gameInfo.setnRowAmount(5);
     }
@@ -99,7 +133,5 @@ public class Menu extends Activity {
                     break;
             }
         }
-
-
     }
 }
