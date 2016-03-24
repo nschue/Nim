@@ -13,7 +13,14 @@
     android:background="@color/boardColor"
     tools:context=".Game">
 
-<!-- Displays the current player -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/howToPlayButton"
+        android:background="@drawable/button"
+        android:text="@string/howToPlayButtonString"/>
+
+    <!-- Displays the current player -->
     <TextView
         android:id="@+id/currentPlayerTextView"
         android:layout_width="wrap_content"
@@ -23,20 +30,31 @@
         android:padding="10dp"
         android:textColor="@color/textColor"
         android:textSize="30dp"
-        android:text="@string/currentPlayerString"/>
+        android:text="@string/PlayerString"/>
 
-<!-- End turn button declaration -->
-            <Button
-                android:id="@+id/endTurnButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:background="@drawable/button"
-                android:padding="10dp"
-                android:text="End Turn"/>
-                <!--android:onClick="onEndTurnClick"-->
-    </RelativeLayout>
+    <!-- End turn button declaration -->
+    <Button
+        android:id="@+id/endTurnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:background="@drawable/button"
+        android:padding="10dp"
+        android:text="End Turn"/>
+    <!--android:onClick="onEndTurnClick"-->
 
+    <!--End Game Button delcaration -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:background="@drawable/button"
+        android:padding="10dp"
+        android:text="End Game"/>
+</RelativeLayout>
