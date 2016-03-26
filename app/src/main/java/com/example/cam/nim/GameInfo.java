@@ -1,13 +1,21 @@
 package com.example.cam.nim;
 
+import java.util.ArrayList;
+
 /**
  * Created by Cam on 3/21/2016.
  */
 public class GameInfo {
+
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
     private double computerSpeed;
+    private double mComputerDifficulty;
     private int nRowAmount;
+
+    private ArrayList<ArrayList<Boolean>> mRemainingDots;
+
+
     GameInfo() {
         this.boolEnableAudio = true;
         this.boolPlayerTurn = true;
@@ -51,5 +59,21 @@ public class GameInfo {
 
     public void setnRowAmount(int nRowAmount) {
         this.nRowAmount = nRowAmount;
+    }
+
+    public double getComputerDifficulty() {
+        return mComputerDifficulty;
+    }
+
+    public void setComputerDifficulty(double computerDifficulty) {
+        mComputerDifficulty = computerDifficulty;
+    }
+
+    public ArrayList<ArrayList<Boolean>> getRemainingDots() {
+        return mRemainingDots;
+    }
+
+    public void setRemainingDots(ArrayList<ArrayList<Boolean>> remainingDots) {
+        mRemainingDots = remainingDots;
     }
 }

@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/boardColor"
-    tools:context=".Game">
+    tools:context=".GameActivity">
 
     <Button
         android:layout_width="wrap_content"
@@ -46,10 +46,11 @@
         android:text="End Turn"/>
     <!--android:onClick="onEndTurnClick"-->
 
-    <!--End Game Button delcaration -->
+    <!--End GameActivity Button delcaration -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/end_game_button"
         android:textColor="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
