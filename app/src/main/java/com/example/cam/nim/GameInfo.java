@@ -20,13 +20,16 @@ public class GameInfo {
         this.boolEnableAudio = true;
         this.boolPlayerTurn = true;
         this.nRowAmount = 5;
+        this.mComputerDifficulty = 2;
+        this.computerSpeed = 1;
     }
-    GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount)
+    GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
     {
         this.boolPlayerTurn = playerTurn;
         this.boolEnableAudio = enableAudio;
         this.computerSpeed = computerSpeed;
         this.nRowAmount = nRowAmount;
+        this.mComputerDifficulty = computerDifficulty;
     }
 
     public boolean isBoolEnableAudio() {
@@ -75,5 +78,24 @@ public class GameInfo {
 
     public void setRemainingDots(ArrayList<ArrayList<Boolean>> remainingDots) {
         mRemainingDots = remainingDots;
+    }
+
+    public void populateGameBoard(ArrayList<ArrayList<Boolean>> remainingDots)
+    {
+
+    }
+
+    /*Populates remainingDots arraylist using this.getnRowAmount*/
+    public void populateGameBoard()
+    {
+        for(int i = 0; i < this.getnRowAmount();i++)
+        {
+           ArrayList<Boolean> tempList = new ArrayList<Boolean>();
+            for(int j = 0; j < i;j++)
+            {
+                tempList.add(true);
+            }
+            getRemainingDots().add(tempList);
+        }
     }
 }
