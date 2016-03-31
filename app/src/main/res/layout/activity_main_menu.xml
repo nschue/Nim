@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.example.cam.nim.MainMenu"
+    tools:context=".MainMenuActivity"
     android:background="#000E0E">
 
 
@@ -41,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="6dp"/>
     <!--
-        Options button
+        OptionsActivity button
     <Button
         android:id="@+id/optionsButton"
         android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
         android:layout_width="0dp"
         android:layout_height="6dp"/>
 
-    <!-- Credits -->
+    <!-- CreditsActivity -->
     <Button
         android:id="@+id/Credits"
         android:layout_width="wrap_content"
