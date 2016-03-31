@@ -5,15 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 /*
 Class:Options
 The activity creates the dialog box for menu to setup the game
  */
-public class Options extends Activity {
+public class OptionsActivity extends Activity {
     private GameInfo gameInfo;
     private Spinner rowSpinner,difficultySpinner;
+    private Button okStart;
+    private Button cancelStart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,6 +32,38 @@ public class Options extends Activity {
 
         onDifficultySpinnerSelection();
         onDifficultySpinnerNoSelection();
+
+        okStart = (Button) findViewById(R.id.okStart);
+        okStart.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                Intent playIntent = new Intent(v.getContext(), GameActivity.class);
+                Bundle mBundle = new Bundle();
+                /*Bundles game info up into type Bundle so that it can be passed when playIntent
+                * is started. GameActivity will then "unbundle" and create a new GameInfo object
+                * with identical values.                                                        */
+                mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
+                mBundle.putBoolean("boolPlayerTurn",gameInfo.isBoolPlayerTurn());//Add player turn to bundle
+                mBundle.putDouble("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
+                mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
+                mBundle.putDouble("computerDifficulty",gameInfo.getComputerDifficulty());//Add difficulty to bundle
+                playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
+                startActivity(playIntent);
+                finish();
+            }
+        });
+
+        cancelStart = (Button) findViewById(R.id.canelStart);
+        cancelStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 
@@ -72,7 +108,7 @@ public class Options extends Activity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        Intent mainMenuIntent = new Intent(this,MainMenu.class);
+        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
         startActivity(mainMenuIntent);
         finish();
     }

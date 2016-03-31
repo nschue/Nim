@@ -3,13 +3,8 @@ package com.example.cam.nim;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-public class Credits extends Activity {
+public class CreditsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +16,7 @@ public class Credits extends Activity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        Intent mainMenuIntent = new Intent(this,MainMenu.class);
+        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
         startActivity(mainMenuIntent);
         finish();
     }

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 
-public class MainMenu extends Activity {
+public class MainMenuActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +18,9 @@ public class MainMenu extends Activity {
         {
             case(R.id.playMenuButton):
             {
-                Intent playIntent = new Intent(this,Options.class);
+                Intent playIntent = new Intent(this,OptionsActivity.class);
                 startActivity(playIntent);
-                finish();
+                //finish();
                 break;
             }
             case(R.id.Scoreboard):
@@ -30,7 +30,7 @@ public class MainMenu extends Activity {
             }
             case(R.id.Credits):
             {
-                Intent creditsButton = new Intent(this,Credits.class);
+                Intent creditsButton = new Intent(this,CreditsActivity.class);
                 startActivity(creditsButton);
                 finish();
                 break;
