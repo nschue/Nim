@@ -1,37 +1,27 @@
 package com.example.cam.nim;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 public class GameActivity extends Activity
 {
     private GameInfo mGameInfo;
     private Button mEndButton;
+    private LinearLayout mGameBoardContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //GridView gridView = (GridView) findViewById(R.id.play_grid);
-       //gridView.setAdapter(new ImageAdapter(this));
-/*
-        gridView.setOnClickListener(new View.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?>parent, View v, int position, long id)
-            {
-                Toast.makeText(GameActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });*/
+        mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
+        mGameBoardContainer.removeAllViews();
 
         mEndButton = (Button) findViewById(R.id.end_game_button);
         mEndButton.setOnClickListener(new View.OnClickListener() {
@@ -54,43 +44,32 @@ public class GameActivity extends Activity
         mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
 
         mGameInfo.populateGameBoard();
+        createGameBoard();
+
     }
 
-    public class ImageAdapter extends BaseAdapter
+    private void updateGameBoard()
     {
-        private Context mContext;
 
-        public ImageAdapter(Context c) {
-            mContext = c;
-        }
+    }
 
-        public int getCount() {
-            return mGameInfo.getnRowAmount();
-        }
-
-        public Object getItem(int position) {
-            return null;
-        }
-
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        // create a new ImageView for each item referenced by the Adapter
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            if (convertView == null) {
-                // if it's not recycled, initialize some attributes
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
-            } else {
-                imageView = (ImageView) convertView;
+    private void createGameBoard()
+    {
+        for( int i = 0; i < mGameInfo.getnRowAmount(); i++)
+        {
+            LinearLayout temp = new LinearLayout(GameActivity.this);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 0, 0, 0);
+            temp.setLayoutParams(layoutParams);
+            temp.setOrientation(LinearLayout.HORIZONTAL);
+            temp.setGravity(Gravity.CENTER_HORIZONTAL);
+            for(int j = 0; j < i+1; j++)
+            {
+                ImageButton tempButton = new ImageButton(GameActivity.this);
+                tempButton.setImageResource(R.drawable.game_piece);
+                temp.addView(tempButton);
             }
-
-            imageView.setImageResource(R.drawable.game_piece);
-            return imageView;
+            mGameBoardContainer.addView(temp);
         }
 
     }

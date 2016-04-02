@@ -25,7 +25,7 @@
         android:id="@+id/currentPlayerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:padding="10dp"
         android:textColor="@color/textColor"
@@ -59,19 +59,12 @@
         android:padding="10dp"
         android:text="End Game"/>
 
-    <GridView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="50dp"
-        android:numColumns="10"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:layout_above="@+id/end_game_button"
-        android:layout_below="@+id/currentPlayerTextView"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:id="@+id/play_grid">
-    </GridView>
+        android:layout_above="@+id/endTurnButton"
+        android:orientation="vertical"
+        android:id="@+id/gameboard_container"></LinearLayout>
 
 
 </RelativeLayout>
