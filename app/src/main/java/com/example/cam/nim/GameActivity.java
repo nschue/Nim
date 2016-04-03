@@ -9,16 +9,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 public class GameActivity extends Activity
 {
     private GameInfo mGameInfo;
     private Button mEndButton;
+    private Button mEndTurnButton;
     private LinearLayout mGameBoardContainer;
+    private ArrayList<Integer> mSelectedPieces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        mSelectedPieces = new ArrayList<>();
 
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
@@ -33,6 +38,23 @@ public class GameActivity extends Activity
             }
         });
 
+        mEndTurnButton = (Button) findViewById(R.id.endTurnButton);
+
+        //Listens for endturn button to be pressed.
+        //Hides and disables buttons that are listed in mSelectedPieces
+        //Needs to check for player turn.
+        mEndTurnButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                for(Integer id: mSelectedPieces)
+                {
+                    View selectedButton = findViewById(id);
+                    selectedButton.setEnabled(false);
+                    selectedButton.setVisibility(View.GONE);
+                }
+            }
+        });
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         Bundle extras = getIntent().getBundleExtra("mBundle");
@@ -53,8 +75,11 @@ public class GameActivity extends Activity
 
     }
 
+    //Creates the gameboard using number of rows.
+    //Each image button is created with an onClickListener to listen for selection. 
     private void createGameBoard()
     {
+        int buttonID = 0;
         for( int i = 0; i < mGameInfo.getnRowAmount(); i++)
         {
             LinearLayout temp = new LinearLayout(GameActivity.this);
@@ -67,10 +92,29 @@ public class GameActivity extends Activity
             {
                 ImageButton tempButton = new ImageButton(GameActivity.this);
                 tempButton.setImageResource(R.drawable.game_piece);
+                tempButton.setId(buttonID++);
+                tempButton.setBackground(null);
+                tempButton.setPadding(0,0,0,0);
                 temp.addView(tempButton);
+
+                //If user clicks button, button is added to a list of buttons to be removed.
+                //Needs to check for player turn and if button is in same row.
+                tempButton.setOnClickListener(new ImageButton.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        mSelectedPieces.add(v.getId());
+                    }
+                });
             }
             mGameBoardContainer.addView(temp);
         }
+
+    }
+
+    private void playGame()
+    {
 
     }
 }

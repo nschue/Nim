@@ -38,12 +38,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:background="@drawable/button"
         android:padding="10dp"
-        android:text="End Turn"/>
+        android:text="End Turn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/gameboard_container"
+        android:layout_marginEnd="58dp"/>
     <!--android:onClick="onEndTurnClick"-->
 
     <!--End GameActivity Button delcaration -->
@@ -52,12 +53,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/end_game_button"
         android:textColor="#ffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:background="@drawable/button"
         android:padding="10dp"
-        android:text="End Game"/>
+        android:text="End Game"
+        android:layout_below="@+id/gameboard_container"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="52dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
