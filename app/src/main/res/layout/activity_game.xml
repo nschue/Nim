@@ -25,7 +25,7 @@
         android:id="@+id/currentPlayerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:padding="10dp"
         android:textColor="@color/textColor"
@@ -58,4 +58,13 @@
         android:background="@drawable/button"
         android:padding="10dp"
         android:text="End Game"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/endTurnButton"
+        android:orientation="vertical"
+        android:id="@+id/gameboard_container"></LinearLayout>
+
+
 </RelativeLayout>
