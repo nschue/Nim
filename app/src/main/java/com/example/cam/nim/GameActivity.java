@@ -35,7 +35,7 @@ public class GameActivity extends Activity
 
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getBundleExtra("mBundle");
         mGameInfo = new GameInfo();
         mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
         mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
@@ -43,7 +43,7 @@ public class GameActivity extends Activity
         mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
 
-        mGameInfo.populateGameBoard();
+        //mGameInfo.populateGameBoard();
         createGameBoard();
 
     }
