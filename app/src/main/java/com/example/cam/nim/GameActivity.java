@@ -38,8 +38,7 @@ public class GameActivity extends Activity
             }
         });
 
-<<<<<<< HEAD
-=======
+
         mEndTurnButton = (Button) findViewById(R.id.endTurnButton);
 
         //Listens for endturn button to be pressed.
@@ -58,7 +57,7 @@ public class GameActivity extends Activity
             }
         });
 
->>>>>>> refs/remotes/origin/master
+
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         Bundle extras = getIntent().getBundleExtra("mBundle");
         mGameInfo = new GameInfo();
