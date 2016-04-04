@@ -89,14 +89,12 @@ public class OptionsActivity extends Activity {
         switch(difficultySpinner.getSelectedItem().toString())
         {
             case("Easy"):
-
                 break;
             case("Medium"):
                 break;
             case("Hard"):
                 break;
         }
-
     }
     public void onDifficultySpinnerNoSelection()
     {

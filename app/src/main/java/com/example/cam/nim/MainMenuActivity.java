@@ -20,7 +20,7 @@ public class MainMenuActivity extends Activity {
             {
                 Intent playIntent = new Intent(this,OptionsActivity.class);
                 startActivity(playIntent);
-                //finish();
+                finish();
                 break;
             }
             case(R.id.Scoreboard):

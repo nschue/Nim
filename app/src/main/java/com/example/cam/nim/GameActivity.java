@@ -26,7 +26,6 @@ public class GameActivity extends Activity
             }
         });
 
-
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         Bundle extras = getIntent().getExtras();
         mGameInfo = new GameInfo();
@@ -35,5 +34,11 @@ public class GameActivity extends Activity
         mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
         mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
+    }
+    public void onHowToPlayClick(View view)
+    {
+        Intent howToPlayIntent = new Intent(this,HowToPlay.class);
+        startActivity(howToPlayIntent);
+
     }
 }
