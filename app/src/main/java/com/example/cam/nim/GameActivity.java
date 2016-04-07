@@ -58,7 +58,7 @@ public class GameActivity extends Activity
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
 
         correctPlayerName();
-        System.out.printf("%s",this.currentPlayer);
+
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
 
