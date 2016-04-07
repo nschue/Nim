@@ -157,7 +157,8 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        mSelectedPieces.add(v.getId());
+                        if(mGameInfo.isBoolPlayerTurn())
+                            mSelectedPieces.add(v.getId());
                     }
                 });
             }
