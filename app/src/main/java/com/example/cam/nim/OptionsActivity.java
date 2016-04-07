@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 /*
 Class:Options
@@ -18,16 +19,20 @@ public class OptionsActivity extends Activity {
     private Spinner rowSpinner,difficultySpinner;
     private Button okStart;
     private Button cancelStart;
-
+    private RadioGroup playerGroup;
+    private RadioGroup audioGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+
+        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
+        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
+
         gameInfo = new GameInfo();
         setUpRowSpinner();
         setUpDifficultySpinner();
-
 
         rowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -147,22 +152,39 @@ public class OptionsActivity extends Activity {
         finish();
     }
 
+    //Sets who is first
+
+    public void onPlayerRadio(View view) {
+
+        int selectedRadio = playerGroup.getCheckedRadioButtonId();
+
+        switch (selectedRadio) {
+            case (R.id.radioOponent): {
+                    gameInfo.setBoolPlayerTurn(false);
+                break;
+            }
+            case (R.id.radioPlayer): {
+                    gameInfo.setBoolPlayerTurn(true);
+                break;
+            }
+        }
+    }
+
+
 
     //Sets if  the audio is on
 
     public void onAudioRadio(View view) {
 
-        boolean enabledAudio = ((RadioButton) view).isChecked();
+        int selectedRadio = audioGroup.getCheckedRadioButtonId();
 
-        switch (view.getId()) {
+        switch (selectedRadio) {
             case (R.id.radioDisable): {
-                if (enabledAudio)
-                        this.gameInfo.setBoolEnableAudio(false);
+                    gameInfo.setBoolEnableAudio(false);
                     break;
             }
             case (R.id.radioEnable): {
-                if (enabledAudio)
-                        this.gameInfo.setBoolEnableAudio(true);
+                    gameInfo.setBoolEnableAudio(true);
                     break;
             }
         }

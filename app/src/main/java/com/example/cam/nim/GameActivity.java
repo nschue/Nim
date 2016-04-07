@@ -27,7 +27,7 @@ public class GameActivity extends Activity
     private TextView currentPlayer;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private String[] mPlanetTitles;
+    private String[] choices;
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
     @Override
@@ -36,10 +36,16 @@ public class GameActivity extends Activity
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
 
+        choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-                /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
+        // Set the adapter for the list view
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
+        // Set the list's click listener
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         Bundle extras = getIntent().getBundleExtra("mBundle");
         this.mGameInfo = new GameInfo();
         this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
@@ -52,13 +58,6 @@ public class GameActivity extends Activity
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
 
         correctPlayerName();
-
-        // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mPlanetTitles));
-        // Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-
 
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
