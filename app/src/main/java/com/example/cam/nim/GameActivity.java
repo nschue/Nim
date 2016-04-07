@@ -24,6 +24,7 @@ public class GameActivity extends Activity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] mPlanetTitles;
+    private AI mAI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class GameActivity extends Activity
             public void onClick(View v)
             {
                 updateGameBoard();
+                mSelectedPieces = mAI.calculateNextMove(mGameInfo.getRemainingDots());
+                updateGameBoard();
             }
         });
 
@@ -86,6 +89,24 @@ public class GameActivity extends Activity
     {
         for(Integer id: mSelectedPieces)
         {
+            int i = 0;
+            int row = 0;
+
+            for(ArrayList<Boolean> al: mGameInfo.getRemainingDots())
+            {
+                int column = 0;
+                for(Boolean bool: al)
+                {
+                    if(id == i)
+                    {
+
+                        mGameInfo.getRemainingDots().get(row).set(column, false);
+                    }
+                    i++;
+                    column++;
+                }
+                row++;
+            }
             View selectedButton = findViewById(id);
             selectedButton.setEnabled(false);
             selectedButton.setVisibility(View.GONE);
