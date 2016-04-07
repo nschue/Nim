@@ -39,8 +39,19 @@ public class GameActivity extends Activity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+                /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
+        Bundle extras = getIntent().getBundleExtra("mBundle");
+        this.mGameInfo = new GameInfo();
+        this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
+        this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
+        this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+        this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
+        this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
+
         this.fadeInPlayerText.setDuration(5000);
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
+
+        correctPlayerName();
 
         // Set the adapter for the list view
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mPlanetTitles));
@@ -67,12 +78,10 @@ public class GameActivity extends Activity
         //Listens for endturn button to be pressed.
         //Hides and disables buttons that are listed in mSelectedPieces
         //Needs to check for player turn.
-        mEndTurnButton.setOnClickListener(new View.OnClickListener(){
+        mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty())
-                {
+            public void onClick(View v) {
+                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
                     ChangePlayerText();
                     updateGameBoard();
                     mSelectedPieces.clear();
@@ -81,28 +90,13 @@ public class GameActivity extends Activity
             }
         });
 
-        /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
-        Bundle extras = getIntent().getBundleExtra("mBundle");
-        mGameInfo = new GameInfo();
-        mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
-        mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
-        mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
-        mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
-        mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
-
 
         mGameInfo.populateGameBoard();
         createGameBoard();
 
     }
-    private void ChangePlayerText()
+    private void correctPlayerName()
     {
-
-        //Does a fade animation
-        this.currentPlayer.setAnimation(fadeInPlayerText);
-        //switches the player turn
-        this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
-
         //changes the text if it isn't the player
         if(!this.mGameInfo.isBoolPlayerTurn())
         {
@@ -114,8 +108,14 @@ public class GameActivity extends Activity
 
             this.currentPlayer.setText(R.string.PlayerString);
         }
-
-
+    }
+    private void ChangePlayerText()
+    {
+        //Does a fade animation
+        this.currentPlayer.setAnimation(fadeInPlayerText);
+        //switches the player turn
+        this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
+        correctPlayerName();
     }
 
     private void updateGameBoard()
