@@ -88,6 +88,7 @@ public class GameInfo {
     /*Populates remainingDots arraylist using this.getnRowAmount*/
     public void populateGameBoard()
     {
+        setRemainingDots(new ArrayList<ArrayList<Boolean>>());
         for(int i = 0; i < this.getnRowAmount();i++)
         {
            ArrayList<Boolean> tempList = new ArrayList<Boolean>();
