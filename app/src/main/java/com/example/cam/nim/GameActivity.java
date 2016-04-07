@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,9 +24,11 @@ public class GameActivity extends Activity
     private Button mEndTurnButton;
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
+    private TextView currentPlayer;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] mPlanetTitles;
+    private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,9 @@ public class GameActivity extends Activity
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        this.fadeInPlayerText.setDuration(5000);
+        this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
 
         // Set the adapter for the list view
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mPlanetTitles));
@@ -63,7 +71,12 @@ public class GameActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                updateGameBoard();
+                if(mGameInfo.isBoolPlayerTurn())
+                {
+                    ChangePlayerText();
+                    updateGameBoard();
+
+                }
             }
         });
 
@@ -81,6 +94,28 @@ public class GameActivity extends Activity
         createGameBoard();
 
     }
+    private void ChangePlayerText()
+    {
+
+        //Does a fade animation
+        this.currentPlayer.setAnimation(fadeInPlayerText);
+        //switches the player turn
+        this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
+
+        //changes the text if it isn't the player
+        if(!this.mGameInfo.isBoolPlayerTurn())
+        {
+
+            this.currentPlayer.setText(R.string.computerString);
+        }
+        //changes it back the the player
+        else {
+
+            this.currentPlayer.setText(R.string.PlayerString);
+        }
+
+
+    }
 
     private void updateGameBoard()
     {
@@ -93,7 +128,7 @@ public class GameActivity extends Activity
     }
 
     //Creates the gameboard using number of rows.
-    //Each image button is created with an onClickListener to listen for selection. 
+    //Each image button is created with an onClickListener to listen for selection.
     private void createGameBoard()
     {
         int buttonID = 0;

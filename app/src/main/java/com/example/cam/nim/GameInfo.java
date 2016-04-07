@@ -7,11 +7,11 @@ import java.util.ArrayList;
  */
 public class GameInfo {
 
-    private Boolean boolEnableAudio;
-    private Boolean boolPlayerTurn;
-    private Double computerSpeed;
-    private Double mComputerDifficulty;
-    private Integer nRowAmount;
+    private boolean boolEnableAudio;
+    private boolean boolPlayerTurn;
+    private double computerSpeed;
+    private double mComputerDifficulty;
+    private int nRowAmount;
 
     private ArrayList<ArrayList<Boolean>> mRemainingDots;
 
@@ -32,7 +32,7 @@ public class GameInfo {
         this.mComputerDifficulty = computerDifficulty;
     }
 
-    public Boolean isBoolEnableAudio() {
+    public boolean isBoolEnableAudio() {
         return boolEnableAudio;
     }
 
@@ -40,7 +40,7 @@ public class GameInfo {
         this.boolEnableAudio = boolEnableAudio;
     }
 
-    public Boolean isBoolPlayerTurn() {
+    public boolean isBoolPlayerTurn() {
         return boolPlayerTurn;
     }
 
@@ -48,7 +48,7 @@ public class GameInfo {
         this.boolPlayerTurn = boolPlayerTurn;
     }
 
-    public Double getComputerSpeed() {
+    public double getComputerSpeed() {
         return computerSpeed;
     }
 
@@ -56,7 +56,7 @@ public class GameInfo {
         this.computerSpeed = computerSpeed;
     }
 
-    public Integer getnRowAmount() {
+    public int getnRowAmount() {
         return nRowAmount;
     }
 
@@ -64,7 +64,7 @@ public class GameInfo {
         this.nRowAmount = nRowAmount;
     }
 
-    public Double getComputerDifficulty() {
+    public double getComputerDifficulty() {
         return mComputerDifficulty;
     }
 
