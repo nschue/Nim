@@ -71,10 +71,11 @@ public class GameActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                if(mGameInfo.isBoolPlayerTurn())
+                if(mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty())
                 {
                     ChangePlayerText();
                     updateGameBoard();
+                    mSelectedPieces.clear();
 
                 }
             }
