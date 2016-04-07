@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -23,15 +24,57 @@ public class OptionsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        this.gameInfo = new GameInfo();
+        gameInfo = new GameInfo();
         setUpRowSpinner();
         setUpDifficultySpinner();
 
-        onRowSpinnerItemSelected();
-        onRowSpinnerNoItemSelected();
 
-        onDifficultySpinnerSelection();
-        onDifficultySpinnerNoSelection();
+        rowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                switch (position+3)
+                {
+                    case 3:
+                        gameInfo.setnRowAmount(3);
+                        break;
+                    case 4:
+                        gameInfo.setnRowAmount(4);
+                        break;
+                    case 5:
+                        gameInfo.setnRowAmount(5);
+                        break;
+                    case 6:
+                        gameInfo.setnRowAmount(6);
+                        break;
+                    case(7):
+                        gameInfo.setnRowAmount(7);
+                        break;
+                    case(8):
+                        gameInfo.setnRowAmount(8);
+                        break;
+                    case(9):
+                        gameInfo.setnRowAmount(9);
+                        break;
+                    case(10):
+                        gameInfo.setnRowAmount(10);
+                        break;
+                    default:
+                        gameInfo.setnRowAmount(5);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //onRowSpinnerItemSelected();
+        //onRowSpinnerNoItemSelected();
+
+        //onDifficultySpinnerSelection();
+        //onDifficultySpinnerNoSelection();
 
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener()
@@ -89,7 +132,6 @@ public class OptionsActivity extends Activity {
         switch(difficultySpinner.getSelectedItem().toString())
         {
             case("Easy"):
-
                 break;
             case("Medium"):
                 break;
@@ -117,16 +159,16 @@ public class OptionsActivity extends Activity {
 
         switch (Integer.parseInt(rowSpinner.getSelectedItem().toString()))
         {
-            case(3):
-                this.gameInfo.setnRowAmount(3);
-                break;
-            case(4):
+            //case 3:
+                //this.gameInfo.setnRowAmount(3);
+                //break;
+            case 4:
                 this.gameInfo.setnRowAmount(4);
                 break;
-            case(5):
+            case 5:
                 this.gameInfo.setnRowAmount(5);
                 break;
-            case(6):
+            case 6:
                 this.gameInfo.setnRowAmount(6);
                 break;
             case(7):
