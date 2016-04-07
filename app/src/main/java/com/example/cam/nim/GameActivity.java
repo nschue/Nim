@@ -63,12 +63,7 @@ public class GameActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                for(Integer id: mSelectedPieces)
-                {
-                    View selectedButton = findViewById(id);
-                    selectedButton.setEnabled(false);
-                    selectedButton.setVisibility(View.GONE);
-                }
+                updateGameBoard();
             }
         });
 
@@ -81,14 +76,20 @@ public class GameActivity extends Activity
         mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
 
-        //mGameInfo.populateGameBoard();
+
+        mGameInfo.populateGameBoard();
         createGameBoard();
 
     }
 
     private void updateGameBoard()
     {
-
+        for(Integer id: mSelectedPieces)
+        {
+            View selectedButton = findViewById(id);
+            selectedButton.setEnabled(false);
+            selectedButton.setVisibility(View.GONE);
+        }
     }
 
     //Creates the gameboard using number of rows.
