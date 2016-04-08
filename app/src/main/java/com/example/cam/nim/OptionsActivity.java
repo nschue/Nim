@@ -70,11 +70,7 @@ public class OptionsActivity extends Activity {
 
             }
         });
-        //onRowSpinnerItemSelected();
-        //onRowSpinnerNoItemSelected();
 
-        //onDifficultySpinnerSelection();
-        //onDifficultySpinnerNoSelection();
 
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener()
@@ -138,12 +134,8 @@ public class OptionsActivity extends Activity {
             case("Hard"):
                 break;
         }
-
     }
-    public void onDifficultySpinnerNoSelection()
-    {
 
-    }
 
     //Takes the player back to the main menu if the player clicks the back button
     @Override
@@ -154,45 +146,8 @@ public class OptionsActivity extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-    //Sets the row amount based on the player choice
-    public void onRowSpinnerItemSelected() {
 
-        switch (Integer.parseInt(rowSpinner.getSelectedItem().toString()))
-        {
-            //case 3:
-                //this.gameInfo.setnRowAmount(3);
-                //break;
-            case 4:
-                this.gameInfo.setnRowAmount(4);
-                break;
-            case 5:
-                this.gameInfo.setnRowAmount(5);
-                break;
-            case 6:
-                this.gameInfo.setnRowAmount(6);
-                break;
-            case(7):
-                this.gameInfo.setnRowAmount(7);
-                break;
-            case(8):
-                this.gameInfo.setnRowAmount(8);
-                break;
-            case(9):
-                this.gameInfo.setnRowAmount(9);
-                break;
-            case(10):
-                this.gameInfo.setnRowAmount(10);
-                break;
-            default:
-                this.gameInfo.setnRowAmount(5);
-                break;
-        }
-    }
-    //Sets the row amount to 5 if no row amount is chosen
-    public void onRowSpinnerNoItemSelected(){
-        if(rowSpinner.getSelectedItem() == null)
-            this.gameInfo.setnRowAmount(5);
-    }
+
     //Sets if  the audio is on
 
     public void onAudioRadio(View view) {
