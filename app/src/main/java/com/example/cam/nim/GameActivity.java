@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -27,7 +26,10 @@ public class GameActivity extends Activity
     private TextView currentPlayer;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    //private AI mAI;
     private String[] choices;
+
+
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
     @Override
@@ -80,12 +82,17 @@ public class GameActivity extends Activity
         mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
+                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty())
+                {
                     ChangePlayerText();
                     updateGameBoard();
                     mSelectedPieces.clear();
-
+                    //mAiCalculate
+                    //mAiAnimate
+                    updateGameBoard();
+                    mSelectedPieces.clear();
                 }
+
             }
         });
 
@@ -121,6 +128,24 @@ public class GameActivity extends Activity
     {
         for(Integer id: mSelectedPieces)
         {
+            int i = 0;
+            int row = 0;
+
+            for(ArrayList<Boolean> al: mGameInfo.getRemainingDots())
+            {
+                int column = 0;
+                for(Boolean bool: al)
+                {
+                    if(id == i)
+                    {
+
+                        mGameInfo.getRemainingDots().get(row).set(column, false);
+                    }
+                    i++;
+                    column++;
+                }
+                row++;
+            }
             View selectedButton = findViewById(id);
             selectedButton.setEnabled(false);
             selectedButton.setVisibility(View.GONE);
