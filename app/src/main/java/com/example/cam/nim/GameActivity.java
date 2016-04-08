@@ -82,11 +82,15 @@ public class GameActivity extends Activity
         mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
+                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty())
+                {
                     ChangePlayerText();
                     updateGameBoard();
                     mSelectedPieces.clear();
-
+                    //mAiCalculate
+                    //mAiAnimate
+                    updateGameBoard();
+                    mSelectedPieces.clear();
                 }
 
             }
