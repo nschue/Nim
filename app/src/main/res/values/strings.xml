@@ -25,6 +25,15 @@
     <string name="HowToPlayString">Choose as many pieces from any one row.\n To win take the last piece.  </string>
     <string name="creditsString">Developed by Team 10. </string>
 
+    <string-array name="NavigatorBar">
+        <item>How to Play</item>
+        <item>End game</item>
+        <item>Audio</item>
+    </string-array>
+
+
+
+
     <string name="difficultyPrompt">Select Difficulty</string>
     <string-array name="DifficultyArray">
         <item>Easy</item>

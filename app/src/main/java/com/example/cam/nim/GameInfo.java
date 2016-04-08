@@ -52,7 +52,7 @@ public class GameInfo {
         return computerSpeed;
     }
 
-    public void setComputerSpeed(Double computerSpeed) {
+    public void setComputerSpeed(double computerSpeed) {
         this.computerSpeed = computerSpeed;
     }
 
@@ -60,7 +60,7 @@ public class GameInfo {
         return nRowAmount;
     }
 
-    public void setnRowAmount(Integer nRowAmount) {
+    public void setnRowAmount(int nRowAmount) {
         this.nRowAmount = nRowAmount;
     }
 

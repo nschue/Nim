@@ -35,8 +35,7 @@
             android:layout_alignParentTop="true"
             android:padding="10dp"
             android:textColor="@color/textColor"
-            android:textSize="30dp"
-            android:text="@string/PlayerString"/>
+            android:textSize="30dp" />
 
         <!-- End turn button declaration -->
         <Button

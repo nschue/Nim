@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -27,12 +26,11 @@ public class GameActivity extends Activity
     private TextView currentPlayer;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private String[] mPlanetTitles;
-<<<<<<< HEAD
-    private AI mAI;
-=======
+    //private AI mAI;
+    private String[] choices;
+
+
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
->>>>>>> refs/remotes/origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +38,28 @@ public class GameActivity extends Activity
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
 
+        choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
+        // Set the list's click listener
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
+        Bundle extras = getIntent().getBundleExtra("mBundle");
+        this.mGameInfo = new GameInfo();
+        this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
+        this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
+        this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+        this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
+        this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
 
         this.fadeInPlayerText.setDuration(5000);
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
 
-        // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mPlanetTitles));
-        // Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-
+        correctPlayerName();
 
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
@@ -71,45 +79,26 @@ public class GameActivity extends Activity
         //Listens for endturn button to be pressed.
         //Hides and disables buttons that are listed in mSelectedPieces
         //Needs to check for player turn.
-        mEndTurnButton.setOnClickListener(new View.OnClickListener(){
+        mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-
-                if(mGameInfo.isBoolPlayerTurn())
-                {
+            public void onClick(View v) {
+                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
                     ChangePlayerText();
                     updateGameBoard();
-                    mSelectedPieces = mAI.calculateNextMove(mGameInfo.getRemainingDots());
-                    updateGameBoard();
+                    mSelectedPieces.clear();
 
                 }
 
             }
         });
 
-        /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
-        Bundle extras = getIntent().getBundleExtra("mBundle");
-        mGameInfo = new GameInfo();
-        mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
-        mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
-        mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
-        mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
-        mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
-
 
         mGameInfo.populateGameBoard();
         createGameBoard();
 
     }
-    private void ChangePlayerText()
+    private void correctPlayerName()
     {
-
-        //Does a fade animation
-        this.currentPlayer.setAnimation(fadeInPlayerText);
-        //switches the player turn
-        this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
-
         //changes the text if it isn't the player
         if(!this.mGameInfo.isBoolPlayerTurn())
         {
@@ -121,8 +110,14 @@ public class GameActivity extends Activity
 
             this.currentPlayer.setText(R.string.PlayerString);
         }
-
-
+    }
+    private void ChangePlayerText()
+    {
+        //Does a fade animation
+        this.currentPlayer.setAnimation(fadeInPlayerText);
+        //switches the player turn
+        this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
+        correctPlayerName();
     }
 
     private void updateGameBoard()
@@ -182,7 +177,8 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        mSelectedPieces.add(v.getId());
+                        if(mGameInfo.isBoolPlayerTurn())
+                            mSelectedPieces.add(v.getId());
                     }
                 });
             }
