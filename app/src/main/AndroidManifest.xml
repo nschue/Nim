@@ -28,7 +28,7 @@
             android:theme="@android:style/Theme.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GameActivity" />
+                android:value=".MainMenuActivity" />
         </activity>
 
         <activity
