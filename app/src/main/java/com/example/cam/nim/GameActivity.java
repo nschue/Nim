@@ -77,8 +77,10 @@ public class GameActivity extends Activity
         mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (mGameInfo.isBoolComputer()) //player v computer
+                //player v computer
+                //checks if the computer was the opponent
+                // checks if it is the player's turn and if the selection list wasn't empty
+                if (mGameInfo.isBoolComputer())
                 {
                     if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
                         ChangePlayerText();
@@ -89,7 +91,12 @@ public class GameActivity extends Activity
                         updateGameBoard();
                         mSelectedPieces.clear();
                     }
-                } else {//Player v Player
+                }
+                //Player v Player
+                //Checks pieces were selected
+                // then changes the current player displayed updates the peices
+                // then clears the selection list
+                else {
                     if (!mSelectedPieces.isEmpty()) {
                         ChangePlayerText();
                         updateGameBoard();
@@ -105,10 +112,10 @@ public class GameActivity extends Activity
         createGameBoard();
 
     }
-    
+
+    //Gets information from the Option's bundle and stores into the gameactvity
     private void getGameInfo()
     {
-
         Bundle extras = getIntent().getBundleExtra("mBundle");
         this.mGameInfo = new GameInfo();
         this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
@@ -119,6 +126,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
 
     }
+    //Assigns the correct name to the current player text
     private void correctPlayerName() {
         if(!this.mGameInfo.isBoolPlayerTurn())
         {    //changes the text if it isn't the player
@@ -143,6 +151,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
         correctPlayerName();
     }
+
 
     private void updateGameBoard()
     {
