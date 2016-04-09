@@ -23,6 +23,7 @@ public class GameInfo {
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
         this.computerSpeed = 1.0;
+        this.pieceCount = findPieceCount();
     }
     GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
     {

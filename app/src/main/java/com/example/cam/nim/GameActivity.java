@@ -107,6 +107,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
+        this.mGameInfo.setPieceCount(this.mGameInfo.findPieceCount());
     }
     private void correctPlayerName() {
         //changes the text if it isn't the player
