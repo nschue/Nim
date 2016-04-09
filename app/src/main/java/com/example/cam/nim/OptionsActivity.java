@@ -185,16 +185,16 @@ public class OptionsActivity extends Activity {
 
         switch (selectedRadio) {
             case (R.id.radioAgainstPlayer): {
-                gameInfo.setBoolEnableAudio(false);
+                gameInfo.setBoolComputer(false);
                 break;
             }
             case (R.id.radioAgainstComp): {
-                gameInfo.setBoolEnableAudio(true);
+                gameInfo.setBoolComputer(true);
                 break;
             }
             default:
             {
-                gameInfo.setBoolEnableAudio(true);
+                gameInfo.setBoolComputer(true);
                 break;
             }
         }
