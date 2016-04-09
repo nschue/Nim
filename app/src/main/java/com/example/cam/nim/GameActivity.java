@@ -26,14 +26,11 @@ public class GameActivity extends Activity
     private TextView currentPlayer;
    /* private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-<<<<<<< HEAD
+
     private String[] choices;*/
-=======
     //private AI mAI;
     private String[] choices;
 
-
->>>>>>> refs/remotes/origin/master
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
     @Override
@@ -80,37 +77,27 @@ public class GameActivity extends Activity
         mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
-                if(mGameInfo.isBoolComputer())
-                    {
-                        if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
-                            ChangePlayerText();
-                            updateGameBoard();
-                            mSelectedPieces.clear();
 
-                        }
+                if (mGameInfo.isBoolComputer()) //player v computer
+                {
+                    if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
+                        ChangePlayerText();
+                        updateGameBoard();
+                        mSelectedPieces.clear();
+                        //mAiCalculate
+                        //mAiAnimate
+                        updateGameBoard();
+                        mSelectedPieces.clear();
                     }
-                else{
-                    if(!mSelectedPieces.isEmpty())
-                    {
+                } else {//Player v Player
+                    if (!mSelectedPieces.isEmpty()) {
                         ChangePlayerText();
                         updateGameBoard();
                         mSelectedPieces.clear();
                     }
-=======
-                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty())
-                {
-                    ChangePlayerText();
-                    updateGameBoard();
-                    mSelectedPieces.clear();
-                    //mAiCalculate
-                    //mAiAnimate
-                    updateGameBoard();
-                    mSelectedPieces.clear();
->>>>>>> refs/remotes/origin/master
                 }
-
             }
+
         });
 
 
@@ -118,6 +105,7 @@ public class GameActivity extends Activity
         createGameBoard();
 
     }
+    
     private void getGameInfo()
     {
 
