@@ -21,6 +21,7 @@ public class OptionsActivity extends Activity {
     private Button cancelStart;
     private RadioGroup playerGroup;
     private RadioGroup audioGroup;
+    private RadioGroup computerGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,6 +30,7 @@ public class OptionsActivity extends Activity {
 
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
+        computerGroup = (RadioGroup) findViewById(R.id.computerGroup);
 
         gameInfo = new GameInfo();
         setUpRowSpinner();
@@ -91,6 +93,7 @@ public class OptionsActivity extends Activity {
                 * with identical values.                                                        */
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn",gameInfo.isBoolPlayerTurn());//Add player turn to bundle
+                mBundle.putBoolean("boolComputer",gameInfo.isBoolComputer());//Add player turn to bundle
                 mBundle.putDouble("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putDouble("computerDifficulty",gameInfo.getComputerDifficulty());//Add difficulty to bundle
@@ -167,6 +170,33 @@ public class OptionsActivity extends Activity {
                     gameInfo.setBoolPlayerTurn(true);
                 break;
             }
+            default:
+            {
+                gameInfo.setBoolEnableAudio(true);
+                break;
+            }
+        }
+    }
+    //Sets if  the audio is on
+
+    public void onComputerRadio(View view) {
+
+        int selectedRadio = computerGroup.getCheckedRadioButtonId();
+
+        switch (selectedRadio) {
+            case (R.id.radioAgainstPlayer): {
+                gameInfo.setBoolEnableAudio(false);
+                break;
+            }
+            case (R.id.radioAgainstComp): {
+                gameInfo.setBoolEnableAudio(true);
+                break;
+            }
+            default:
+            {
+                gameInfo.setBoolEnableAudio(true);
+                break;
+            }
         }
     }
 
@@ -186,6 +216,10 @@ public class OptionsActivity extends Activity {
             case (R.id.radioEnable): {
                     gameInfo.setBoolEnableAudio(true);
                     break;
+            }
+            default: {
+                gameInfo.setBoolEnableAudio(true);
+                break;
             }
         }
     }

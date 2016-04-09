@@ -151,7 +151,6 @@ public class GameActivity extends Activity
             int i = 0;
             int row = 0;
 
-            //Matches button id to row and column of ArrayList<ArrayList<Boolean>>
             for(ArrayList<Boolean> al: mGameInfo.getRemainingDots())
             {
                 int column = 0;
@@ -159,6 +158,7 @@ public class GameActivity extends Activity
                 {
                     if(id == i)
                     {
+
                         mGameInfo.getRemainingDots().get(row).set(column, false);
                     }
                     i++;
@@ -187,10 +187,10 @@ public class GameActivity extends Activity
             temp.setGravity(Gravity.CENTER_HORIZONTAL);
             for(int j = 0; j < i+1; j++)
             {
-                final ImageButton tempButton = new ImageButton(GameActivity.this);
-                tempButton.setBackgroundResource(R.drawable.game_piece);
+                ImageButton tempButton = new ImageButton(GameActivity.this);
+                tempButton.setImageResource(R.drawable.game_piece);
                 tempButton.setId(buttonID++);
-                //tempButton.setBackground(null);
+                tempButton.setBackground(null);
                 tempButton.setPadding(0,0,0,0);
                 temp.addView(tempButton);
 
@@ -201,24 +201,10 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        if(mGameInfo.isBoolPlayerTurn())
-                        {
-                            //If the game piece has already been selected, deselect it and reset image
-                            if(mSelectedPieces.contains(v.getId()))
-                            {
-                                v.setBackgroundResource(R.drawable.game_piece);
-                                mSelectedPieces.remove(new Integer(v.getId()));
-                                return;
-                            }
-                            //Only executes code below if game piece was not already selected
-                            //Need to check row selection
-
                         if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
                             mSelectedPieces.add(v.getId());
                         else if(!mGameInfo.isBoolComputer())
                             mSelectedPieces.add(v.getId());
-                            v.setBackgroundResource(R.drawable.selected_game_piece);
-                        }
                     }
                 });
             }
@@ -226,6 +212,5 @@ public class GameActivity extends Activity
         }
 
     }
-
 
 }

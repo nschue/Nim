@@ -201,6 +201,7 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
+<<<<<<< HEAD
                         if(mGameInfo.isBoolPlayerTurn())
                         {
                             //If the game piece has already been selected, deselect it and reset image
@@ -212,10 +213,11 @@ public class GameActivity extends Activity
                             }
                             //Only executes code below if game piece was not already selected
                             //Need to check row selection
-
+=======
                         if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
                             mSelectedPieces.add(v.getId());
                         else if(!mGameInfo.isBoolComputer())
+>>>>>>> refs/remotes/origin/master
                             mSelectedPieces.add(v.getId());
                             v.setBackgroundResource(R.drawable.selected_game_piece);
                         }
@@ -227,5 +229,13 @@ public class GameActivity extends Activity
 
     }
 
+<<<<<<< HEAD
+    private void playGame()
+    {
 
+    }
+
+
+=======
+>>>>>>> refs/remotes/origin/master
 }

@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/howToPlayButton"
             android:background="@drawable/button"
-            android:text="@string/howToPlayButtonString"/>
+            android:text="@string/howToPlayButtonString"
+            android:onClick="onHowToPlay"/>
 
         <!-- Displays the current player -->
         <TextView
