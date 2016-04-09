@@ -9,6 +9,7 @@ public class GameInfo {
 
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
+    private boolean boolComputer;
     private double computerSpeed;
     private double mComputerDifficulty;
     private int nRowAmount;
@@ -22,6 +23,7 @@ public class GameInfo {
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
         this.computerSpeed = 1.0;
+
     }
     GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
     {
@@ -98,5 +100,13 @@ public class GameInfo {
             }
             getRemainingDots().add(tempList);
         }
+    }
+
+    public boolean isBoolComputer() {
+        return boolComputer;
+    }
+
+    public void setBoolComputer(boolean boolComputer) {
+        this.boolComputer = boolComputer;
     }
 }

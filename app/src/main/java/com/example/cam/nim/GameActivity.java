@@ -24,11 +24,12 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    private DrawerLayout mDrawerLayout;
+   /* private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+
+    private String[] choices;*/
     //private AI mAI;
     private String[] choices;
-
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
@@ -38,9 +39,9 @@ public class GameActivity extends Activity
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
 
-        choices = getResources().getStringArray(R.array.NavigatorBar);
+        /*choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);*/
 
         // Set the adapter for the list view
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
@@ -48,13 +49,7 @@ public class GameActivity extends Activity
         //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
-        Bundle extras = getIntent().getBundleExtra("mBundle");
-        this.mGameInfo = new GameInfo();
-        this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
-        this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
-        this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
-        this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
-        this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
+        getGameInfo();
 
         this.fadeInPlayerText.setDuration(5000);
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
@@ -82,18 +77,27 @@ public class GameActivity extends Activity
         mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty())
-                {
-                    ChangePlayerText();
-                    updateGameBoard();
-                    mSelectedPieces.clear();
-                    //mAiCalculate
-                    //mAiAnimate
-                    updateGameBoard();
-                    mSelectedPieces.clear();
-                }
 
+                if (mGameInfo.isBoolComputer()) //player v computer
+                {
+                    if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
+                        ChangePlayerText();
+                        updateGameBoard();
+                        mSelectedPieces.clear();
+                        //mAiCalculate
+                        //mAiAnimate
+                        updateGameBoard();
+                        mSelectedPieces.clear();
+                    }
+                } else {//Player v Player
+                    if (!mSelectedPieces.isEmpty()) {
+                        ChangePlayerText();
+                        updateGameBoard();
+                        mSelectedPieces.clear();
+                    }
+                }
             }
+
         });
 
 
@@ -101,14 +105,30 @@ public class GameActivity extends Activity
         createGameBoard();
 
     }
-    private void correctPlayerName()
+    
+    private void getGameInfo()
     {
-        //changes the text if it isn't the player
-        if(!this.mGameInfo.isBoolPlayerTurn())
-        {
 
-            this.currentPlayer.setText(R.string.computerString);
-        }
+        Bundle extras = getIntent().getBundleExtra("mBundle");
+        this.mGameInfo = new GameInfo();
+        this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
+        this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
+        this.mGameInfo.setBoolComputer(extras.getBoolean("boolComputer"));
+        this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+        this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
+        this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
+
+    }
+    private void correctPlayerName() {
+        if(!this.mGameInfo.isBoolPlayerTurn())
+        {    //changes the text if it isn't the player
+            if(this.mGameInfo.isBoolComputer())
+            {
+                this.currentPlayer.setText(R.string.computerString);
+            }
+            else
+                this.currentPlayer.setText(R.string.friendString);
+            }
         //changes it back the the player
         else {
 
@@ -181,7 +201,9 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        if(mGameInfo.isBoolPlayerTurn())
+                        if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
+                            mSelectedPieces.add(v.getId());
+                        else if(!mGameInfo.isBoolComputer())
                             mSelectedPieces.add(v.getId());
                     }
                 });
@@ -191,8 +213,4 @@ public class GameActivity extends Activity
 
     }
 
-    private void playGame()
-    {
-
-    }
 }
