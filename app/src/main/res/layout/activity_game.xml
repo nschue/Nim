@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/howToPlayButton"
             android:background="@drawable/button"
-            android:text="@string/howToPlayButtonString" />
+            android:text="@string/howToPlayButtonString"
+            android:onClick="onHowToPlay"/>
 
         <!-- Displays the current player -->
         <TextView
@@ -81,5 +82,5 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="#226666" />
+        android:background="#111"/>
 </android.support.v4.widget.DrawerLayout>

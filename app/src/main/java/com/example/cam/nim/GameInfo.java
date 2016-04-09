@@ -12,8 +12,8 @@ public class GameInfo {
     private boolean boolComputer;
     private double computerSpeed;
     private double mComputerDifficulty;
-    private double pieceCount;
     private int nRowAmount;
+
     private ArrayList<ArrayList<Boolean>> mRemainingDots;
 
 
@@ -23,7 +23,7 @@ public class GameInfo {
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
         this.computerSpeed = 1.0;
-        this.pieceCount = findPieceCount();
+
     }
     GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
     {
@@ -32,7 +32,6 @@ public class GameInfo {
         this.computerSpeed = computerSpeed;
         this.nRowAmount = nRowAmount;
         this.mComputerDifficulty = computerDifficulty;
-        this.pieceCount = findPieceCount();
     }
 
     public boolean isBoolEnableAudio() {
@@ -106,19 +105,8 @@ public class GameInfo {
     public boolean isBoolComputer() {
         return boolComputer;
     }
-public double findPieceCount()
-{
-   return .5 * ( this.nRowAmount * ( this.nRowAmount + 1) );
-}
+
     public void setBoolComputer(boolean boolComputer) {
         this.boolComputer = boolComputer;
-    }
-
-    public double getPieceCount() {
-        return pieceCount;
-    }
-
-    public void setPieceCount(double pieceCount) {
-        this.pieceCount = pieceCount;
     }
 }

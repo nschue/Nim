@@ -20,23 +20,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/OpponentGroup">
+        android:id="@+id/computerGroup">
 
         <RadioButton
             android:id="@+id/radioAgainstPlayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:onClick="onOponnentRadio"
-            android:text="@string/friendString" />
+            android:text="@string/friendString"
+            android:onClick="onComputerRadio"/>
 
         <RadioButton
             android:id="@+id/radioAgainstComp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:onClick="onOponnentRadio"
-            android:text="@string/computerString" />
+            android:text="@string/computerString"
+            android:onClick="onComputerRadio"/>
     </RadioGroup>
 
     <TextView
@@ -98,6 +98,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         <!-- For Row selection-->
         <Spinner
@@ -127,7 +128,7 @@
         android:id="@+id/computerSpeedSeekbar"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:max="100"
+        android:max="2"
         android:maxHeight="3dip"
         android:minHeight="3dip"
         android:padding="5dp"
@@ -136,6 +137,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
 

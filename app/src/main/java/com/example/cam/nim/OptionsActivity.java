@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 /*
@@ -16,8 +17,11 @@ The activity creates the dialog box for menu to setup the game
 public class OptionsActivity extends Activity {
     private GameInfo gameInfo;
     private Spinner rowSpinner,difficultySpinner;
-    private Button okStart,cancelStart;
-    private RadioGroup playerGroup,audioGroup,opponentGroup;
+    private Button okStart;
+    private Button cancelStart;
+    private RadioGroup playerGroup;
+    private RadioGroup audioGroup;
+    private RadioGroup computerGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -26,7 +30,7 @@ public class OptionsActivity extends Activity {
 
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
-        opponentGroup = (RadioGroup) findViewById(R.id.OpponentGroup);
+        computerGroup = (RadioGroup) findViewById(R.id.computerGroup);
 
         gameInfo = new GameInfo();
         setUpRowSpinner();
@@ -89,7 +93,7 @@ public class OptionsActivity extends Activity {
                 * with identical values.                                                        */
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn",gameInfo.isBoolPlayerTurn());//Add player turn to bundle
-                mBundle.putBoolean("boolComputer",gameInfo.isBoolComputer());
+                mBundle.putBoolean("boolComputer",gameInfo.isBoolComputer());//Add player turn to bundle
                 mBundle.putDouble("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putDouble("computerDifficulty",gameInfo.getComputerDifficulty());//Add difficulty to bundle
@@ -106,6 +110,8 @@ public class OptionsActivity extends Activity {
                 finish();
             }
         });
+
+
     }
 
     public void setUpRowSpinner()
@@ -158,7 +164,6 @@ public class OptionsActivity extends Activity {
         switch (selectedRadio) {
             case (R.id.radioOponent): {
                     gameInfo.setBoolPlayerTurn(false);
-                    System.out.println("Options: false");
                 break;
             }
             case (R.id.radioPlayer): {
@@ -166,11 +171,39 @@ public class OptionsActivity extends Activity {
                 break;
             }
             default:
-                gameInfo.setBoolPlayerTurn(true);
+            {
+                gameInfo.setBoolEnableAudio(true);
+                break;
+            }
+        }
+    }
+    //Sets if  the audio is on
+
+    public void onComputerRadio(View view) {
+
+        int selectedRadio = computerGroup.getCheckedRadioButtonId();
+
+        switch (selectedRadio) {
+            case (R.id.radioAgainstPlayer): {
+                gameInfo.setBoolEnableAudio(false);
+                break;
+            }
+            case (R.id.radioAgainstComp): {
+                gameInfo.setBoolEnableAudio(true);
+                break;
+            }
+            default:
+            {
+                gameInfo.setBoolEnableAudio(true);
+                break;
+            }
         }
     }
 
+
+
     //Sets if  the audio is on
+
     public void onAudioRadio(View view) {
 
         int selectedRadio = audioGroup.getCheckedRadioButtonId();
@@ -184,27 +217,10 @@ public class OptionsActivity extends Activity {
                     gameInfo.setBoolEnableAudio(true);
                     break;
             }
-            default:
+            default: {
                 gameInfo.setBoolEnableAudio(true);
-        }
-    }
-    //Sets if  the audio is on
-    public void onOponnentRadio(View view) {
-
-        int selectedRadio = opponentGroup.getCheckedRadioButtonId();
-
-        switch (selectedRadio) {
-            case (R.id.radioAgainstComp): {
-                gameInfo.setBoolComputer(true);
                 break;
             }
-            case (R.id.radioAgainstPlayer): {
-                gameInfo.setBoolComputer(false);
-                break;
-            }
-            default:
-                gameInfo.setBoolComputer(true);
-                break;
         }
     }
 }
