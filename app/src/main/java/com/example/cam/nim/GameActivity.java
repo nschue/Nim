@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameActivity extends Activity
 {
@@ -22,11 +23,11 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-   /* private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
+    /* private DrawerLayout mDrawerLayout;
+     private ListView mDrawerList;
 
-    private String[] choices;*/
-    //private AI mAI;
+     private String[] choices;*/
+    private AI mAI;
     private String[] choices;
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
@@ -136,7 +137,7 @@ public class GameActivity extends Activity
             }
             else
                 this.currentPlayer.setText(R.string.friendString);
-            }
+        }
         //changes it back the the player
         else {
 
@@ -220,25 +221,80 @@ public class GameActivity extends Activity
                                 return;
                             }
                             //Only executes code below if game piece was not already selected
-                            //Need to check row selection
+                            else
+                            {
+                                checkRowSelection(v.getId());
+                                v.setBackgroundResource(R.drawable.selected_game_piece);
+                                mSelectedPieces.add(v.getId());
 
-                        if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
-                            mSelectedPieces.add(v.getId());
-                        else if(!mGameInfo.isBoolComputer())
-                            mSelectedPieces.add(v.getId());
-                            v.setBackgroundResource(R.drawable.selected_game_piece);
+//                                if(mGameInfo.isBoolComputer())
+//                                {
+//                                }
+//                                else
+//                                {
+//                                }
+                            }
                         }
                     }
                 });
             }
             mGameBoardContainer.addView(temp);
         }
+    }
 
+    private ArrayList<Integer> convertToGrid(int index)
+    {
+        ArrayList<Integer> result = new ArrayList();
+        int precedingDots = 0;
+        int dotsInRow = 1;
+        for(int i = 0; i <= index; i++)
+        {
+            if(i == dotsInRow + precedingDots)
+            {
+                precedingDots = precedingDots + dotsInRow;
+                dotsInRow = dotsInRow + 1;
+            }
+        }
+        result.add(dotsInRow - 1);
+        result.add(index - (precedingDots - 1));
+
+        return result;
+    }
+
+    private Boolean isInSameRow(int index)
+    {
+        boolean result = true;
+        if(!(mSelectedPieces.size() == 0))
+        {
+            for(int i = 0; i < mSelectedPieces.size(); i++)
+            {
+                if(Objects.equals(convertToGrid(mSelectedPieces.get(i)).get(0), convertToGrid(index).get(0)))
+                {
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }
+
+    private void checkRowSelection(int index)
+    {
+        if(!isInSameRow(index))
+        {
+            for(int i = 0; i < mSelectedPieces.size(); i++)
+            {
+                //ArrayList<Integer> selectedPiece = convertToGrid(mSelectedPieces.get(i))
+                findViewById(i).setBackgroundResource(R.drawable.game_piece);
+                mSelectedPieces.remove(new Integer(index));
+            }
+        }
     }
 
     private void aiMove()
     {
-        //calculate AI move
+        // The following returns a linear ArrayList consisting of the AI's choices
+        //mAI.calculateNextMove(mGameInfo.getRemainingDots());
+
         //AI animate
         updateGameBoard();
         mSelectedPieces.clear();
