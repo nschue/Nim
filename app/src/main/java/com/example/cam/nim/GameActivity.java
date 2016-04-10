@@ -224,15 +224,12 @@ public class GameActivity extends Activity
                             else
                             {
                                 checkRowSelection(v.getId());
+                                
+                                if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
+                                else if(!mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
                                 v.setBackgroundResource(R.drawable.selected_game_piece);
-                                mSelectedPieces.add(v.getId());
-
-//                                if(mGameInfo.isBoolComputer())
-//                                {
-//                                }
-//                                else
-//                                {
-//                                }
                             }
                         }
                     }
