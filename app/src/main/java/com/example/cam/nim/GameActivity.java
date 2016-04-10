@@ -3,7 +3,6 @@ package com.example.cam.nim;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -11,7 +10,6 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -86,10 +84,7 @@ public class GameActivity extends Activity
                         ChangePlayerText();
                         updateGameBoard();
                         mSelectedPieces.clear();
-                        //mAiCalculate
-                        //mAiAnimate
-                        updateGameBoard();
-                        mSelectedPieces.clear();
+                        aiMove();
                     }
                 }
                 //Player v Player
@@ -110,6 +105,11 @@ public class GameActivity extends Activity
 
         mGameInfo.populateGameBoard();
         createGameBoard();
+
+        if(!mGameInfo.isBoolPlayerTurn())
+        {
+            aiMove();
+        }
 
     }
 
@@ -234,6 +234,15 @@ public class GameActivity extends Activity
             mGameBoardContainer.addView(temp);
         }
 
+    }
+
+    private void aiMove()
+    {
+        //calculate AI move
+        //AI animate
+        updateGameBoard();
+        mSelectedPieces.clear();
+        mGameInfo.setBoolPlayerTurn(true);
     }
 
 
