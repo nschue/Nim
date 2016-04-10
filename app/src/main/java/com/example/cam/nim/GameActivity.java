@@ -245,5 +245,10 @@ public class GameActivity extends Activity
         mGameInfo.setBoolPlayerTurn(true);
     }
 
+    private void checkSelectedPieces()
+    {
+
+    }
+
 
 }
