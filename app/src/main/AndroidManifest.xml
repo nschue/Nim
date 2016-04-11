@@ -25,12 +25,11 @@
         <activity
             android:name=".OptionsActivity"
             android:label="@string/Preferences"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenuActivity" />
         </activity>
-
         <activity
             android:name=".HowToPlay"
             android:label="@string/howToPlayButtonString"
@@ -48,6 +47,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenuActivity" />
         </activity>
+        <activity android:name=".Scoreboard"></activity>
     </application>
 
 </manifest>
