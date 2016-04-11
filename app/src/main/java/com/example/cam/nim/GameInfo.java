@@ -12,7 +12,7 @@ public class GameInfo {
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
     private boolean boolComputer;
-    private double computerSpeed;
+    private long computerSpeed;
     private double mComputerDifficulty;
     private int nRowAmount;
 
@@ -24,11 +24,11 @@ public class GameInfo {
         this.boolPlayerTurn = true;
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
-        this.computerSpeed = 1.0;
+        this.computerSpeed = 1;
         this.mRemainingDots = new ArrayList<>();
 
     }
-    GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
+    GameInfo(boolean enableAudio,boolean playerTurn, long computerSpeed,int nRowAmount, double computerDifficulty)
     {
         this.boolPlayerTurn = playerTurn;
         this.boolEnableAudio = enableAudio;
@@ -54,11 +54,11 @@ public class GameInfo {
         this.boolPlayerTurn = boolPlayerTurn;
     }
 
-    public double getComputerSpeed() {
+    public long getComputerSpeed() {
         return computerSpeed;
     }
 
-    public void setComputerSpeed(double computerSpeed) {
+    public void setComputerSpeed(long computerSpeed) {
         this.computerSpeed = computerSpeed;
     }
 

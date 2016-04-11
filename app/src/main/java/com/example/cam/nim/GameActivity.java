@@ -3,6 +3,7 @@ package com.example.cam.nim;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -99,6 +100,7 @@ public class GameActivity extends Activity
                         ChangePlayerText();
                         updateGameBoard();
                         mSelectedPieces.clear();
+                        mSelectedPieces = new ArrayList<>();
                     }
                 }
             }
@@ -127,7 +129,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setBoolComputer(extras.getBoolean("boolComputer"));
         this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
-        this.mGameInfo.setComputerSpeed(extras.getDouble("computerSpeed"));
+        this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
 
     }
     //Assigns the correct name to the current player text
@@ -143,7 +145,6 @@ public class GameActivity extends Activity
         }
         //changes it back the the player
         else {
-
             this.currentPlayer.setText(R.string.PlayerString);
         }
     }
@@ -181,7 +182,8 @@ public class GameActivity extends Activity
             }
             View selectedButton = findViewById(id);
             selectedButton.setEnabled(false);
-            selectedButton.setVisibility(View.GONE);
+            selectedButton.setBackgroundResource(R.drawable.blank_game_piece);
+            //selectedButton.setVisibility(View.GONE);
         }
     }
 
@@ -214,7 +216,7 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        if(mGameInfo.isBoolPlayerTurn())
+                        if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
                         {
                             //If the game piece has already been selected, deselect it and reset image
                             if(mSelectedPieces.contains(v.getId()))
@@ -226,8 +228,8 @@ public class GameActivity extends Activity
                             //Only executes code below if game piece was not already selected
                             else
                             {
-                                checkRowSelection(v.getId());
-                                
+                                //checkRowSelection(v.getId());
+
                                 if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
                                     mSelectedPieces.add(v.getId());
                                 else if(!mGameInfo.isBoolComputer())
@@ -244,7 +246,7 @@ public class GameActivity extends Activity
 
     private ArrayList<Integer> convertToGrid(int index)
     {
-        ArrayList<Integer> result = new ArrayList();
+        ArrayList<Integer> result = new ArrayList<>();
         int precedingDots = 0;
         int dotsInRow = 1;
         for(int i = 0; i <= index; i++)
@@ -292,6 +294,8 @@ public class GameActivity extends Activity
 
     private void aiMove()
     {
+
+
         // The following returns a linear ArrayList consisting of the AI's choices
         ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));
         for(Integer selectedButton:tempAIList)
@@ -299,12 +303,35 @@ public class GameActivity extends Activity
             mSelectedPieces.add(selectedButton);
         }
 
-        //AI animate
-        updateGameBoard();
-        mSelectedPieces.clear();
-        mSelectedPieces = new ArrayList<>();
-        ChangePlayerText();
+
+        for(Integer id:mSelectedPieces)
+        {
+            final View tempButton = findViewById(id);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after .5s = 500ms
+                    tempButton.setBackgroundResource(R.drawable.selected_game_piece);
+                }
+            }, 500*mGameInfo.getComputerSpeed());
+
+
+            final Handler handler2 = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after .5s = 500ms
+                    updateGameBoard();
+                    mSelectedPieces.clear();
+                    mSelectedPieces = new ArrayList<>();
+                    ChangePlayerText();
+                }
+            }, 500*mGameInfo.getComputerSpeed()+500);
+
+        }
     }
+
 
 
 }
