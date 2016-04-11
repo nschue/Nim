@@ -19,21 +19,24 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/computerGroup">
 
         <RadioButton
             android:id="@+id/radioAgainstPlayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/friendString" />
+            android:text="@string/friendString"
+            android:onClick="onComputerRadio"/>
 
         <RadioButton
             android:id="@+id/radioAgainstComp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/computerString" />
+            android:text="@string/computerString"
+            android:onClick="onComputerRadio"/>
     </RadioGroup>
 
     <TextView
@@ -45,21 +48,24 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/PlayerGroup">
 
         <RadioButton
             android:id="@+id/radioPlayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/PlayerString" />
+            android:text="@string/PlayerString"
+            android:onClick="onPlayerRadio"/>
 
         <RadioButton
             android:id="@+id/radioOponent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/Oponent" />
+            android:text="@string/Oponent"
+            android:onClick="onPlayerRadio"/>
     </RadioGroup>
 
     <TextView
@@ -70,7 +76,8 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/AudioGroup">
 
         <RadioButton
             android:id="@+id/radioEnable"

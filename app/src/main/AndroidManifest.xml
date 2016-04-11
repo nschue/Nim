@@ -25,15 +25,19 @@
         <activity
             android:name=".OptionsActivity"
             android:label="@string/Preferences"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Dialog">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".HowToPlay"
+            android:label="@string/howToPlayButtonString"
+            android:theme="@android:style/Theme.Dialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />
-
-        <activity
-            android:name=".HowToPlay"
-            android:label="@string/title_activity_how_to_play"
-            android:theme="@style/AppTheme.NoActionBar" />
+        </activity>
         <activity
             android:name=".CreditsActivity"
             android:label="@string/title_activity_credits"
@@ -43,6 +47,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMenuActivity" />
         </activity>
+        <activity android:name=".ScoreboardActivity"></activity>
     </application>
 
 </manifest>

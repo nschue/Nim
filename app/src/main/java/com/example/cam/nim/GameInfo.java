@@ -7,11 +7,12 @@ import java.util.ArrayList;
  */
 public class GameInfo {
 
-    private Boolean boolEnableAudio;
-    private Boolean boolPlayerTurn;
-    private Double computerSpeed;
-    private Double mComputerDifficulty;
-    private Integer nRowAmount;
+    private boolean boolEnableAudio;
+    private boolean boolPlayerTurn;
+    private boolean boolComputer;
+    private double computerSpeed;
+    private double mComputerDifficulty;
+    private int nRowAmount;
 
     private ArrayList<ArrayList<Boolean>> mRemainingDots;
 
@@ -22,6 +23,7 @@ public class GameInfo {
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
         this.computerSpeed = 1.0;
+
     }
     GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
     {
@@ -32,7 +34,7 @@ public class GameInfo {
         this.mComputerDifficulty = computerDifficulty;
     }
 
-    public Boolean isBoolEnableAudio() {
+    public boolean isBoolEnableAudio() {
         return boolEnableAudio;
     }
 
@@ -40,7 +42,7 @@ public class GameInfo {
         this.boolEnableAudio = boolEnableAudio;
     }
 
-    public Boolean isBoolPlayerTurn() {
+    public boolean isBoolPlayerTurn() {
         return boolPlayerTurn;
     }
 
@@ -48,23 +50,23 @@ public class GameInfo {
         this.boolPlayerTurn = boolPlayerTurn;
     }
 
-    public Double getComputerSpeed() {
+    public double getComputerSpeed() {
         return computerSpeed;
     }
 
-    public void setComputerSpeed(Double computerSpeed) {
+    public void setComputerSpeed(double computerSpeed) {
         this.computerSpeed = computerSpeed;
     }
 
-    public Integer getnRowAmount() {
+    public int getnRowAmount() {
         return nRowAmount;
     }
 
-    public void setnRowAmount(Integer nRowAmount) {
+    public void setnRowAmount(int nRowAmount) {
         this.nRowAmount = nRowAmount;
     }
 
-    public Double getComputerDifficulty() {
+    public double getComputerDifficulty() {
         return mComputerDifficulty;
     }
 
@@ -98,5 +100,13 @@ public class GameInfo {
             }
             getRemainingDots().add(tempList);
         }
+    }
+
+    public boolean isBoolComputer() {
+        return boolComputer;
+    }
+
+    public void setBoolComputer(boolean boolComputer) {
+        this.boolComputer = boolComputer;
     }
 }
