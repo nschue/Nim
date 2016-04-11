@@ -37,6 +37,8 @@ public class GameActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
+        mAI = new AI();
+
 
         /*choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -79,12 +81,12 @@ public class GameActivity extends Activity
                 //player v computer
                 //checks if the computer was the opponent
                 // checks if it is the player's turn and if the selection list wasn't empty
-                if (mGameInfo.isBoolComputer())
-                {
+                if (mGameInfo.isBoolComputer()) {
                     if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
                         ChangePlayerText();
                         updateGameBoard();
                         mSelectedPieces.clear();
+                        mSelectedPieces = new ArrayList<>();
                         aiMove();
                     }
                 }
@@ -104,8 +106,9 @@ public class GameActivity extends Activity
         });
 
 
-        mGameInfo.populateGameBoard();
+        this.mGameInfo.populateGameBoard();
         createGameBoard();
+
 
         if(!mGameInfo.isBoolPlayerTurn())
         {
@@ -290,17 +293,17 @@ public class GameActivity extends Activity
     private void aiMove()
     {
         // The following returns a linear ArrayList consisting of the AI's choices
-        //mAI.calculateNextMove(mGameInfo.getRemainingDots());
+        ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));
+        for(Integer selectedButton:tempAIList)
+        {
+            mSelectedPieces.add(selectedButton);
+        }
 
         //AI animate
         updateGameBoard();
         mSelectedPieces.clear();
-        mGameInfo.setBoolPlayerTurn(true);
-    }
-
-    private void checkSelectedPieces()
-    {
-
+        mSelectedPieces = new ArrayList<>();
+        ChangePlayerText();
     }
 
 

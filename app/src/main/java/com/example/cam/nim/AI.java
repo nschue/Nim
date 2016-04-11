@@ -73,7 +73,7 @@ public class AI
     public ArrayList<Integer> calculateNextMove(ArrayList<ArrayList<Boolean>> remainingDots)
     {
         setRemainingDots(remainingDots);
-        ArrayList<Integer> fullMove = new ArrayList();
+        ArrayList<Integer> fullMove = new ArrayList<>();
         Integer parity = 0;
         Integer dotsChoice = -1;
         Integer rowChoice = -1;

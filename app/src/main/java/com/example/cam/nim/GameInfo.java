@@ -1,5 +1,7 @@
 package com.example.cam.nim;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -23,6 +25,7 @@ public class GameInfo {
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
         this.computerSpeed = 1.0;
+        this.mRemainingDots = new ArrayList<>();
 
     }
     GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
@@ -32,6 +35,7 @@ public class GameInfo {
         this.computerSpeed = computerSpeed;
         this.nRowAmount = nRowAmount;
         this.mComputerDifficulty = computerDifficulty;
+        this.mRemainingDots = new ArrayList<>();
     }
 
     public boolean isBoolEnableAudio() {
@@ -90,15 +94,16 @@ public class GameInfo {
     /*Populates remainingDots arraylist using this.getnRowAmount*/
     public void populateGameBoard()
     {
-        setRemainingDots(new ArrayList<ArrayList<Boolean>>());
         for(int i = 0; i < this.getnRowAmount();i++)
         {
-           ArrayList<Boolean> tempList = new ArrayList<Boolean>();
-            for(int j = 0; j < i;j++)
+            Log.d("GameInfo", "Adding row");
+            ArrayList<Boolean> tempList = new ArrayList<>();
+            for(int j = 0; j <= i;j++)
             {
-                tempList.add(true);
+                tempList.add(Boolean.TRUE);
+                Log.d("GameInfo", "Adding bool");
             }
-            getRemainingDots().add(tempList);
+            this.getRemainingDots().add(tempList);
         }
     }
 
