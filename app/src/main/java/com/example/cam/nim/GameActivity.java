@@ -313,6 +313,7 @@ public class GameActivity extends Activity
                     // Do something after .5s = 500ms
                     tempButton.setBackgroundResource(R.drawable.selected_game_piece);
                 }
+            }, 500);
         }
 
             handler.postDelayed(new Runnable() {
