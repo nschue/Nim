@@ -230,7 +230,10 @@ public class GameActivity extends Activity
                             else
                             {
                                 //checkRowSelection(v.getId());
-
+                                if(!mSelectedPieces.isEmpty())
+                                {
+                                    checkRowSelect(v.getId());
+                                }
                                 if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
                                     mSelectedPieces.add(v.getId());
                                 else if(!mGameInfo.isBoolComputer())
@@ -331,6 +334,38 @@ public class GameActivity extends Activity
 
     }
 
-
-
+    private void checkRowSelect(int currentID)
+    {
+        int row;
+        int prevRow = -1;
+        int currentRow = -1;
+        int prevID = mSelectedPieces.get(0);
+        int i = 0;
+        for(row = 0; row <= mGameInfo.getnRowAmount(); row++)
+        {
+            for(int column = 0; column <= row; column++)
+            {
+                if(i==prevID)
+                {
+                    prevRow = row;
+                }
+                if(i == currentID)
+                {
+                    currentRow = row;
+                }
+                i++;
+            }
+        }
+        if(currentRow!=prevRow)
+        {
+            for(Integer id: mSelectedPieces)
+            {
+                View tempButton = findViewById(id);
+                tempButton.setBackgroundResource(R.drawable.game_piece);
+            }
+            mSelectedPieces.clear();
+            mSelectedPieces = new ArrayList<>();
+        }
+    }
 }
+
