@@ -1,5 +1,7 @@
 package com.example.cam.nim;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ public class GameInfo {
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
     private boolean boolComputer;
-    private double computerSpeed;
+    private long computerSpeed;
     private double mComputerDifficulty;
     private int nRowAmount;
 
@@ -22,16 +24,18 @@ public class GameInfo {
         this.boolPlayerTurn = true;
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
-        this.computerSpeed = 1.0;
+        this.computerSpeed = 1;
+        this.mRemainingDots = new ArrayList<>();
 
     }
-    GameInfo(boolean enableAudio,boolean playerTurn, double computerSpeed,int nRowAmount, double computerDifficulty)
+    GameInfo(boolean enableAudio,boolean playerTurn, long computerSpeed,int nRowAmount, double computerDifficulty)
     {
         this.boolPlayerTurn = playerTurn;
         this.boolEnableAudio = enableAudio;
         this.computerSpeed = computerSpeed;
         this.nRowAmount = nRowAmount;
         this.mComputerDifficulty = computerDifficulty;
+        this.mRemainingDots = new ArrayList<>();
     }
 
     public boolean isBoolEnableAudio() {
@@ -50,11 +54,11 @@ public class GameInfo {
         this.boolPlayerTurn = boolPlayerTurn;
     }
 
-    public double getComputerSpeed() {
+    public long getComputerSpeed() {
         return computerSpeed;
     }
 
-    public void setComputerSpeed(double computerSpeed) {
+    public void setComputerSpeed(long computerSpeed) {
         this.computerSpeed = computerSpeed;
     }
 
@@ -90,15 +94,16 @@ public class GameInfo {
     /*Populates remainingDots arraylist using this.getnRowAmount*/
     public void populateGameBoard()
     {
-        setRemainingDots(new ArrayList<ArrayList<Boolean>>());
         for(int i = 0; i < this.getnRowAmount();i++)
         {
-           ArrayList<Boolean> tempList = new ArrayList<Boolean>();
-            for(int j = 0; j < i;j++)
+            //Log.d("GameInfo", "Adding row");
+            ArrayList<Boolean> tempList = new ArrayList<>();
+            for(int j = 0; j <= i;j++)
             {
-                tempList.add(true);
+                tempList.add(Boolean.TRUE);
+                //Log.d("GameInfo", "Adding bool");
             }
-            getRemainingDots().add(tempList);
+            this.getRemainingDots().add(tempList);
         }
     }
 

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 /*
@@ -36,47 +35,7 @@ public class OptionsActivity extends Activity {
         setUpRowSpinner();
         setUpDifficultySpinner();
 
-        rowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                switch (position+3)
-                {
-                    case 3:
-                        gameInfo.setnRowAmount(3);
-                        break;
-                    case 4:
-                        gameInfo.setnRowAmount(4);
-                        break;
-                    case 5:
-                        gameInfo.setnRowAmount(5);
-                        break;
-                    case 6:
-                        gameInfo.setnRowAmount(6);
-                        break;
-                    case(7):
-                        gameInfo.setnRowAmount(7);
-                        break;
-                    case(8):
-                        gameInfo.setnRowAmount(8);
-                        break;
-                    case(9):
-                        gameInfo.setnRowAmount(9);
-                        break;
-                    case(10):
-                        gameInfo.setnRowAmount(10);
-                        break;
-                    default:
-                        gameInfo.setnRowAmount(5);
-                        break;
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         okStart = (Button) findViewById(R.id.okStart);
@@ -94,7 +53,7 @@ public class OptionsActivity extends Activity {
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn",gameInfo.isBoolPlayerTurn());//Add player turn to bundle
                 mBundle.putBoolean("boolComputer",gameInfo.isBoolComputer());//Add player turn to bundle
-                mBundle.putDouble("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
+                mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putDouble("computerDifficulty",gameInfo.getComputerDifficulty());//Add difficulty to bundle
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
@@ -121,6 +80,47 @@ public class OptionsActivity extends Activity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.rowArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rowSpinner.setAdapter(adapter);
+
+        rowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position + 3) {
+                    case 3:
+                        gameInfo.setnRowAmount(3);
+                        break;
+                    case 4:
+                        gameInfo.setnRowAmount(4);
+                        break;
+                    case 5:
+                        gameInfo.setnRowAmount(5);
+                        break;
+                    case 6:
+                        gameInfo.setnRowAmount(6);
+                        break;
+                    case (7):
+                        gameInfo.setnRowAmount(7);
+                        break;
+                    case (8):
+                        gameInfo.setnRowAmount(8);
+                        break;
+                    case (9):
+                        gameInfo.setnRowAmount(9);
+                        break;
+                    case (10):
+                        gameInfo.setnRowAmount(10);
+                        break;
+                    default:
+                        gameInfo.setnRowAmount(5);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
     }
     public void setUpDifficultySpinner()
     {
