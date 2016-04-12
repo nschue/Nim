@@ -302,22 +302,19 @@ public class GameActivity extends Activity
         {
             mSelectedPieces.add(selectedButton);
         }
+        final Handler handler = new Handler();
 
-
-        for(Integer id:mSelectedPieces)
-        {
+        for(Integer id:mSelectedPieces) {
             final View tempButton = findViewById(id);
-            final Handler handler = new Handler();
+;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     // Do something after .5s = 500ms
                     tempButton.setBackgroundResource(R.drawable.selected_game_piece);
                 }
-            }, 500*mGameInfo.getComputerSpeed());
+        }
 
-
-            final Handler handler2 = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -329,7 +326,7 @@ public class GameActivity extends Activity
                 }
             }, 500*mGameInfo.getComputerSpeed()+500);
 
-        }
+
     }
 
 
