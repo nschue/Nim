@@ -34,6 +34,11 @@ public class AI
      */
     private ArrayList<Integer> dotCountPerRow;
     /**
+     * An ArrayList of Integers where each Integer represents the number of
+     * total dots in its respective row.
+     */
+    private ArrayList<Integer> dotCountPerRow2;
+    /**
      * The number of rows that contain at least one dot.
      */
     private Integer populatedRowCount;
@@ -100,7 +105,7 @@ public class AI
         // fullMove.add(rowChoice);
         for(int rowIndex = 0; rowIndex < rowChoice; rowIndex++)
         {
-            precedingDotCount = precedingDotCount + dotCountPerRow.get(rowIndex);
+            precedingDotCount = precedingDotCount + dotCountPerRow2.get(rowIndex);
         }
         int dotIndex = 0;
         for(int dotCount = 0; dotCount < dotsChoice; dotCount++)
@@ -172,21 +177,25 @@ public class AI
      */
     public void setRemainingDots(ArrayList<ArrayList<Boolean>> remainingDots)
     {
-        Integer count;
+        Integer count, count2;
         Integer populatedRowCount = 0;
         ArrayList<Integer> dotCountPerRow = new ArrayList();
+        ArrayList<Integer> dotCountPerRow2 = new ArrayList();
         this.remainingDots = remainingDots;
         for(ArrayList<Boolean> row : remainingDots)
         {
             count = 0;
+            count2 = 0;
             for(Boolean dot : row)
             {
                 if(dot)
                 {
                     count++;
                 }
+                count2++;
             }
             dotCountPerRow.add(count);
+            dotCountPerRow2.add(count2);
             if(count > 0)
             {
                 populatedRowCount++;
@@ -194,6 +203,7 @@ public class AI
         }
         setPopulatedRowCount(populatedRowCount);
         setDotCountPerRow(dotCountPerRow);
+        this.dotCountPerRow2 = dotCountPerRow2;
     }
     /**
      * @param dotCountPerRow
