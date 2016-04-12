@@ -38,7 +38,7 @@ public class GameActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
-        mAI = new AI();
+
 
 
         /*choices = getResources().getStringArray(R.array.NavigatorBar);
@@ -52,6 +52,7 @@ public class GameActivity extends Activity
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         getGameInfo();
+        mAI = new AI(mGameInfo.getComputerDifficulty());
 
         this.fadeInPlayerText.setDuration(5000);
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);

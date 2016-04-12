@@ -96,12 +96,12 @@ public class GameInfo {
     {
         for(int i = 0; i < this.getnRowAmount();i++)
         {
-            Log.d("GameInfo", "Adding row");
+            //Log.d("GameInfo", "Adding row");
             ArrayList<Boolean> tempList = new ArrayList<>();
             for(int j = 0; j <= i;j++)
             {
                 tempList.add(Boolean.TRUE);
-                Log.d("GameInfo", "Adding bool");
+                //Log.d("GameInfo", "Adding bool");
             }
             this.getRemainingDots().add(tempList);
         }

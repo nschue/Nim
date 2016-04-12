@@ -25,7 +25,9 @@ public class MainMenuActivity extends Activity {
             }
             case(R.id.Scoreboard):
             {
-
+                Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
+                startActivity(scoreIntent);
+                finish();
                 break;
             }
             case(R.id.Credits):
