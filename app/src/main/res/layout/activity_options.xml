@@ -15,6 +15,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:text="@string/Preferences" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="@string/Oponent" />
     <View
         android:layout_width="0dp"
@@ -33,6 +40,7 @@
             android:padding="10dp"
             android:text="@string/friendString"
             android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onComputerRadio"/>
 
         <RadioButton
@@ -42,6 +50,7 @@
             android:padding="10dp"
             android:text="@string/computerString"
             android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onComputerRadio"/>
     </RadioGroup>
     <View
@@ -70,6 +79,7 @@
             android:padding="10dp"
             android:text="@string/PlayerString"
             android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onPlayerRadio"/>
 
         <RadioButton
@@ -79,6 +89,7 @@
             android:padding="10dp"
             android:text="@string/Oponent"
             android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onPlayerRadio"/>
     </RadioGroup>
     <View
@@ -115,6 +126,7 @@
             android:onClick="onAudioRadio"
             android:padding="10dp"
             android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:text="@string/disable" />
     </RadioGroup>
     <View
@@ -130,7 +142,7 @@
             android:id="@+id/spinnerRows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FFFFFF"
+            android:background="#FFFFFF"
             android:prompt="@string/rowPrompt">
         </Spinner>
         <View
@@ -140,7 +152,8 @@
             android:id="@+id/spinnerDiffculty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FFFFFF"
+            android:background="#FFFFFF"
+            android:backgroundTint="#226666"
             android:prompt="@string/difficultyPrompt">
 
         </Spinner>
