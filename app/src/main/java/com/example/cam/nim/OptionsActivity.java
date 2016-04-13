@@ -66,6 +66,8 @@ public class OptionsActivity extends Activity {
         cancelStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent mainMenuIntent = new Intent(OptionsActivity.this,MainMenuActivity.class);
+                startActivity(mainMenuIntent);
                 finish();
             }
         });
