@@ -11,6 +11,8 @@
     <string name="title_activity_options">Options</string>
     <string name="Oponent">Oponent</string>
 
+    <string name="edit_message">Change Player Name</string>
+
     <string name="friendString">Friend</string>
     <string name="computerString">Computer</string>
     <string name="stringFirst">Select Player One:</string>
