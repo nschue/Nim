@@ -256,7 +256,7 @@ public class GameActivity extends Activity
             mGameBoardContainer.addView(temp);
         }
     }
-    public void onStart()
+    public void onClickHowToPlay()
     {
         Intent howToplay = new Intent(this,HowToPlay.class);
         startActivity(howToplay);
