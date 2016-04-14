@@ -25,7 +25,7 @@
             android:id="@+id/howToPlayButton"
             android:background="@drawable/button"
             android:text="@string/howToPlayButtonString"
-            android:onClick="onHowToPlay"/>
+            android:onClick="howToPlay"/>
 
         <!-- Displays the current player -->
         <TextView
