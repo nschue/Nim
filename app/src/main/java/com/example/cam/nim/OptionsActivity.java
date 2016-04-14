@@ -40,8 +40,6 @@ public class OptionsActivity extends Activity {
         setUpDifficultySpinner();
 
 
-
-
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener()
         {

@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class GameActivity extends Activity
         getGameInfo();
         mAI = new AI(mGameInfo.getComputerDifficulty());
 
-        this.fadeInPlayerText.setDuration(5000);
+        this.fadeInPlayerText.setDuration(1000);
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
 
         correctPlayerName();
@@ -112,7 +113,6 @@ public class GameActivity extends Activity
         this.mGameInfo.populateGameBoard();
         createGameBoard();
 
-
         if(!mGameInfo.isBoolPlayerTurn())
         {
             aiMove();
@@ -134,26 +134,31 @@ public class GameActivity extends Activity
         this.mGameInfo.setUpdatedName1(extras.getString("newPlayerName"));
 
     }
+
+
+
     //Assigns the correct name to the current player text
     private void correctPlayerName() {
-        if(!this.mGameInfo.isBoolPlayerTurn())
-        {    //changes the text if it isn't the player
-            if(this.mGameInfo.isBoolComputer())
-            {
-                this.currentPlayer.setText(R.string.computerString);
+
+            if(!this.mGameInfo.isBoolPlayerTurn())
+            {    //changes the text if it isn't the player
+                if(this.mGameInfo.isBoolComputer())
+                {
+                    this.currentPlayer.setText(R.string.computerString);
+                }
+                else
+                    this.currentPlayer.setText(R.string.friendString);
             }
-            else
-                this.currentPlayer.setText(R.string.friendString);
-        }
-        //changes it back the the player
-        else {
-            if(mGameInfo.getUpdatedName1() != null)
-            {
-                this.currentPlayer.setText(mGameInfo.getUpdatedName1());
+            //changes it back the the player
+            else {
+                if(mGameInfo.getUpdatedName1() != null)
+                {
+                    this.currentPlayer.setText(mGameInfo.getUpdatedName1());
+                }
+                else
+                    this.currentPlayer.setText(R.string.PlayerString);
             }
-            else
-                this.currentPlayer.setText(R.string.PlayerString);
-        }
+
     }
     private void ChangePlayerText()
     {
@@ -217,7 +222,6 @@ public class GameActivity extends Activity
                 temp.addView(tempButton);
 
                 //If user clicks button, button is added to a list of buttons to be removed.
-                //Needs to check for player turn and if button is in same row.
                 tempButton.setOnClickListener(new ImageButton.OnClickListener()
                 {
                     @Override
@@ -230,7 +234,6 @@ public class GameActivity extends Activity
                             {
                                 v.setBackgroundResource(R.drawable.game_piece);
                                 mSelectedPieces.remove(new Integer(v.getId()));
-                                return;
                             }
                             //Only executes code below if game piece was not already selected
                             else
@@ -252,6 +255,11 @@ public class GameActivity extends Activity
             }
             mGameBoardContainer.addView(temp);
         }
+    }
+    public void onStart()
+    {
+        Intent howToplay = new Intent(this,HowToPlay.class);
+        startActivity(howToplay);
     }
 
     private ArrayList<Integer> convertToGrid(int index)
@@ -304,7 +312,6 @@ public class GameActivity extends Activity
 
     private void aiMove()
     {
-
 
         // The following returns a linear ArrayList consisting of the AI's choices
         ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));
