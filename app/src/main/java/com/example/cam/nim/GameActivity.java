@@ -138,14 +138,13 @@ public class GameActivity extends Activity
 
     }
     public void howToPlay(View view){
-        final AlertDialog howToPlay = new AlertDialog.Builder(GameActivity.this).create();
-        howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
-        howToPlay.setButton("Okay", new DialogInterface.OnClickListener() {
+           AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int Id) {
-                howToPlay.dismiss();
             }
-        });
-
+        }
+           );
+        AlertDialog howToPlay = builder.create();
+        howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
         howToPlay.show();
     }
 
