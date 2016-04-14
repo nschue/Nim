@@ -1,9 +1,12 @@
 package com.example.cam.nim;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -134,8 +137,17 @@ public class GameActivity extends Activity
         this.mGameInfo.setUpdatedName1(extras.getString("newPlayerName"));
 
     }
+    public void howToPlay(View view){
+        final AlertDialog howToPlay = new AlertDialog.Builder(GameActivity.this).create();
+        howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
+        howToPlay.setButton("Okay", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int Id) {
+                howToPlay.dismiss();
+            }
+        });
 
-
+        howToPlay.show();
+    }
 
     //Assigns the correct name to the current player text
     private void correctPlayerName() {
@@ -256,11 +268,7 @@ public class GameActivity extends Activity
             mGameBoardContainer.addView(temp);
         }
     }
-    public void onClickHowToPlay()
-    {
-        Intent howToplay = new Intent(this,HowToPlay.class);
-        startActivity(howToplay);
-    }
+
 
     private ArrayList<Integer> convertToGrid(int index)
     {
