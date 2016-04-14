@@ -131,6 +131,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
+        this.mGameInfo.setUpdatedName1(extras.getString("newPlayerName"));
 
     }
     //Assigns the correct name to the current player text
@@ -146,7 +147,12 @@ public class GameActivity extends Activity
         }
         //changes it back the the player
         else {
-            this.currentPlayer.setText(R.string.PlayerString);
+            if(mGameInfo.getUpdatedName1() != null)
+            {
+                this.currentPlayer.setText(mGameInfo.getUpdatedName1());
+            }
+            else
+                this.currentPlayer.setText(R.string.PlayerString);
         }
     }
     private void ChangePlayerText()
