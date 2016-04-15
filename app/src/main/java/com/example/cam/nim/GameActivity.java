@@ -113,7 +113,7 @@ public class GameActivity extends Activity
         createGameBoard();
 
 
-        if(!mGameInfo.isBoolPlayerTurn())
+        if(!mGameInfo.isBoolPlayerTurn()&&mGameInfo.isBoolComputer())
         {
             aiMove();
         }
