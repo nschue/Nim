@@ -24,8 +24,7 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="ComputerMoveSpeed">Computer Move Speed</string>
-    <string name="HowToPlayString">Choose as many pieces from any one row.\n To win take the last piece.  </string>
-    <string name="creditsString">Developed by Team 10. </string>
+    <string name="creditsString">Developed by Team 10.\n\nGame board and Operations by Nicholas Schuetze\n Main Graphical User Interfaces by Cam Nguyen \n Artificial Intelligence by Kendall Pruit \nScoreboard by Vincent Bui </string>
 
     <string-array name="NavigatorBar">
         <item>How to Play</item>
