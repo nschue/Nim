@@ -1,12 +1,15 @@
 package com.example.cam.nim;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 /*
@@ -14,6 +17,7 @@ Class:Options
 The activity creates the dialog box for menu to setup the game
  */
 public class OptionsActivity extends Activity {
+    private boolean clicked = false;
     private GameInfo gameInfo;
     private Spinner rowSpinner,difficultySpinner;
     private Button okStart;
@@ -36,8 +40,6 @@ public class OptionsActivity extends Activity {
         setUpDifficultySpinner();
 
 
-
-
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener()
         {
@@ -55,7 +57,8 @@ public class OptionsActivity extends Activity {
                 mBundle.putBoolean("boolComputer",gameInfo.isBoolComputer());//Add player turn to bundle
                 mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
-                mBundle.putDouble("computerDifficulty",gameInfo.getComputerDifficulty());//Add difficulty to bundle
+                mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
+                mBundle.putString("newPlayerName", gameInfo.getUpdatedName1());
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
                 startActivity(playIntent);
                 finish();
@@ -66,6 +69,8 @@ public class OptionsActivity extends Activity {
         cancelStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent mainMenuIntent = new Intent(OptionsActivity.this,MainMenuActivity.class);
+                startActivity(mainMenuIntent);
                 finish();
             }
         });
@@ -130,6 +135,13 @@ public class OptionsActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(adapter);
 
+    }
+    public void onClick(View view)
+    {
+        EditText editText = (EditText)findViewById(R.id.playerEditTextField);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        gameInfo.setUpdatedName1(editText.getText().toString());
     }
     public void onDifficultySpinnerSelection()
     {

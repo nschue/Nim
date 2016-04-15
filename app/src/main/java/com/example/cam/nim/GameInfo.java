@@ -12,6 +12,7 @@ public class GameInfo {
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
     private boolean boolComputer;
+    private String updatedName1;
     private long computerSpeed;
     private double mComputerDifficulty;
     private int nRowAmount;
@@ -113,5 +114,13 @@ public class GameInfo {
 
     public void setBoolComputer(boolean boolComputer) {
         this.boolComputer = boolComputer;
+    }
+
+    public String getUpdatedName1() {
+        return updatedName1;
+    }
+
+    public void setUpdatedName1(String updatedName1) {
+        this.updatedName1 = updatedName1;
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000E0E"
+    android:background="@color/boardColor"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -14,7 +14,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:text="@string/Preferences" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="@string/Oponent" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -28,6 +39,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/friendString"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onComputerRadio"/>
 
         <RadioButton
@@ -36,13 +49,21 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/computerString"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onComputerRadio"/>
     </RadioGroup>
-
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="@string/stringFirst" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
 
     <!--Player Selection Radio Group -->
     <RadioGroup
@@ -57,6 +78,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/PlayerString"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onPlayerRadio"/>
 
         <RadioButton
@@ -65,14 +88,22 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/Oponent"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:onClick="onPlayerRadio"/>
     </RadioGroup>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="@string/Audio" />
-
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,6 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onAudioRadio"
+            android:textColor="#FFFFFF"
             android:padding="10dp"
             android:text="@string/enable" />
 
@@ -93,8 +125,13 @@
             android:layout_height="wrap_content"
             android:onClick="onAudioRadio"
             android:padding="10dp"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
             android:text="@string/disable" />
     </RadioGroup>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,6 +142,7 @@
             android:id="@+id/spinnerRows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             android:prompt="@string/rowPrompt">
         </Spinner>
         <View
@@ -114,15 +152,24 @@
             android:id="@+id/spinnerDiffculty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:backgroundTint="#226666"
             android:prompt="@string/difficultyPrompt">
 
         </Spinner>
     </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
     <!-- label for computer speed seekbar -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="@string/ComputerMoveSpeed" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
 
     <SeekBar
         android:id="@+id/computerSpeedSeekbar"
@@ -133,6 +180,39 @@
         android:minHeight="3dip"
         android:padding="5dp"
         android:progressDrawable="@drawable/progess_bar" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/playerEditTextField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_message"
+            android:background="#FFFFFF" />
+        <View
+            android:layout_width="10dp"
+            android:layout_height="0dp"></View>
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/NewNameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
+            android:onClick="onClick"
+            android:padding="0dp"
+            android:text="@string/apply">
+
+        </Button>
+    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
     <!--Container for the buttons to be horizontial -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -146,13 +226,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
             android:text="@string/apply" />
+        <View
+            android:layout_width="5dp"
+            android:layout_height="0dp">
+        </View>
+
 
         <Button
             android:id="@+id/canelStart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
             android:text="@string/cancel" />
 
     </LinearLayout>

@@ -23,12 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OptionsActivity"
-            android:label="@string/Preferences"
-            android:theme="@android:style/Theme.Dialog">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainMenuActivity" />
+            android:name=".OptionsActivity">
+            <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
             android:name=".HowToPlay"

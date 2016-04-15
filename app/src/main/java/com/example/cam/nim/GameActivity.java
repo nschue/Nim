@@ -1,6 +1,8 @@
 package com.example.cam.nim;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,7 +56,7 @@ public class GameActivity extends Activity
         getGameInfo();
         mAI = new AI(mGameInfo.getComputerDifficulty());
 
-        this.fadeInPlayerText.setDuration(5000);
+        this.fadeInPlayerText.setDuration(1000);
         this.currentPlayer = (TextView) findViewById(R.id.currentPlayerTextView);
 
         correctPlayerName();
@@ -111,8 +113,7 @@ public class GameActivity extends Activity
 
         this.mGameInfo.populateGameBoard();
         createGameBoard();
-
-
+        
         if(!mGameInfo.isBoolPlayerTurn()&&mGameInfo.isBoolComputer())
         {
             aiMove();
@@ -131,23 +132,42 @@ public class GameActivity extends Activity
         this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
+        this.mGameInfo.setUpdatedName1(extras.getString("newPlayerName"));
 
     }
+    public void howToPlay(View view){
+           AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int Id) {
+            }
+        }
+           );
+        AlertDialog howToPlay = builder.create();
+        howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
+        howToPlay.show();
+    }
+
     //Assigns the correct name to the current player text
     private void correctPlayerName() {
-        if(!this.mGameInfo.isBoolPlayerTurn())
-        {    //changes the text if it isn't the player
-            if(this.mGameInfo.isBoolComputer())
-            {
-                this.currentPlayer.setText(R.string.computerString);
+
+            if(!this.mGameInfo.isBoolPlayerTurn())
+            {    //changes the text if it isn't the player
+                if(this.mGameInfo.isBoolComputer())
+                {
+                    this.currentPlayer.setText(R.string.computerString);
+                }
+                else
+                    this.currentPlayer.setText(R.string.friendString);
             }
-            else
-                this.currentPlayer.setText(R.string.friendString);
-        }
-        //changes it back the the player
-        else {
-            this.currentPlayer.setText(R.string.PlayerString);
-        }
+            //changes it back the the player
+            else {
+                if(mGameInfo.getUpdatedName1() != null)
+                {
+                    this.currentPlayer.setText(mGameInfo.getUpdatedName1());
+                }
+                else
+                    this.currentPlayer.setText(R.string.PlayerString);
+            }
+
     }
     private void ChangePlayerText()
     {
@@ -211,7 +231,6 @@ public class GameActivity extends Activity
                 temp.addView(tempButton);
 
                 //If user clicks button, button is added to a list of buttons to be removed.
-                //Needs to check for player turn and if button is in same row.
                 tempButton.setOnClickListener(new ImageButton.OnClickListener()
                 {
                     @Override
@@ -224,7 +243,6 @@ public class GameActivity extends Activity
                             {
                                 v.setBackgroundResource(R.drawable.game_piece);
                                 mSelectedPieces.remove(new Integer(v.getId()));
-                                return;
                             }
                             //Only executes code below if game piece was not already selected
                             else
@@ -247,6 +265,7 @@ public class GameActivity extends Activity
             mGameBoardContainer.addView(temp);
         }
     }
+
 
     private ArrayList<Integer> convertToGrid(int index)
     {
@@ -298,7 +317,6 @@ public class GameActivity extends Activity
 
     private void aiMove()
     {
-
 
         // The following returns a linear ArrayList consisting of the AI's choices
         ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));

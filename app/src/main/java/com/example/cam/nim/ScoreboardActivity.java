@@ -1,5 +1,6 @@
 package com.example.cam.nim;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TabHost;
@@ -75,6 +76,16 @@ public class ScoreboardActivity extends AppCompatActivity {
         String dbStringH = dbHandlerHard.databaseToString();
         hardtxtText.setText(dbStringH);
 
+    }
+
+    //Takes the player back to the main menu if the player clicks the back button
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
+        startActivity(mainMenuIntent);
+        finish();
     }
 }
 
