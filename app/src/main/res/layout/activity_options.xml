@@ -30,7 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/computerGroup">
+        android:id="@+id/computerGroup"
+        android:checkedButton="@+id/radioAgainstPlayer">
 
         <RadioButton
             android:id="@+id/radioAgainstPlayer"
@@ -69,7 +70,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/PlayerGroup">
+        android:id="@+id/PlayerGroup"
+        android:checkedButton="@+id/radioPlayer">
 
         <RadioButton
             android:id="@+id/radioPlayer"
@@ -107,7 +109,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/AudioGroup">
+        android:id="@+id/AudioGroup"
+        android:checkedButton="@+id/radioEnable">
 
         <RadioButton
             android:id="@+id/radioEnable"
@@ -137,16 +140,32 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         <!-- For Row selection-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="@string/rowPrompt"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="0dp"></View>
         <Spinner
             android:id="@+id/spinnerRows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
-            android:spinnerMode="dialog"
-            android:prompt="@string/rowPrompt">
+            android:spinnerMode="dropdown">
         </Spinner>
+
         <View
             android:layout_width="30dp"
+            android:layout_height="0dp"></View>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="@string/difficultyPrompt"/>
+        <View
+            android:layout_width="10dp"
             android:layout_height="0dp"></View>
         <Spinner
             android:id="@+id/spinnerDiffculty"
@@ -154,8 +173,7 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:backgroundTint="#226666"
-            android:spinnerMode="dialog"
-            android:prompt="@string/difficultyPrompt">
+            android:spinnerMode="dropdown">
 
         </Spinner>
     </LinearLayout>

@@ -6,13 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+//import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+//import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+//import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,12 +29,10 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    /* private DrawerLayout mDrawerLayout;
-     private ListView mDrawerList;
-
-     private String[] choices;*/
+   // private DrawerLayout mDrawerLayout;
+   // private ListView mDrawerList;
     private AI mAI;
-    private String[] choices;
+   // private String[] choices;
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
@@ -41,16 +42,14 @@ public class GameActivity extends Activity
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
 
-
-
         /*choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);*/
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
         // Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());*/
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         getGameInfo();
@@ -317,7 +316,6 @@ public class GameActivity extends Activity
 
     private void aiMove()
     {
-
         // The following returns a linear ArrayList consisting of the AI's choices
         ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));
         for(Integer selectedButton:tempAIList)
@@ -348,8 +346,6 @@ public class GameActivity extends Activity
                     ChangePlayerText();
                 }
             }, 500*mGameInfo.getComputerSpeed()+500);
-
-
     }
 
     private void checkRowSelect(int currentID)
