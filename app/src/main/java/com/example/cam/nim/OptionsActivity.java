@@ -1,13 +1,13 @@
 package com.example.cam.nim;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +27,7 @@ public class OptionsActivity extends Activity {
     private RadioGroup playerGroup;
     private RadioGroup audioGroup;
     private RadioGroup computerGroup;
-    private AlertDialog changePlayerName;
+    private Dialog changePlayerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,31 +163,34 @@ public class OptionsActivity extends Activity {
     }
 
     public void ChangePlayerName( View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int Id) {
-                        EditText playerEditText = (EditText) changePlayerName.findViewById(R.id.playerEditName);
-                        RadioGroup playerSwitch = (RadioGroup) changePlayerName.findViewById(R.id.PlayerNameGroup);
-                        int choice = playerSwitch.getCheckedRadioButtonId();
-                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-                        if(choice == R.id.playerOne)
-                            gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
-                        else if(choice == R.id.playerTwo)
-                            gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
-                    }
+        changePlayerName = new Dialog(OptionsActivity.this);
+        changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        changePlayerName.setContentView(R.layout.dialog_name);
+        changePlayerName.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Button applyButton = (Button) changePlayerName.findViewById(R.id.okName);
+        Button cancelButton = (Button) changePlayerName.findViewById(R.id.cancelName);
+        final EditText playerEditText = (EditText) changePlayerName.findViewById(R.id.playerEditName);
+        final RadioGroup playerSwitch = (RadioGroup) changePlayerName.findViewById(R.id.PlayerNameGroup);
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int choice = playerSwitch.getCheckedRadioButtonId();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+                if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
+                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+                if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
+                    gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
+                changePlayerName.dismiss();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePlayerName.dismiss();
+            }
+        });
 
-                });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        changePlayerName.dismiss();
-                    }
-                });
-        LayoutInflater inflater = this.getLayoutInflater();
-        View nameView = inflater.inflate(R.layout.dialog_name, null);
-        changePlayerName = builder.create();
-        changePlayerName.setTitle(R.string.change_name);
-        changePlayerName.setView(nameView);
         changePlayerName.show();
     }
 
