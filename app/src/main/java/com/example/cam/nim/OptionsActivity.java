@@ -166,9 +166,13 @@ public class OptionsActivity extends Activity {
                     builder.setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int Id) {
                         EditText playerEditText = (EditText) changePlayerName.findViewById(R.id.playerEditName);
+                        RadioGroup playerSwitch = (RadioGroup) changePlayerName.findViewById(R.id.PlayerNameGroup);
+                        int choice = playerSwitch.getCheckedRadioButtonId();
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+                        if(choice == R.id.playerOne)
                             gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+                        else if(choice == R.id.playerTwo)
                             gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
                     }
 
