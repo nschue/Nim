@@ -143,6 +143,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setTotalPieces(this.mGameInfo.findTotal(this.mGameInfo.getnRowAmount()));
         this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
         this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
+        this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
     }
     public void WinDialog(){
@@ -199,6 +200,8 @@ public class GameActivity extends Activity
 
         if(!this.mGameInfo.isBoolPlayerTurn())
         {    //changes the text if it isn't the player
+            if(this.mGameInfo.getUpdatePlayer2() != null)
+                this.currentPlayer.setText(this.mGameInfo.getUpdatePlayer2());
             if(this.mGameInfo.isBoolComputer())
                 this.currentPlayer.setText(R.string.computerString);
 
