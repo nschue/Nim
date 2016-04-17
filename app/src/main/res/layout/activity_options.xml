@@ -14,8 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textSize="25dp"
+        android:textSize="30dp"
         android:text="@string/Preferences" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"></View>
 
     <TextView
         android:layout_width="wrap_content"
@@ -134,11 +137,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="5dp"></View>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+
         <!-- For Row selection-->
         <TextView
             android:layout_width="wrap_content"
@@ -176,7 +175,6 @@
             android:spinnerMode="dropdown">
 
         </Spinner>
-    </LinearLayout>
     <View
         android:layout_width="0dp"
         android:layout_height="5dp"></View>
@@ -203,17 +201,17 @@
         android:layout_width="0dp"
         android:layout_height="5dp"></View>
 
-        <Button
-            android:id="@+id/NewPlayerOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/button"
-            android:onClick="ChangePlayerName"
-            android:padding="0dp"
-            android:text="Change Player Name">
+    <Button
+        android:id="@+id/NewPlayerOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        android:onClick="ChangePlayerName"
+        android:padding="0dp"
+        android:text="Change Player Name">
 
-        </Button>
+    </Button>
 
     <View
         android:layout_width="0dp"
@@ -222,6 +220,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="bottom"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 

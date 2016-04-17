@@ -4,7 +4,14 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dialogs"
     android:id="@+id/editName">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/change_name"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -17,6 +24,7 @@
             android:id="@+id/playerOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:padding="10dp"
             android:text="@string/playerOne" />
 
@@ -24,16 +32,50 @@
             android:id="@+id/playerTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:padding="10dp"
             android:text="@string/playerTwo"/>
     </RadioGroup>
 
     <EditText
         android:id="@+id/playerEditName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:hint="@string/edit_message"
         android:background="#FFFFFF"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/okName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
+            android:text="@string/apply" />
+        <View
+            android:layout_width="5dp"
+            android:layout_height="0dp">
+        </View>
+
+        <Button
+            android:id="@+id/cancelName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button"
+            android:text="@string/cancel" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
