@@ -202,33 +202,18 @@
     <View
         android:layout_width="0dp"
         android:layout_height="5dp"></View>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:layout_weight="1"
-            android:id="@+id/playerEditTextField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_message"
-            android:background="#FFFFFF" />
-        <View
-            android:layout_width="10dp"
-            android:layout_height="0dp"></View>
+
         <Button
-            android:layout_weight="1"
-            android:id="@+id/NewNameButton"
+            android:id="@+id/NewPlayerOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:background="@drawable/button"
-            android:onClick="onClick"
+            android:onClick="ChangePlayerName"
             android:padding="0dp"
-            android:text="@string/apply">
+            android:text="Change Player Name">
 
         </Button>
-    </LinearLayout>
 
     <View
         android:layout_width="0dp"

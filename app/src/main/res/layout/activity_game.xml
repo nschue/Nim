@@ -36,6 +36,7 @@
             android:textColor="@color/textColor"
             android:textSize="30dp" />
 
+
         <!-- End turn button declaration -->
         <Button
             android:id="@+id/endTurnButton"

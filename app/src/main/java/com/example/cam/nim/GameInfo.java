@@ -1,7 +1,5 @@
 package com.example.cam.nim;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -12,11 +10,12 @@ public class GameInfo {
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
     private boolean boolComputer;
-    private String updatedName1;
+    private String updatedPlayer1;
+    private String updatePlayer2;
     private long computerSpeed;
     private double mComputerDifficulty;
     private int nRowAmount;
-
+    private double totalPieces;
     private ArrayList<ArrayList<Boolean>> mRemainingDots;
 
 
@@ -26,6 +25,7 @@ public class GameInfo {
         this.nRowAmount = 5;
         this.mComputerDifficulty = 2.0;
         this.computerSpeed = 1;
+        this.totalPieces = findTotal(nRowAmount);
         this.mRemainingDots = new ArrayList<>();
 
     }
@@ -47,6 +47,10 @@ public class GameInfo {
         this.boolEnableAudio = boolEnableAudio;
     }
 
+    public double findTotal(int nRowAmount)
+    {
+        return .5*( nRowAmount *( nRowAmount + 1));
+    }
     public boolean isBoolPlayerTurn() {
         return boolPlayerTurn;
     }
@@ -87,11 +91,6 @@ public class GameInfo {
         mRemainingDots = remainingDots;
     }
 
-    public void populateGameBoard(ArrayList<ArrayList<Boolean>> remainingDots)
-    {
-
-    }
-
     /*Populates remainingDots arraylist using this.getnRowAmount*/
     public void populateGameBoard()
     {
@@ -116,11 +115,30 @@ public class GameInfo {
         this.boolComputer = boolComputer;
     }
 
-    public String getUpdatedName1() {
-        return updatedName1;
+    public String getUpdatedPlayer1() {
+        return updatedPlayer1;
     }
 
-    public void setUpdatedName1(String updatedName1) {
-        this.updatedName1 = updatedName1;
+    public void setUpdatedPlayer1(String updatedPlayer1) {
+        this.updatedPlayer1 = updatedPlayer1;
+    }
+
+    public String getUpdatePlayer2() {
+        return updatePlayer2;
+    }
+
+    public void setUpdatePlayer2(String updatePlayer2) {
+        this.updatePlayer2 = updatePlayer2;
+    }
+
+    public double getTotalPieces() {
+        return totalPieces;
+    }
+
+    public void setTotalPieces(double totalPieces) {
+        if(this.totalPieces < 0)
+            this.totalPieces = 0;
+        else
+            this.totalPieces = totalPieces;
     }
 }
