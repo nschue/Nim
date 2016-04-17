@@ -41,12 +41,57 @@
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rank"
+                            android:id="@+id/rankbuttonE" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win"
+                            android:id="@+id/winbuttonE"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="Streak"
+                            android:id="@+id/streakbuttonE"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:id="@+id/namebuttonE"
+                            android:onClick="onClick" />
+
+                    </LinearLayout>
+
+                    <ScrollView
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Easy"
-                        android:id="@+id/easytextView" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/scrollView"
+                        android:fillViewport="false">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Easy"
+                            android:id="@+id/easytextView" />
+                    </ScrollView>
 
                 </LinearLayout>
 
@@ -56,12 +101,60 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rank"
+                            android:id="@+id/rankbuttonM" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win"
+                            android:id="@+id/winbuttonM"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="Streak"
+                            android:id="@+id/streakbuttonM"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:id="@+id/namebuttonM"
+                            android:onClick="onClick" />
+
+                    </LinearLayout>
+
+
+
+                    <ScrollView
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium"
-                        android:id="@+id/mediumtextView" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/scrollView2" >
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Medium"
+                            android:id="@+id/mediumtextView" />
+                    </ScrollView>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,16 +163,121 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rank"
+                            android:id="@+id/rankbuttonH" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win"
+                            android:id="@+id/winbuttonH"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="Streak"
+                            android:id="@+id/streakbuttonH"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:id="@+id/namebuttonH"
+                            android:onClick="onClick" />
+
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Hard"
-                        android:id="@+id/hardtextView"
-                        android:phoneNumber="false" />
+                        android:id="@+id/scrollView3" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Hard"
+                            android:id="@+id/hardtextView"
+                            android:phoneNumber="false" />
+                    </ScrollView>
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabPlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rank"
+                            android:id="@+id/rankbuttonP" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win"
+                            android:id="@+id/winbuttonP"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="Streak"
+                            android:id="@+id/streakbuttonP"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:id="@+id/namebuttonP"
+                            android:onClick="onClick" />
+
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/scrollView4" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:id="@+id/playertextView"
+                            android:phoneNumber="false" />
+                    </ScrollView>
+
+                </LinearLayout>
+
             </FrameLayout>
         </LinearLayout>
     </TabHost>
 </RelativeLayout>
-
