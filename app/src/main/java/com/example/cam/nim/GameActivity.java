@@ -2,17 +2,24 @@ package com.example.cam.nim;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+//import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+//import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+//import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,12 +33,11 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    /* private DrawerLayout mDrawerLayout;
-     private ListView mDrawerList;
-
-     private String[] choices;*/
+    private AlertDialog winDialog;
+   // private DrawerLayout mDrawerLayout;
+   // private ListView mDrawerList;
     private AI mAI;
-    private String[] choices;
+   // private String[] choices;
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
@@ -41,16 +47,14 @@ public class GameActivity extends Activity
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
 
-
-
         /*choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);*/
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item,choices));
         // Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());*/
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
         getGameInfo();
@@ -91,12 +95,13 @@ public class GameActivity extends Activity
                         updateGameBoard();
                         mSelectedPieces.clear();
                         mSelectedPieces = new ArrayList<>();
-                        aiMove();
+                       if(mGameInfo.getTotalPieces() > 0)
+                         aiMove();
                     }
                 }
                 //Player v Player
                 //Checks pieces were selected
-                // then changes the current player displayed updates the peices
+                // then changes the current player displayed updates the pieces
                 // then clears the selection list
                 else {
                     if (!mSelectedPieces.isEmpty()) {
@@ -114,9 +119,11 @@ public class GameActivity extends Activity
         this.mGameInfo.populateGameBoard();
         createGameBoard();
         
-        if(!mGameInfo.isBoolPlayerTurn()&&mGameInfo.isBoolComputer())
+        if(!mGameInfo.isBoolPlayerTurn()&& mGameInfo.isBoolComputer())
         {
-            aiMove();
+            if (mGameInfo.getTotalPieces() > 0) {
+                aiMove();
+            }
         }
 
     }
@@ -131,16 +138,30 @@ public class GameActivity extends Activity
         this.mGameInfo.setBoolComputer(extras.getBoolean("boolComputer"));
         this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
+        this.mGameInfo.setTotalPieces(this.mGameInfo.findTotal(this.mGameInfo.getnRowAmount()));
         this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
-        this.mGameInfo.setUpdatedName1(extras.getString("newPlayerName"));
+        this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
 
     }
-    public void howToPlay(View view){
-           AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int Id) {
-            }
-        }
-           );
+    public void WinDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View nameView = inflater.inflate(R.layout.dialog_win, null);
+        winDialog = builder.create();
+        if(mGameInfo.isBoolPlayerTurn())
+            winDialog.setTitle(R.string.Winner + R.string.computerString);
+        else
+            winDialog.setTitle(R.string.Winner + R.string.PlayerString);
+        winDialog.setView(nameView);
+        winDialog.show();
+    }
+    public void howToPlay(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int Id) {
+                    }
+                }
+        );
         AlertDialog howToPlay = builder.create();
         howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
         howToPlay.show();
@@ -149,63 +170,69 @@ public class GameActivity extends Activity
     //Assigns the correct name to the current player text
     private void correctPlayerName() {
 
-            if(!this.mGameInfo.isBoolPlayerTurn())
-            {    //changes the text if it isn't the player
-                if(this.mGameInfo.isBoolComputer())
-                {
-                    this.currentPlayer.setText(R.string.computerString);
-                }
-                else
-                    this.currentPlayer.setText(R.string.friendString);
+        if(!this.mGameInfo.isBoolPlayerTurn())
+        {    //changes the text if it isn't the player
+            if(this.mGameInfo.isBoolComputer())
+            {
+                this.currentPlayer.setText(R.string.computerString);
             }
-            //changes it back the the player
-            else {
-                if(mGameInfo.getUpdatedName1() != null)
-                {
-                    this.currentPlayer.setText(mGameInfo.getUpdatedName1());
-                }
-                else
-                    this.currentPlayer.setText(R.string.PlayerString);
+            else
+                this.currentPlayer.setText(R.string.friendString);
+        }
+        //changes it back the the player
+        else {
+            if(mGameInfo.getUpdatedPlayer1() != null)
+            {
+                this.currentPlayer.setText(mGameInfo.getUpdatedPlayer1());
             }
+            else
+                this.currentPlayer.setText(R.string.PlayerString);
+        }
 
     }
-    private void ChangePlayerText()
-    {
+
+    private void ChangePlayerText() {
         //Does a fade animation
         this.currentPlayer.setAnimation(fadeInPlayerText);
         //switches the player turn
         this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
         correctPlayerName();
+
     }
 
 
     private void updateGameBoard()
     {
-        for(Integer id: mSelectedPieces)
-        {
-            int i = 0;
-            int row = 0;
+        if(mGameInfo.getTotalPieces() > 0) {
+            for (Integer id : mSelectedPieces) {
+                int i = 0;
+                int row = 0;
 
-            //Matches button id to row and column of ArrayList<ArrayList<Boolean>>
-            for(ArrayList<Boolean> al: mGameInfo.getRemainingDots())
-            {
-                int column = 0;
-                for(Boolean bool: al)
-                {
-                    if(id == i)
-                    {
-                        mGameInfo.getRemainingDots().get(row).set(column, false);
+                //Matches button id to row and column of ArrayList<ArrayList<Boolean>>
+                for (ArrayList<Boolean> al : mGameInfo.getRemainingDots()) {
+                    int column = 0;
+                    for (Boolean bool : al) {
+                        if (id == i) {
+                            mGameInfo.getRemainingDots().get(row).set(column, false);
+                        }
+                        i++;
+                        column++;
                     }
-                    i++;
-                    column++;
+                    row++;
                 }
-                row++;
+                View selectedButton = findViewById(id);
+                selectedButton.setEnabled(false);
+                selectedButton.setBackgroundResource(R.drawable.blank_game_piece);
+                //selectedButton.setVisibility(View.GONE);
             }
-            View selectedButton = findViewById(id);
-            selectedButton.setEnabled(false);
-            selectedButton.setBackgroundResource(R.drawable.blank_game_piece);
-            //selectedButton.setVisibility(View.GONE);
+            mGameInfo.setTotalPieces(mGameInfo.getTotalPieces() - mSelectedPieces.size());
         }
+        if (mGameInfo.getTotalPieces() == 0)
+        {
+            currentPlayer.setVisibility(View.GONE);
+        }
+
+
     }
 
     //Creates the gameboard using number of rows.
@@ -317,7 +344,6 @@ public class GameActivity extends Activity
 
     private void aiMove()
     {
-
         // The following returns a linear ArrayList consisting of the AI's choices
         ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));
         for(Integer selectedButton:tempAIList)
@@ -348,8 +374,6 @@ public class GameActivity extends Activity
                     ChangePlayerText();
                 }
             }, 500*mGameInfo.getComputerSpeed()+500);
-
-
     }
 
     private void checkRowSelect(int currentID)
