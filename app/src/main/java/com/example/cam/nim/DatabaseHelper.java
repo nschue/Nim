@@ -32,7 +32,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-
+    public double findWinStreak(int winCount,int gamePlayed)
+    {
+        return  gamePlayed/winCount;
+    }
     public boolean insertData(String name,String score,String streak) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -90,6 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.close();
         return buffer.toString();
     }
+
     //return string that sorted by winning streak
     public String databaseSortStreakToString(){
         int count = 1;

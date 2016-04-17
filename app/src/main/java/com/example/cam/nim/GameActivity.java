@@ -93,8 +93,8 @@ public class GameActivity extends Activity
                 // checks if it is the player's turn and if the selection list wasn't empty
                 if (mGameInfo.isBoolComputer()) {
                     if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
-                        ChangePlayerText();
                         updateGameBoard();
+                        ChangePlayerText();
                         mSelectedPieces.clear();
                         mSelectedPieces = new ArrayList<>();
                        if(mGameInfo.getTotalPieces() > 0)
@@ -107,8 +107,8 @@ public class GameActivity extends Activity
                 // then clears the selection list
                 else {
                     if (!mSelectedPieces.isEmpty()) {
-                        ChangePlayerText();
                         updateGameBoard();
+                        ChangePlayerText();
                         mSelectedPieces.clear();
                         mSelectedPieces = new ArrayList<>();
                     }
@@ -152,15 +152,7 @@ public class GameActivity extends Activity
         View nameView = inflater.inflate(R.layout.dialog_win, null);
         winDialog = builder.create();
         winDialog.setView(nameView);
-        if(mGameInfo.isBoolPlayerTurn())
-        {
-            if(mGameInfo.isBoolComputer())
-                winDialog.setTitle(R.string.ComputerWinner);
-            else
-                winDialog.setTitle(R.string.FriendWins);
-        }
-        else
-            winDialog.setTitle(R.string.PlayerWins);
+        winDialog.setTitle(currentPlayer.getText() + " Wins!");
         winDialog.show();
     }
     public void onScoreBoardButton(View view)
@@ -179,7 +171,7 @@ public class GameActivity extends Activity
     {
         Intent playAgainIntent = new Intent(this,GameActivity.class);
         Bundle mBundle = getIntent().getBundleExtra("mBundle");
-        playAgainIntent.putExtra("mBundle",mBundle);
+        playAgainIntent.putExtra("mBundle", mBundle);
         startActivity(playAgainIntent);
         finish();
 
@@ -220,11 +212,12 @@ public class GameActivity extends Activity
     }
 
     private void ChangePlayerText() {
-        //Does a fade animation
-        this.currentPlayer.setAnimation(fadeInPlayerText);
-        //switches the player turn
-        this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
-        correctPlayerName();
+        if(mGameInfo.getTotalPieces() > 0) {    //Does a fade animation
+            this.currentPlayer.setAnimation(fadeInPlayerText);
+            //switches the player turn
+            this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
+            correctPlayerName();
+        }
     }
 
 
@@ -390,16 +383,16 @@ public class GameActivity extends Activity
             }, 500);
         }
 
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Do something after .5s = 500ms
-                    updateGameBoard();
-                    mSelectedPieces.clear();
-                    mSelectedPieces = new ArrayList<>();
-                    ChangePlayerText();
-                }
-            }, 500*mGameInfo.getComputerSpeed()+500);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after .5s = 500ms
+                updateGameBoard();
+                mSelectedPieces.clear();
+                mSelectedPieces = new ArrayList<>();
+                ChangePlayerText();
+            }
+        }, 500*mGameInfo.getComputerSpeed()+500);
     }
 
     private void checkRowSelect(int currentID)
