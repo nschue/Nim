@@ -239,7 +239,6 @@
             android:layout_height="0dp">
         </View>
 
-
         <Button
             android:id="@+id/canelStart"
             android:layout_width="0dp"

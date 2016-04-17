@@ -2,6 +2,7 @@ package com.example.cam.nim;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ public class GameActivity extends Activity
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
     private AlertDialog winDialog;
+
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
     private AI mAI;
@@ -144,17 +146,42 @@ public class GameActivity extends Activity
 
     }
     public void WinDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
         LayoutInflater inflater = this.getLayoutInflater();
         View nameView = inflater.inflate(R.layout.dialog_win, null);
         winDialog = builder.create();
-        if(mGameInfo.isBoolPlayerTurn())
-            winDialog.setTitle(R.string.Winner + R.string.computerString);
-        else
-            winDialog.setTitle(R.string.Winner + R.string.PlayerString);
         winDialog.setView(nameView);
+        if(mGameInfo.isBoolPlayerTurn())
+        {
+            if(mGameInfo.isBoolComputer())
+                winDialog.setTitle(R.string.ComputerWinner);
+            else
+                winDialog.setTitle(R.string.FriendWins);
+        }
+        else
+            winDialog.setTitle(R.string.PlayerWins);
         winDialog.show();
+    }
+    public void onScoreBoardButton(View view)
+    {
+        Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
+        startActivity(scoreIntent);
+        finish();
+    }
+    public void onExitButton(View view)
+    {
+        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
+        startActivity(mainMenuIntent);
+        finish();
+    }
+    public void onPlayAgain(View view)
+    {
+        Intent playAgainIntent = new Intent(this,GameActivity.class);
+        Bundle mBundle = getIntent().getBundleExtra("mBundle");
+        playAgainIntent.putExtra("mBundle",mBundle);
+        startActivity(playAgainIntent);
+        finish();
+
     }
     public void howToPlay(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
@@ -173,18 +200,16 @@ public class GameActivity extends Activity
         if(!this.mGameInfo.isBoolPlayerTurn())
         {    //changes the text if it isn't the player
             if(this.mGameInfo.isBoolComputer())
-            {
                 this.currentPlayer.setText(R.string.computerString);
-            }
+
             else
                 this.currentPlayer.setText(R.string.friendString);
         }
         //changes it back the the player
         else {
             if(mGameInfo.getUpdatedPlayer1() != null)
-            {
                 this.currentPlayer.setText(mGameInfo.getUpdatedPlayer1());
-            }
+
             else
                 this.currentPlayer.setText(R.string.PlayerString);
         }
@@ -197,7 +222,6 @@ public class GameActivity extends Activity
         //switches the player turn
         this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
         correctPlayerName();
-
     }
 
 
@@ -230,9 +254,9 @@ public class GameActivity extends Activity
         if (mGameInfo.getTotalPieces() == 0)
         {
             currentPlayer.setVisibility(View.GONE);
+            WinDialog();
+
         }
-
-
     }
 
     //Creates the gameboard using number of rows.
@@ -263,36 +287,35 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
+                    if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
+                    {
+                        //If the game piece has already been selected, deselect it and reset image
+                        if(mSelectedPieces.contains(v.getId()))
                         {
-                            //If the game piece has already been selected, deselect it and reset image
-                            if(mSelectedPieces.contains(v.getId()))
-                            {
-                                v.setBackgroundResource(R.drawable.game_piece);
-                                mSelectedPieces.remove(new Integer(v.getId()));
-                            }
-                            //Only executes code below if game piece was not already selected
-                            else
-                            {
-                                //checkRowSelection(v.getId());
-                                if(!mSelectedPieces.isEmpty())
-                                {
-                                    checkRowSelect(v.getId());
-                                }
-                                if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
-                                    mSelectedPieces.add(v.getId());
-                                else if(!mGameInfo.isBoolComputer())
-                                    mSelectedPieces.add(v.getId());
-                                v.setBackgroundResource(R.drawable.selected_game_piece);
-                            }
+                            v.setBackgroundResource(R.drawable.game_piece);
+                            mSelectedPieces.remove(new Integer(v.getId()));
                         }
+                        //Only executes code below if game piece was not already selected
+                        else
+                        {
+                            //checkRowSelection(v.getId());
+                            if(!mSelectedPieces.isEmpty())
+                            {
+                                checkRowSelect(v.getId());
+                            }
+                            if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
+                                mSelectedPieces.add(v.getId());
+                            else if(!mGameInfo.isBoolComputer())
+                                mSelectedPieces.add(v.getId());
+                            v.setBackgroundResource(R.drawable.selected_game_piece);
+                        }
+                    }
                     }
                 });
             }
             mGameBoardContainer.addView(temp);
         }
     }
-
 
     private ArrayList<Integer> convertToGrid(int index)
     {
