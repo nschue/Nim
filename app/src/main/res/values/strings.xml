@@ -8,15 +8,11 @@
     <string name="creditsButtonString">Credits</string>
     <string name="scoreboardButtonString">Scoreboard</string>
 
-    <string name="okay">okay</string>
+    <string name="okay">OK</string>
 
     <string name="PlayAgain">Play Again</string>
     <string name="Exit">Exit to Main Menu</string>
     <string name="ViewScoreBoard">View Scoreboard</string>
-
-    <string name="ComputerWinner">Computer Wins!</string>
-    <string name="PlayerWins">Player Wins!</string>
-    <string name="FriendWins">Friend Wins!</string>
 
     <string name="title_activity_options">Options</string>
     <string name="Oponent">Oponent</string>
