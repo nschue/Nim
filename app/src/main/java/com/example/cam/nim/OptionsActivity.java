@@ -60,6 +60,7 @@ public class OptionsActivity extends Activity {
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
+                mBundle.putString("newOtherPlayerName",gameInfo.getUpdatePlayer2());
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
                 startActivity(playIntent);
                 finish();
