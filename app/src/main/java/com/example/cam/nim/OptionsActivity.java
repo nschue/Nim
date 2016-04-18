@@ -86,6 +86,7 @@ public class OptionsActivity extends Activity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.rowArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rowSpinner.setAdapter(adapter);
+        rowSpinner.setSelection(2);
 
         rowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -160,7 +161,9 @@ public class OptionsActivity extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-
+    //Displays the dialog for the player to change their name
+    // Changes the name that is selected through the radio buttons
+    // then disappears
     public void ChangePlayerName( View view){
         changePlayerName = new Dialog(OptionsActivity.this);
         changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
