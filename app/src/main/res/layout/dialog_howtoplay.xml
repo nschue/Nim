@@ -16,7 +16,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button"
         android:text="@string/okay"
-        android:id="@+id/Ok"/>
+        android:id="@+id/okay"/>
 
 </LinearLayout>

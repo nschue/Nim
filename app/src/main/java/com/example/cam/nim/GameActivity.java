@@ -33,7 +33,7 @@ public class GameActivity extends Activity
 {
     private GameInfo mGameInfo;
     private Button mEndButton;
-    private Button mEndTurnButton;
+    private Button mEndTurnButton,howToPlay;
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
@@ -72,6 +72,15 @@ public class GameActivity extends Activity
 
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
+
+        howToPlay = (Button) findViewById(R.id.howToPlayButton);
+        howToPlay.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                howToPlay();
+            }
+        });
 
         mEndButton = (Button) findViewById(R.id.end_game_button);
         mEndButton.setOnClickListener(new View.OnClickListener() {
@@ -189,14 +198,14 @@ public class GameActivity extends Activity
         winDialog.show();
     }
 
-    public void howToPlay(View view) {
+    public void howToPlay() {
 
         howToPlayDialog = new Dialog(GameActivity.this);
         howToPlayDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         howToPlayDialog.setContentView(R.layout.dialog_howtoplay);
         howToPlayDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        final Button okayButton = (Button) winDialog.findViewById(R.id.Ok);
+        Button okayButton = (Button) howToPlayDialog.findViewById(R.id.okay);
 
         okayButton.setOnClickListener(new View.OnClickListener() {
             @Override
