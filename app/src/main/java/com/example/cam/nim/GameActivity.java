@@ -37,7 +37,7 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    private Dialog winDialog;
+    private Dialog winDialog,howToPlayDialog;
 
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
@@ -190,14 +190,21 @@ public class GameActivity extends Activity
     }
 
     public void howToPlay(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int Id) {
-                    }
-                }
-        );
-        AlertDialog howToPlay = builder.create();
-        howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
-        howToPlay.show();
+
+        howToPlayDialog = new Dialog(GameActivity.this);
+        howToPlayDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        howToPlayDialog.setContentView(R.layout.dialog_howtoplay);
+        howToPlayDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        final Button okayButton = (Button) winDialog.findViewById(R.id.Ok);
+
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlayDialog.dismiss();
+            }
+        });
+        howToPlayDialog.show();
     }
 
     //Assigns the correct name to the current player text
