@@ -9,10 +9,12 @@
     <string name="scoreboardButtonString">Scoreboard</string>
 
     <string name="okay">OK</string>
-
+    <string name ="directions">To win select the last piece.\nYou can take as many pieces from any row but only one row at a time.</string>
     <string name="PlayAgain">Play Again</string>
     <string name="Exit">Exit to Main Menu</string>
     <string name="ViewScoreBoard">View Scoreboard</string>
+
+    <string name="Winner"> Wins!</string>
 
     <string name="title_activity_options">Options</string>
     <string name="Oponent">Oponent</string>

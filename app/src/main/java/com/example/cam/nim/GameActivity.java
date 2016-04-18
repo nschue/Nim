@@ -6,12 +6,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 //import android.widget.ArrayAdapter;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 //import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,11 +33,11 @@ public class GameActivity extends Activity
 {
     private GameInfo mGameInfo;
     private Button mEndButton;
-    private Button mEndTurnButton;
+    private Button mEndTurnButton,howToPlay;
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    private AlertDialog winDialog;
+    private Dialog winDialog,howToPlayDialog;
 
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
@@ -69,6 +72,15 @@ public class GameActivity extends Activity
 
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
+
+        howToPlay = (Button) findViewById(R.id.howToPlayButton);
+        howToPlay.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                howToPlay();
+            }
+        });
 
         mEndButton = (Button) findViewById(R.id.end_game_button);
         mEndButton.setOnClickListener(new View.OnClickListener() {
@@ -147,44 +159,61 @@ public class GameActivity extends Activity
 
     }
     public void WinDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View nameView = inflater.inflate(R.layout.dialog_win, null);
-        winDialog = builder.create();
-        winDialog.setView(nameView);
-        winDialog.setTitle(currentPlayer.getText() + " Wins!");
+        winDialog = new Dialog(GameActivity.this);
+        winDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        winDialog.setContentView(R.layout.dialog_win);
+        winDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
+        final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
+        final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
+        final Button exitButton = (Button) winDialog.findViewById(R.id.exitButton);
+
+        scoreboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreIntent = new Intent(GameActivity.this,ScoreboardActivity.class);
+                startActivity(scoreIntent);
+                finish();
+            }
+        });
+        playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainMenuIntent = new Intent(GameActivity.this,MainMenuActivity.class);
+                startActivity(mainMenuIntent);
+                finish();
+            }
+        });
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
+                Bundle mBundle = getIntent().getBundleExtra("mBundle");
+                playAgainIntent.putExtra("mBundle", mBundle);
+                startActivity(playAgainIntent);
+                finish();
+            }
+        });
+        winnerName.setText(currentPlayer.getText().toString() + " Wins!");
         winDialog.show();
     }
-    public void onScoreBoardButton(View view)
-    {
-        Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
-        startActivity(scoreIntent);
-        finish();
-    }
-    public void onExitButton(View view)
-    {
-        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
-        startActivity(mainMenuIntent);
-        finish();
-    }
-    public void onPlayAgain(View view)
-    {
-        Intent playAgainIntent = new Intent(this,GameActivity.class);
-        Bundle mBundle = getIntent().getBundleExtra("mBundle");
-        playAgainIntent.putExtra("mBundle", mBundle);
-        startActivity(playAgainIntent);
-        finish();
 
-    }
-    public void howToPlay(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int Id) {
-                    }
-                }
-        );
-        AlertDialog howToPlay = builder.create();
-        howToPlay.setMessage("Choose as many pieces from any one row.\n To win take the last piece.");
-        howToPlay.show();
+    public void howToPlay() {
+
+        howToPlayDialog = new Dialog(GameActivity.this);
+        howToPlayDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        howToPlayDialog.setContentView(R.layout.dialog_howtoplay);
+        howToPlayDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        Button okayButton = (Button) howToPlayDialog.findViewById(R.id.okay);
+
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                howToPlayDialog.dismiss();
+            }
+        });
+        howToPlayDialog.show();
     }
 
     //Assigns the correct name to the current player text
@@ -192,7 +221,7 @@ public class GameActivity extends Activity
 
         if(!this.mGameInfo.isBoolPlayerTurn())
         {    //changes the text if it isn't the player
-            if(!mGameInfo.getUpdatePlayer2().isEmpty())
+            if(mGameInfo.getUpdatePlayer2()!= null)
                 this.currentPlayer.setText(mGameInfo.getUpdatePlayer2());
             if(this.mGameInfo.isBoolComputer())
                 this.currentPlayer.setText(R.string.computerString);

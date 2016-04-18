@@ -77,7 +77,6 @@ public class OptionsActivity extends Activity {
             }
         });
 
-
     }
 
     public void setUpRowSpinner()
