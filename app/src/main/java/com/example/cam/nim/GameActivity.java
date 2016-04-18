@@ -6,12 +6,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 //import android.widget.ArrayAdapter;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 //import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    private AlertDialog winDialog;
+    private Dialog winDialog;
 
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
@@ -147,14 +150,15 @@ public class GameActivity extends Activity
 
     }
     public void WinDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View nameView = inflater.inflate(R.layout.dialog_win, null);
-        winDialog = builder.create();
-        winDialog.setView(nameView);
-        winDialog.setTitle(currentPlayer.getText() + " Wins!");
+        winDialog = new Dialog(GameActivity.this);
+        winDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        winDialog.setContentView(R.layout.dialog_win);
+        winDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
+        winnerName.setText(currentPlayer .getText().toString() + " Wins!");
         winDialog.show();
     }
+
     public void onScoreBoardButton(View view)
     {
         Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
@@ -192,7 +196,7 @@ public class GameActivity extends Activity
 
         if(!this.mGameInfo.isBoolPlayerTurn())
         {    //changes the text if it isn't the player
-            if(!mGameInfo.getUpdatePlayer2().isEmpty())
+            if(mGameInfo.getUpdatePlayer2()!= null)
                 this.currentPlayer.setText(mGameInfo.getUpdatePlayer2());
             if(this.mGameInfo.isBoolComputer())
                 this.currentPlayer.setText(R.string.computerString);

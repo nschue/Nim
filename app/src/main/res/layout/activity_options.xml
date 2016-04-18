@@ -43,7 +43,6 @@
             android:padding="10dp"
             android:text="@string/friendString"
             android:textColor="#FFFFFF"
-            android:buttonTint="#FFFFFF"
             android:onClick="onComputerRadio"/>
 
         <RadioButton
@@ -53,7 +52,6 @@
             android:padding="10dp"
             android:text="@string/computerString"
             android:textColor="#FFFFFF"
-            android:buttonTint="#FFFFFF"
             android:onClick="onComputerRadio"/>
     </RadioGroup>
     <View
@@ -83,7 +81,6 @@
             android:padding="10dp"
             android:text="@string/PlayerString"
             android:textColor="#FFFFFF"
-            android:buttonTint="#FFFFFF"
             android:onClick="onPlayerRadio"/>
 
         <RadioButton
@@ -93,7 +90,6 @@
             android:padding="10dp"
             android:text="@string/Oponent"
             android:textColor="#FFFFFF"
-            android:buttonTint="#FFFFFF"
             android:onClick="onPlayerRadio"/>
     </RadioGroup>
     <View

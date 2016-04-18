@@ -3,9 +3,18 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/boardColor"
+    android:background="@drawable/dialogs"
     android:gravity="center">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:id="@+id/winnerName"
+        android:textSize="30dp"/>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"/>
     <Button
         android:id="@+id/exitButton"
         android:layout_width="wrap_content"
