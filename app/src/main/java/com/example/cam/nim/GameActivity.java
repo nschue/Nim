@@ -176,7 +176,7 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-        playAgain.setOnClickListener(new View.OnClickListener() {
+        exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mainMenuIntent = new Intent(GameActivity.this,MainMenuActivity.class);
@@ -184,7 +184,7 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-        exitButton.setOnClickListener(new View.OnClickListener() {
+        playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
