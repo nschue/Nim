@@ -155,31 +155,40 @@ public class GameActivity extends Activity
         winDialog.setContentView(R.layout.dialog_win);
         winDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
-        winnerName.setText(currentPlayer .getText().toString() + " Wins!");
+        final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
+        final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
+        final Button exitButton = (Button) winDialog.findViewById(R.id.exitButton);
+
+        scoreboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreIntent = new Intent(GameActivity.this,ScoreboardActivity.class);
+                startActivity(scoreIntent);
+                finish();
+            }
+        });
+        playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainMenuIntent = new Intent(GameActivity.this,MainMenuActivity.class);
+                startActivity(mainMenuIntent);
+                finish();
+            }
+        });
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
+                Bundle mBundle = getIntent().getBundleExtra("mBundle");
+                playAgainIntent.putExtra("mBundle", mBundle);
+                startActivity(playAgainIntent);
+                finish();
+            }
+        });
+        winnerName.setText(currentPlayer.getText().toString() + " Wins!");
         winDialog.show();
     }
 
-    public void onScoreBoardButton(View view)
-    {
-        Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
-        startActivity(scoreIntent);
-        finish();
-    }
-    public void onExitButton(View view)
-    {
-        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
-        startActivity(mainMenuIntent);
-        finish();
-    }
-    public void onPlayAgain(View view)
-    {
-        Intent playAgainIntent = new Intent(this,GameActivity.class);
-        Bundle mBundle = getIntent().getBundleExtra("mBundle");
-        playAgainIntent.putExtra("mBundle", mBundle);
-        startActivity(playAgainIntent);
-        finish();
-
-    }
     public void howToPlay(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int Id) {
