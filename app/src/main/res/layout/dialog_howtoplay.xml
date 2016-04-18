@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:background="@drawable/dialogs"
     android:id="@+id/howToPlay">
     <TextView
@@ -10,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/howToPlayButtonString"
         android:textColor="#FFFFFF"
+        android:textSize="30dp"
         android:id="@+id/howToPlayTitle"/>
     <TextView
         android:layout_width="wrap_content"
