@@ -221,11 +221,11 @@ public class GameActivity extends Activity
 
         if(!this.mGameInfo.isBoolPlayerTurn())
         {    //changes the text if it isn't the player
-            if(mGameInfo.getUpdatePlayer2()!= null )
-                this.currentPlayer.setText(mGameInfo.getUpdatePlayer2());
-            else if(this.mGameInfo.isBoolComputer())
-                this.currentPlayer.setText(R.string.computerString);
 
+            if(this.mGameInfo.isBoolComputer())
+                this.currentPlayer.setText(R.string.computerString);
+            else if(mGameInfo.getUpdatePlayer2()!= null && !mGameInfo.isBoolComputer() )
+                this.currentPlayer.setText(mGameInfo.getUpdatePlayer2());
             else
                 this.currentPlayer.setText(R.string.friendString);
         }
