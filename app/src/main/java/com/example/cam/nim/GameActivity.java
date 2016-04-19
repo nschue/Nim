@@ -1,29 +1,22 @@
 package com.example.cam.nim;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 //import android.widget.ArrayAdapter;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 //import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -158,6 +151,9 @@ public class GameActivity extends Activity
         this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
     }
+    //Tells the player who won
+    // gives them the option to
+    //exit, view scoreboard, or play with the same settings
     public void WinDialog(){
         winDialog = new Dialog(GameActivity.this);
         winDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -171,7 +167,7 @@ public class GameActivity extends Activity
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent scoreIntent = new Intent(GameActivity.this,ScoreboardActivity.class);
+                Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
                 startActivity(scoreIntent);
                 finish();
             }
@@ -179,7 +175,7 @@ public class GameActivity extends Activity
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainMenuIntent = new Intent(GameActivity.this,MainMenuActivity.class);
+                Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
                 startActivity(mainMenuIntent);
                 finish();
             }
@@ -204,9 +200,7 @@ public class GameActivity extends Activity
         howToPlayDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         howToPlayDialog.setContentView(R.layout.dialog_howtoplay);
         howToPlayDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
         Button okayButton = (Button) howToPlayDialog.findViewById(R.id.okay);
-
         okayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,10 +212,9 @@ public class GameActivity extends Activity
 
     //Assigns the correct name to the current player text
     private void correctPlayerName() {
-
+        //changes the text if it isn't the player
         if(!this.mGameInfo.isBoolPlayerTurn())
-        {    //changes the text if it isn't the player
-
+        {
             if(this.mGameInfo.isBoolComputer())
                 this.currentPlayer.setText(R.string.computerString);
             else if(mGameInfo.getUpdatePlayer2()!= null && !mGameInfo.isBoolComputer() )
@@ -233,16 +226,14 @@ public class GameActivity extends Activity
         else {
             if(mGameInfo.getUpdatedPlayer1() != null)
                 this.currentPlayer.setText(mGameInfo.getUpdatedPlayer1());
-
             else
                 this.currentPlayer.setText(R.string.PlayerString);
         }
-
     }
 
     private void ChangePlayerText() {
-        if(mGameInfo.getTotalPieces() > 0) {    //Does a fade animation
-            this.currentPlayer.setAnimation(fadeInPlayerText);
+        if(mGameInfo.getTotalPieces() > 0) { //checks if there are pieces to remove
+            this.currentPlayer.setAnimation(fadeInPlayerText);//Does a fade animation
             //switches the player turn
             this.mGameInfo.setBoolPlayerTurn(!this.mGameInfo.isBoolPlayerTurn());
             correctPlayerName();

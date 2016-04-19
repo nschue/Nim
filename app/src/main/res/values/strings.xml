@@ -41,8 +41,8 @@
 
     <string-array name="NavigatorBar">
         <item>How to Play</item>
-        <item>End game</item>
         <item>Audio</item>
+        <item>End game</item>
     </string-array>
 
 
