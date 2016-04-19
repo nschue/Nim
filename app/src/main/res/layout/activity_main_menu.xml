@@ -9,10 +9,6 @@
     android:gravity="center"
     tools:context=".MainMenuActivity"
     android:background="#000E0E">
-    <!--android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"-->
 
     <!-- For the menu logo -->
     <ImageView
@@ -39,27 +35,6 @@
     <View
         android:layout_width="0dp"
         android:layout_height="6dp"/>
-    <!--
-        OptionsActivity button
-    <Button
-        android:id="@+id/optionsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="@drawable/button"
-        android:text="@string/optionsButtonString"
-        android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClick"/>
-         -->
-
-    <!-- Spacing -->
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="6dp"></View>
-    <!--Scoreboard button-->
-
     <Button
         android:id="@+id/Scoreboard"
         android:layout_width="wrap_content"
