@@ -138,28 +138,39 @@ public class OptionsActivity extends Activity {
 
         });
     }
-    public void setUpDifficultySpinner()
-    {
+    public void setUpDifficultySpinner() {
         difficultySpinner = (Spinner) findViewById(R.id.spinnerDiffculty); // finds the spinner ID
         // Sets the items  defined in the string.xml and layout of the spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.DifficultyArray, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.DifficultyArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(adapter);
+        difficultySpinner.setSelection(2);
+        difficultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position)
+                {
+                    case 0:
+                        gameInfo.setComputerDifficulty(0.0);
+                        break;
+                    case 1:
+                        gameInfo.setComputerDifficulty(0.5);
+                        break;
+                    case 2:
+                        gameInfo.setComputerDifficulty(1.0);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
-    public void onDifficultySpinnerSelection()
-    {
-        switch(difficultySpinner.getSelectedItem().toString())
-        {
-            case("Easy"):
-                break;
-            case("Medium"):
-                break;
-            case("Hard"):
-                break;
-        }
-    }
+
 
     //Takes the player back to the main menu if the player clicks the back button
     @Override
