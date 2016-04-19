@@ -35,6 +35,22 @@
     <View
         android:layout_width="0dp"
         android:layout_height="6dp"/>
+
+    <!-- Play with friend Activity -->
+    <Button
+        android:id="@+id/playWithFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="@string/playWithFriend"
+        android:padding="5dp"
+        android:textColor="#FFFFFF"
+        android:onClick="onClick"
+        android:layout_centerHorizontal="true"/>
+    <!-- Spaces the items -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="6dp"/>
     <Button
         android:id="@+id/Scoreboard"
         android:layout_width="wrap_content"

@@ -26,22 +26,31 @@ public class OptionsActivity extends Activity {
     private Button cancelStart;
     private RadioGroup playerGroup;
     private RadioGroup audioGroup;
-    private RadioGroup computerGroup;
     private Dialog changePlayerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_options);
+        gameInfo = new GameInfo();
+        Bundle bundle = getIntent().getBundleExtra("mBundle");
+        if (bundle.getBoolean("PlayWithComp"))
+        {
+            setContentView(R.layout.activity_options);
+            setUpDifficultySpinner();
+            this.gameInfo.setBoolComputer(true);
+        }
+        else
+        {   setContentView(R.layout.activity_friendplaylayout);
+            this.gameInfo.setBoolComputer(false);
+        }
+
 
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
-        computerGroup = (RadioGroup) findViewById(R.id.computerGroup);
 
-        gameInfo = new GameInfo();
+
         setUpRowSpinner();
-        setUpDifficultySpinner();
+
 
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +69,7 @@ public class OptionsActivity extends Activity {
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                mBundle.putString("newOtherPlayerName",gameInfo.getUpdatePlayer2());
+                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
                 startActivity(playIntent);
                 finish();
@@ -214,29 +223,6 @@ public class OptionsActivity extends Activity {
             default:
             {
                 gameInfo.setBoolEnableAudio(true);
-                break;
-            }
-        }
-    }
-
-    //Sets if  the audio is on
-
-    public void onComputerRadio(View view) {
-
-        int selectedRadio = computerGroup.getCheckedRadioButtonId();
-
-        switch (selectedRadio) {
-            case (R.id.radioAgainstPlayer): {
-                gameInfo.setBoolComputer(false);
-                break;
-            }
-            case (R.id.radioAgainstComp): {
-                gameInfo.setBoolComputer(true);
-                break;
-            }
-            default:
-            {
-                gameInfo.setBoolComputer(true);
                 break;
             }
         }

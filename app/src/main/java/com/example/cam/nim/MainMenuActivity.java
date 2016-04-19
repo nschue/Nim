@@ -19,10 +19,23 @@ public class MainMenuActivity extends Activity {
             case(R.id.playMenuButton):
             {
                 Intent playIntent = new Intent(this,OptionsActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putBoolean("PlayWithComp",true);
+                playIntent.putExtra("mBundle", mBundle);
                 startActivity(playIntent);
                 finish();
                 break;
             }
+            case(R.id.playWithFriend):
+            {   Intent playIntent = new Intent(this,OptionsActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putBoolean("PlayWithComp",false);
+                playIntent.putExtra("mBundle",mBundle);
+                startActivity(playIntent);
+                finish();
+                break;
+            }
+
             case(R.id.Scoreboard):
             {
                 Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
