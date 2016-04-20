@@ -214,7 +214,7 @@ public class OptionsActivity extends Activity {
     public void ChangeName( View view){
         changePlayerName = new Dialog(OptionsActivity.this);
         changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        changePlayerName.setContentView(R.layout.dialog_name);
+        changePlayerName.setContentView(R.layout.dialog_name_pcverison);
         changePlayerName.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         Button applyButton = (Button) changePlayerName.findViewById(R.id.okName);
         Button cancelButton = (Button) changePlayerName.findViewById(R.id.cancelName);
