@@ -14,30 +14,6 @@
         android:textColor="#FFFFFF"
         android:textSize="20dp"/>
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/PlayerNameGroup"
-        android:checkedButton="@+id/playerOne">
-
-        <RadioButton
-            android:id="@+id/playerOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:padding="10dp"
-            android:text="@string/PlayerString" />
-
-        <RadioButton
-            android:id="@+id/playerTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:padding="10dp"
-            android:text="@string/friendString"/>
-    </RadioGroup>
-
     <EditText
         android:id="@+id/playerEditName"
         android:layout_width="match_parent"

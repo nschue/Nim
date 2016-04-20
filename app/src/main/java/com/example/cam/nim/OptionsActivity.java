@@ -148,8 +148,7 @@ public class OptionsActivity extends Activity {
         difficultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position)
-                {
+                switch (position) {
                     case 0:
                         gameInfo.setComputerDifficulty(0.0);
                         break;
@@ -169,9 +168,6 @@ public class OptionsActivity extends Activity {
         });
 
     }
-
-
-
     //Takes the player back to the main menu if the player clicks the back button
     @Override
     public void onBackPressed()
@@ -204,6 +200,36 @@ public class OptionsActivity extends Activity {
                 if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
                 changePlayerName.dismiss();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePlayerName.dismiss();
+            }
+        });
+
+        changePlayerName.show();
+    }
+    public void ChangeName( View view){
+        changePlayerName = new Dialog(OptionsActivity.this);
+        changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        changePlayerName.setContentView(R.layout.dialog_name);
+        changePlayerName.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Button applyButton = (Button) changePlayerName.findViewById(R.id.okName);
+        Button cancelButton = (Button) changePlayerName.findViewById(R.id.cancelName);
+        final EditText playerEditText = (EditText) changePlayerName.findViewById(R.id.playerEditName);
+
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+            if (!playerEditText.getText().toString().isEmpty())
+                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+
+            changePlayerName.dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
