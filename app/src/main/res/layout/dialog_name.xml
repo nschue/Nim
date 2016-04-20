@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:padding="10dp"
-            android:text="@string/playerOne" />
+            android:text="@string/PlayerString" />
 
         <RadioButton
             android:id="@+id/playerTwo"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:padding="10dp"
-            android:text="@string/playerTwo"/>
+            android:text="@string/friendString"/>
     </RadioGroup>
 
     <EditText
