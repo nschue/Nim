@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 /*
 Class:Options
@@ -59,6 +60,7 @@ public class OptionsActivity extends Activity {
 
                 Intent playIntent = new Intent(v.getContext(), GameActivity.class);
                 Bundle mBundle = new Bundle();
+                getComputerSpeed();
                 /*Bundles game info up into type Bundle so that it can be passed when playIntent
                 * is started. GameActivity will then "unbundle" and create a new GameInfo object
                 * with identical values.                                                        */
@@ -86,6 +88,11 @@ public class OptionsActivity extends Activity {
             }
         });
 
+    }
+    public void getComputerSpeed()
+    {
+        SeekBar computerSpeed = (SeekBar)findViewById(R.id.computerSpeedSeekbar);
+        gameInfo.setComputerSpeed(computerSpeed.getProgress());
     }
 
     public void setUpRowSpinner()

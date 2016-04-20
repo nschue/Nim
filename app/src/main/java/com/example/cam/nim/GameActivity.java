@@ -412,7 +412,7 @@ public class GameActivity extends Activity
                 mSelectedPieces = new ArrayList<>();
                 ChangePlayerText();
             }
-        }, 500*mGameInfo.getComputerSpeed()+500);
+        }, 5*mGameInfo.getComputerSpeed()+500);
     }
 
     private void checkRowSelect(int currentID)
