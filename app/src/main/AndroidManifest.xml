@@ -8,14 +8,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainMenuActivity">
+        <activity android:name=".MainMenuActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity">
+        <activity android:name=".GameActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,19 +26,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OptionsActivity">
+            android:name=".OptionsActivity"
+            android:screenOrientation="portrait">
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
         <activity
-            android:name=".HowToPlay"
-            android:label="@string/howToPlayButtonString"
-            android:theme="@android:style/Theme.Dialog">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GameActivity" />
-        </activity>
-        <activity
             android:name=".CreditsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_credits"
             android:parentActivityName=".MainMenuActivity"
             android:theme="@style/AppTheme.NoActionBar">

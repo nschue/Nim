@@ -202,7 +202,7 @@ public class OptionsActivity extends Activity {
                 int choice = playerSwitch.getCheckedRadioButtonId();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-                if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
+                if (choice == R.id.playerOne && playerEditText.getText() != null)
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
                 if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
