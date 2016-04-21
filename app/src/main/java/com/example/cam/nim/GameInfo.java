@@ -143,4 +143,13 @@ public class GameInfo {
         else
             this.totalPieces = totalPieces;
     }
+    //convert difficulty to integer
+    public int getdifficultyCoversion()
+    {
+        int level=0;
+        if(Double.compare(this.mComputerDifficulty,0.0) == 0) {level = 0;}
+        else if(Double.compare(this.mComputerDifficulty,1.0) == 0) {level = 1;}
+        else { level = 2;}
+        return level;
+    }
 }

@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 /*
 Class:Options
 The activity creates the menu to setup the game
@@ -29,11 +32,21 @@ public class OptionsActivity extends Activity {
     private RadioGroup audioGroup;
     private Dialog changePlayerName;
 
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameInfo = new GameInfo();
         Bundle bundle = getIntent().getBundleExtra("mBundle");
+
+        //call up the database
+        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+
         if (bundle.getBoolean("PlayWithComp"))
         {
             setContentView(R.layout.activity_options);
@@ -73,8 +86,72 @@ public class OptionsActivity extends Activity {
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
                 mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
-                startActivity(playIntent);
-                finish();
+
+                //Check which database to add to
+
+                int level = gameInfo.getdifficultyCoversion();
+
+                //Alert box if name already exist in database
+                if(level ==0 && (dbHandlerEasy.checkName(gameInfo.getUpdatedPlayer1()) != null) ) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Name already exist");
+                    alertDialogBuilder
+                            .setMessage("Please repick a different name!")
+                            .setCancelable(false)
+                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                else if(level ==1 && (dbHandlerMed.checkName(gameInfo.getUpdatedPlayer1()) != null) ) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Name already exist");
+                    alertDialogBuilder
+                            .setMessage("Please repick a different name!")
+                            .setCancelable(false)
+                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                else if(level ==2 && (dbHandlerHard.checkName(gameInfo.getUpdatedPlayer1()) != null) ) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Name already exist");
+                    alertDialogBuilder
+                            .setMessage("Please repick a different name!")
+                            .setCancelable(false)
+                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                else {
+
+                    switch (level) {
+                        case 0:
+                            dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
+                            break;
+                        case 1:
+                            dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
+                            break;
+                        case 2:
+                            dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
+                            break;
+                    }
+
+
+                    startActivity(playIntent);
+                    finish();
+                }
             }
         });
 
@@ -215,7 +292,6 @@ public class OptionsActivity extends Activity {
                 changePlayerName.dismiss();
             }
         });
-
         changePlayerName.show();
     }
     public void ChangeName( View view){

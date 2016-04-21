@@ -12,10 +12,16 @@ public class ScoreboardActivity extends AppCompatActivity {
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
+
+        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -41,15 +47,10 @@ public class ScoreboardActivity extends AppCompatActivity {
         tabHost.addTab(tabSpec);
 
         easytxtText = (TextView) findViewById(R.id.easytextView);
-        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         medtxtText = (TextView) findViewById(R.id.mediumtextView);
-        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         hardtxtText = (TextView) findViewById(R.id.hardtextView);
-        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         playertxtText = (TextView) findViewById(R.id.playertextView);
-        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
-
-
+        /*
         dbHandlerEasy.insertData("Vincent", "3", "2","4");
         dbHandlerEasy.insertData("Ken", "2", "4","3");
         dbHandlerEasy.insertData("Nic", "3", "7","2");
@@ -71,6 +72,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         dbHandlerPlayer.insertData("Cam", "4", "5","1");
 
         dbHandlerEasy.updateData("Vincent", "10", "9", "6");
+        */
         //deleting player, for testing purpose
 /*
         dbHandlerEasy.deletePlayer("Vincent");
@@ -93,7 +95,6 @@ public class ScoreboardActivity extends AppCompatActivity {
         dbHandlerPlayer.deletePlayer("Cam");
         dbHandlerPlayer.deletePlayer("Nic");
 */
-
 
         //print out the data
         try {

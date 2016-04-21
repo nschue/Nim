@@ -32,6 +32,9 @@ public class GameActivity extends Activity
     private TextView currentPlayer;
     private Dialog winDialog,howToPlayDialog;
 
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
+
+
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
     private AI mAI;
@@ -44,6 +47,10 @@ public class GameActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
+        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
         /*choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,6 +170,28 @@ public class GameActivity extends Activity
         final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
         final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
         final Button exitButton = (Button) winDialog.findViewById(R.id.exitButton);
+
+        //check winner and update score to database
+        getGameInfo();
+        int level=mGameInfo.getdifficultyCoversion();
+        String winner = winnerName.toString();
+
+        switch(level){
+            case 0:{
+                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
+                {
+                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1"); //if win
+
+                }
+                else
+                {
+                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                }
+                break;
+            }
+
+        }
+
 
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override

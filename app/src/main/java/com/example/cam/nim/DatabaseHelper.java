@@ -47,12 +47,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         ContentValues contentValues = new ContentValues();
 
 
-        String winPercent = String.format("%.2f", (double)(Integer.parseInt(win))/(Integer.parseInt(win)+Integer.parseInt(loses))*100);
+        //String winPercent = String.format("%.2f", (double)(Integer.parseInt(win))/(Integer.parseInt(win)+Integer.parseInt(loses))*100);
         contentValues.put(COL_NAME,name);
         contentValues.put(COL_WIN,win);
         contentValues.put(COL_LOSES,loses);
         contentValues.put(COL_STREAK, streak);
-        contentValues.put(COL_WIN_PERCENT,winPercent);
+        contentValues.put(COL_WIN_PERCENT,"0.0");
 
         if(checkName(name) == null) {
             this.getWritableDatabase().insertOrThrow(TABLE_NAME, "", contentValues);
@@ -103,12 +103,31 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
     public void updateData(String name, String win,String loses, String streak)
     {
+        int update_win = Integer.parseInt(win);
+        int update_loses = Integer.parseInt(loses);
+        int update_streak = Integer.parseInt(streak);
+
+        Cursor data = checkName(name);
+        int dwin = data.getInt(2);
+        int dloses = data.getInt(3);
+        int dstreak = data.getInt(5);
+
+        update_win += dwin;
+        update_loses += dloses;
+        update_streak += dstreak;
+
+        if(update_streak <= 0){ update_streak = 0;}
+
+
+        String winPercent = String.format("%.2f", (double)update_win/(update_win+update_loses)*100);
+
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = checkName(name);
         ContentValues cv = new ContentValues();
-        cv.put(COL_WIN,win);
-        cv.put(COL_LOSES,loses);
-        cv.put(COL_STREAK,streak);
+        cv.put(COL_WIN,Integer.toString(update_win));
+        cv.put(COL_LOSES,Integer.toString(update_loses));
+        cv.put(COL_STREAK,Integer.toString(update_streak));
+        cv.put(COL_WIN_PERCENT,winPercent);
         db.update(TABLE_NAME,cv,"ID="+res.getString(0),null);
     }
 }
