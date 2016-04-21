@@ -37,10 +37,10 @@
         android:layout_width="0dp"
         android:layout_height="5dp"/>
     <Button
-        android:id="@+id/exitButton"
+        android:id="@+id/newGame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:background="@drawable/button"
-        android:text="@string/Exit" />
+        android:text="@string/newGame" />
 </LinearLayout>

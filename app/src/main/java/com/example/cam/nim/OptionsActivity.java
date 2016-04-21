@@ -60,18 +60,24 @@ public class OptionsActivity extends Activity {
 
                 Intent playIntent = new Intent(v.getContext(), GameActivity.class);
                 Bundle mBundle = new Bundle();
-                getComputerSpeed();
+
                 /*Bundles game info up into type Bundle so that it can be passed when playIntent
                 * is started. GameActivity will then "unbundle" and create a new GameInfo object
                 * with identical values.                                                        */
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn", gameInfo.isBoolPlayerTurn());//Add player turn to bundle
-                mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add player turn to bundle
-                mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
+                mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add if it is a computer player to bundle
+                if(gameInfo.isBoolComputer()) {
+                    SeekBar computerSpeed = (SeekBar)findViewById(R.id.computerSpeedSeekbar);
+                    gameInfo.setComputerSpeed(computerSpeed.getProgress());
+                    mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
+                    mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
+                }
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
-                mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
-                mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+                if(!gameInfo.getUpdatedPlayer1().equals("Player") )
+                    mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
+                if(!gameInfo.getUpdatePlayer2().equals("Friend") )
+                    mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
                 startActivity(playIntent);
                 finish();
@@ -89,11 +95,7 @@ public class OptionsActivity extends Activity {
         });
 
     }
-    public void getComputerSpeed()
-    {
-        SeekBar computerSpeed = (SeekBar)findViewById(R.id.computerSpeedSeekbar);
-        gameInfo.setComputerSpeed(computerSpeed.getProgress());
-    }
+
 
     public void setUpRowSpinner()
     {
@@ -202,9 +204,9 @@ public class OptionsActivity extends Activity {
                 int choice = playerSwitch.getCheckedRadioButtonId();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-                if (choice == R.id.playerOne && playerEditText.getText() != null)
+                if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
-                if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
+                else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty() )
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
                 changePlayerName.dismiss();
             }
