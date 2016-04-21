@@ -88,70 +88,32 @@ public class OptionsActivity extends Activity {
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
 
                 //Check which database to add to
-
                 int level = gameInfo.getdifficultyCoversion();
+                if(gameInfo.isBoolComputer()) {
+                    if (level == 0) {
+                        if (gameInfo.getUpdatedPlayer1() == null) {
+                            gameInfo.setUpdatedPlayer1("Player"); //assign player name to default name
+                        } else {
+                            dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new data
+                        }
 
-                //Alert box if name already exist in database
-                if(level ==0 && (dbHandlerEasy.checkName(gameInfo.getUpdatedPlayer1()) != null) ) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    alertDialogBuilder.setTitle("Name already exist");
-                    alertDialogBuilder
-                            .setMessage("Please repick a different name!")
-                            .setCancelable(false)
-                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-                }
-                else if(level ==1 && (dbHandlerMed.checkName(gameInfo.getUpdatedPlayer1()) != null) ) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    alertDialogBuilder.setTitle("Name already exist");
-                    alertDialogBuilder
-                            .setMessage("Please repick a different name!")
-                            .setCancelable(false)
-                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-                }
-                else if(level ==2 && (dbHandlerHard.checkName(gameInfo.getUpdatedPlayer1()) != null) ) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    alertDialogBuilder.setTitle("Name already exist");
-                    alertDialogBuilder
-                            .setMessage("Please repick a different name!")
-                            .setCancelable(false)
-                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-                }
-                else {
-
-                    switch (level) {
-                        case 0:
-                            dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
-                            break;
-                        case 1:
+                    } else if (level == 1) {
+                        if (gameInfo.getUpdatedPlayer1() == null) {
+                            gameInfo.setUpdatedPlayer1("Player");
+                        } else {
                             dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
-                            break;
-                        case 2:
+                        }
+
+                    } else {
+                        if (gameInfo.getUpdatedPlayer1() == null) {
+                            gameInfo.setUpdatedPlayer1("Player");
+                        } else {
                             dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
-                            break;
+                        }
                     }
-
-
-                    startActivity(playIntent);
-                    finish();
                 }
+                startActivity(playIntent);
+                finish();
             }
         });
 

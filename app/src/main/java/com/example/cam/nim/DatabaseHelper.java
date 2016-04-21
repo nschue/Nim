@@ -38,14 +38,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    public double findWinStreak(int winCount,int gamePlayed)
-    {
-        return  gamePlayed/winCount;
-    }
     public boolean insertData(String name,String win,String loses,String streak) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
 
         //String winPercent = String.format("%.2f", (double)(Integer.parseInt(win))/(Integer.parseInt(win)+Integer.parseInt(loses))*100);
         contentValues.put(COL_NAME,name);
@@ -53,14 +48,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(COL_LOSES,loses);
         contentValues.put(COL_STREAK, streak);
         contentValues.put(COL_WIN_PERCENT,"0.0");
-
+        //check if not exist then add new one
         if(checkName(name) == null) {
             this.getWritableDatabase().insertOrThrow(TABLE_NAME, "", contentValues);
             db.close();
             return true;
         }
-        db.close();
-        return false;
+        else
+        {
+            Cursor existname = checkName(name);
+            updateData(name,win,loses,streak);
+            db.close();
+            return true;
+        }
     }
     public void deletePlayer(String playerName){
         SQLiteDatabase db = getWritableDatabase();
@@ -76,10 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         StringBuffer buffer = new StringBuffer();
         while(res.moveToNext())
         {
-            buffer.append(count+".\t\tW:"+res.getString(2)+"\t\t");
-            buffer.append("L:"+res.getString(3)+"\t\t");
-            buffer.append("W:"+formatter.format(res.getDouble(4))+"%\t\t");
-            buffer.append("Stk:"+res.getString(5)+"\t\t");
+            buffer.append(count+".\t\t\t"+res.getString(2)+"\t\t\t\t");
+            buffer.append(res.getString(3)+"\t\t\t\t");
+            buffer.append(formatter.format(res.getDouble(4))+"%\t\t\t\t");
+            buffer.append(res.getString(5)+"\t\t\t\t");
             buffer.append(res.getString(1)+"\n\n");
             count++;
         }
@@ -92,7 +92,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String sortOrder = COL_NAME + " ASC";
         Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortOrder);
 
-        //check for duplicate name if it exist then it won't add to the data
         while(res.moveToNext())
         {
             if(name.equalsIgnoreCase(res.getString(1))){

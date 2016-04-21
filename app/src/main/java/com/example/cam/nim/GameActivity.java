@@ -171,28 +171,6 @@ public class GameActivity extends Activity
         final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
         final Button exitButton = (Button) winDialog.findViewById(R.id.exitButton);
 
-        //check winner and update score to database
-        getGameInfo();
-        int level=mGameInfo.getdifficultyCoversion();
-        String winner = winnerName.toString();
-
-        switch(level){
-            case 0:{
-                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
-                {
-                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1"); //if win
-
-                }
-                else
-                {
-                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
-                }
-                break;
-            }
-
-        }
-
-
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,6 +199,48 @@ public class GameActivity extends Activity
         });
         winnerName.setText(currentPlayer.getText().toString() + " Wins!");
         winDialog.show();
+
+        //check winner and update score to database
+        getGameInfo();
+        int level=mGameInfo.getdifficultyCoversion();
+        String winner = currentPlayer.getText().toString();
+
+        switch(level){
+            case 0:{
+                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
+                {
+                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1");
+                }
+                else
+                {
+                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                }
+                break;
+            }
+            case 1:{
+                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
+                {
+                    dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1");
+                }
+                else
+                {
+                    dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                }
+                break;
+            }
+            case 2:{
+                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
+                {
+                    dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1");
+                }
+                else
+                {
+                    dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                }
+                break;
+            }
+
+        }
     }
 
     public void howToPlay() {
