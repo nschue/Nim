@@ -150,10 +150,8 @@ public class GameActivity extends Activity
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setTotalPieces(this.mGameInfo.findTotal(this.mGameInfo.getnRowAmount()));
 
-        if(!mGameInfo.getUpdatedPlayer1().equals("Player"))
-            this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
-        if(!mGameInfo.getUpdatePlayer2().equals("Computer") )
-            this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
+        this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
+        this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
     }
     //Tells the player who won
@@ -238,7 +236,7 @@ public class GameActivity extends Activity
         }
         //changes it back the the player
         else {
-            if(mGameInfo.getUpdatedPlayer1() != null && !mGameInfo.getUpdatedPlayer1().isEmpty())
+            if( !mGameInfo.getUpdatedPlayer1().equals("Player"))
                 this.currentPlayer.setText(mGameInfo.getUpdatedPlayer1());
             else
                 this.currentPlayer.setText(R.string.PlayerString);

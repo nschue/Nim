@@ -31,15 +31,6 @@ public class GameInfo {
         this.updatePlayer2 = "Friend";
 
     }
-    GameInfo(boolean enableAudio,boolean playerTurn, long computerSpeed,int nRowAmount, double computerDifficulty)
-    {
-        this.boolPlayerTurn = playerTurn;
-        this.boolEnableAudio = enableAudio;
-        this.computerSpeed = computerSpeed;
-        this.nRowAmount = nRowAmount;
-        this.mComputerDifficulty = computerDifficulty;
-        this.mRemainingDots = new ArrayList<>();
-    }
 
     public boolean isBoolEnableAudio() {
         return boolEnableAudio;
