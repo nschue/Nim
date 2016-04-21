@@ -50,52 +50,8 @@ public class ScoreboardActivity extends AppCompatActivity {
         medtxtText = (TextView) findViewById(R.id.mediumtextView);
         hardtxtText = (TextView) findViewById(R.id.hardtextView);
         playertxtText = (TextView) findViewById(R.id.playertextView);
-        /*
-        dbHandlerEasy.insertData("Vincent", "3", "2","4");
-        dbHandlerEasy.insertData("Ken", "2", "4","3");
-        dbHandlerEasy.insertData("Nic", "3", "7","2");
-        dbHandlerEasy.insertData("Cam", "4", "5","1");
 
-        dbHandlerMed.insertData("Vincent", "3", "2","4");
-        dbHandlerMed.insertData("Ken", "2", "4","3");
-        dbHandlerMed.insertData("Nic", "3", "7","2");
-        dbHandlerMed.insertData("Cam", "4", "5","1");
-
-        dbHandlerHard.insertData("Vincent", "3", "2","4");
-        dbHandlerHard.insertData("Ken", "2", "4","3");
-        dbHandlerHard.insertData("Nic", "3", "7","2");
-        dbHandlerHard.insertData("Cam", "4", "5","1");
-
-        dbHandlerPlayer.insertData("Vincent", "3", "2","4");
-        dbHandlerPlayer.insertData("Ken", "2", "4","3");
-        dbHandlerPlayer.insertData("Nic", "3", "7","2");
-        dbHandlerPlayer.insertData("Cam", "4", "5","1");
-
-        dbHandlerEasy.updateData("Vincent", "10", "9", "6");
-        */
-        //deleting player, for testing purpose
-/*
-        dbHandlerEasy.deletePlayer("Vincent");
-        dbHandlerEasy.deletePlayer("Ken");
-        dbHandlerEasy.deletePlayer("Cam");
-        dbHandlerEasy.deletePlayer("Nic");
-
-        dbHandlerMed.deletePlayer("Vincent");
-        dbHandlerMed.deletePlayer("Ken");
-        dbHandlerMed.deletePlayer("Cam");
-        dbHandlerMed.deletePlayer("Nic");
-
-        dbHandlerHard.deletePlayer("Vincent");
-        dbHandlerHard.deletePlayer("Ken");
-        dbHandlerHard.deletePlayer("Cam");
-        dbHandlerHard.deletePlayer("Nic");
-
-        dbHandlerPlayer.deletePlayer("Vincent");
-        dbHandlerPlayer.deletePlayer("Ken");
-        dbHandlerPlayer.deletePlayer("Cam");
-        dbHandlerPlayer.deletePlayer("Nic");
-*/
-
+        //dbHandlerMed.deletePlayer("vicky");
         //print out the data
         try {
             printData("easy","WIN DESC");
