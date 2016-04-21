@@ -43,61 +43,20 @@ public class ScoreboardActivity extends AppCompatActivity {
         easytxtText = (TextView) findViewById(R.id.easytextView);
         dbHandlerEasy = new DatabaseHelper(this,"easy2.db","easy_table");
 
-        // In method insertData(name, score,winstreak), will be inserting to different levels
-        // Fake data below for testing. Replace with real data later on
 
-        dbHandlerEasy.insertData("Vincent", "99.6", "1");
-        dbHandlerEasy.insertData("Ken", "99.7", "3");
-        dbHandlerEasy.insertData("Nic", "99.8", "5");
-        dbHandlerEasy.insertData("Cam", "99.9", "2");
 
         medtxtText = (TextView) findViewById(R.id.mediumtextView);
         dbHandlerMed = new DatabaseHelper(this,"medium2.db", "medium_table");
 
-        dbHandlerMed.insertData("Vincent", "99.6", "1");
-        dbHandlerMed.insertData("Ken", "99.7", "3");
-        dbHandlerMed.insertData("Nic", "99.8", "5");
-        dbHandlerMed.insertData("Cam", "99.9", "2");
 
         hardtxtText = (TextView) findViewById(R.id.hardtextView);
         dbHandlerHard = new DatabaseHelper(this,"hard2.db", "hard_table");
 
-        dbHandlerHard.insertData("Vincent", "99.6", "1");
-        dbHandlerHard.insertData("Ken", "99.7", "3");
-        dbHandlerHard.insertData("Nic", "99.8", "5");
-        dbHandlerHard.insertData("Cam", "99.9", "2");
+
 
         playertxtText = (TextView) findViewById(R.id.playertextView);
         dbHandlerPlayer = new DatabaseHelper(this,"player2.db", "player_table");
 
-        dbHandlerPlayer.insertData("Vincent", "99.6", "1");
-        dbHandlerPlayer.insertData("Ken", "99.7", "3");
-        dbHandlerPlayer.insertData("Nic", "99.8", "5");
-        dbHandlerPlayer.insertData("Cam", "99.9", "2");
-
-
-        //deleting player, for testing purpose
-        /*
-        dbHandlerEasy.deletePlayer("Vincent");
-        dbHandlerEasy.deletePlayer("Ken");
-        dbHandlerEasy.deletePlayer("Cam");
-        dbHandlerEasy.deletePlayer("Nic");
-
-        dbHandlerMed.deletePlayer("Vincent");
-        dbHandlerMed.deletePlayer("Ken");
-        dbHandlerMed.deletePlayer("Cam");
-        dbHandlerMed.deletePlayer("Nic");
-
-        dbHandlerHard.deletePlayer("Vincent");
-        dbHandlerHard.deletePlayer("Ken");
-        dbHandlerHard.deletePlayer("Cam");
-        dbHandlerHard.deletePlayer("Nic");
-
-        dbHandlerPlayer.deletePlayer("Vincent");
-        dbHandlerPlayer.deletePlayer("Ken");
-        dbHandlerPlayer.deletePlayer("Cam");
-        dbHandlerPlayer.deletePlayer("Nic");
-        */
 
 
         //print out the data

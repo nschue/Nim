@@ -161,16 +161,35 @@ public class GameActivity extends Activity
         winDialog = new Dialog(GameActivity.this);
         winDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         winDialog.setContentView(R.layout.dialog_win);
+
         winDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
         final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
         final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
         final Button newGame = (Button) winDialog.findViewById(R.id.newGame);
+        winnerName.setText(currentPlayer.getText().toString() + " Wins!");
 
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                Bundle mBundle = new Bundle();
+                //Stores the Winner
+                mBundle.putString("Winner",currentPlayer.getText().toString());
+
+                //Player lost is the loser
+                if(!mGameInfo.isBoolPlayerTurn())
+                    mBundle.putString("Loser",mGameInfo.getUpdatedPlayer1());
+                //Player won
+                else
+                {   //Not the computer, Friend lost
+                    if(!mGameInfo.isBoolComputer())
+                        mBundle.putString("Loser",mGameInfo.getUpdatePlayer2());
+                    //Not the Friend , Computer lost
+                    else
+                        mBundle.putString("Loser","Computer");
+                }
+
                 startActivity(scoreIntent);
                 finish();
             }
@@ -202,7 +221,7 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-        winnerName.setText(currentPlayer.getText().toString() + " Wins!");
+
         winDialog.show();
     }
 

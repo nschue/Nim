@@ -12,9 +12,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     String PLAYER_DATABASE = null;
     String TABLE_NAME = null;
     public static final String COL_ID = "ID";
-    public static final String COL_NAME = "NAME";
-    public static final String COL_SCORE = "SCORE";
-    public static final String COL_STREAK = "STREAK";
+    public static final String COL_NAME = "NAME"; //Name of the Player
+    public static final String COL_TOTAL = "TOTAL"; // Total games played
+    public static final String COL_WINS = "WINS"; //Wins of the Player
+    public static final String COL_STREAK = "STREAK"; //Total Conscetive wins
 
     public DatabaseHelper(Context context, String dataName, String tableName) {
         super(context, dataName, null, 1);
@@ -32,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    public double findWinStreak(int winCount,int gamePlayed)
+    public double findWinPercent(int winCount,int gamePlayed)
     {
         return  gamePlayed/winCount;
     }
