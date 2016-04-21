@@ -27,8 +27,8 @@ public class GameInfo {
         this.computerSpeed = 1;
         this.totalPieces = findTotal(nRowAmount);
         this.mRemainingDots = new ArrayList<>();
-        this.updatedPlayer1 = null;
-        this.updatePlayer2 = null;
+        this.updatedPlayer1 = "Player";
+        this.updatePlayer2 = "Friend";
 
     }
     GameInfo(boolean enableAudio,boolean playerTurn, long computerSpeed,int nRowAmount, double computerDifficulty)

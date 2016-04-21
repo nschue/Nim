@@ -143,12 +143,17 @@ public class GameActivity extends Activity
         this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
         this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
         this.mGameInfo.setBoolComputer(extras.getBoolean("boolComputer"));
-        this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+        if(mGameInfo.isBoolComputer()) {
+            this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+            this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
+        }
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setTotalPieces(this.mGameInfo.findTotal(this.mGameInfo.getnRowAmount()));
-        this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
-        this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
-        this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
+
+        if(!mGameInfo.getUpdatedPlayer1().equals("Player"))
+            this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
+        if(!mGameInfo.getUpdatePlayer2().equals("Computer") )
+            this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
     }
     //Tells the player who won
@@ -162,7 +167,7 @@ public class GameActivity extends Activity
         final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
         final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
         final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
-        final Button exitButton = (Button) winDialog.findViewById(R.id.exitButton);
+        final Button newGame = (Button) winDialog.findViewById(R.id.newGame);
 
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,11 +177,20 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-        exitButton.setOnClickListener(new View.OnClickListener() {
+        newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
-                startActivity(mainMenuIntent);
+                Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
+                Bundle mBundle = new Bundle();
+                if(mGameInfo.isBoolComputer()){
+                    mBundle.putBoolean("PlayWithComp", true);
+                }
+                else
+                {
+                    mBundle.getBoolean("PlayWithComp",false);
+                }
+                newGameIntent.putExtra("mBundle", mBundle);
+                startActivity(newGameIntent);
                 finish();
             }
         });
@@ -217,14 +231,14 @@ public class GameActivity extends Activity
         {
             if(this.mGameInfo.isBoolComputer())
                 this.currentPlayer.setText(R.string.computerString);
-            else if(mGameInfo.getUpdatePlayer2()!= null && !mGameInfo.isBoolComputer() )
+            else if(!mGameInfo.isBoolComputer() )
                 this.currentPlayer.setText(mGameInfo.getUpdatePlayer2());
             else
                 this.currentPlayer.setText(R.string.friendString);
         }
         //changes it back the the player
         else {
-            if(mGameInfo.getUpdatedPlayer1() != null)
+            if(mGameInfo.getUpdatedPlayer1() != null && !mGameInfo.getUpdatedPlayer1().isEmpty())
                 this.currentPlayer.setText(mGameInfo.getUpdatedPlayer1());
             else
                 this.currentPlayer.setText(R.string.PlayerString);
