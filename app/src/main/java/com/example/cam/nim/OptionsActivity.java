@@ -74,10 +74,9 @@ public class OptionsActivity extends Activity {
                     mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
                 }
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
-                if(!gameInfo.getUpdatedPlayer1().equals("Player") )
-                    mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                if(!gameInfo.getUpdatePlayer2().equals("Friend") )
-                    mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+                mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
+                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
                 startActivity(playIntent);
                 finish();
@@ -206,7 +205,7 @@ public class OptionsActivity extends Activity {
                 imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
                 if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
-                else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty() )
+                else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
                 changePlayerName.dismiss();
             }
