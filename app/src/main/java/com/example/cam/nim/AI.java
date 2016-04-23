@@ -1,6 +1,7 @@
 package com.example.cam.nim;
 import java.util.ArrayList;
 import java.util.Random;
+import android.util.Log;
 
 /**
  * It should be noted that the "impossible" difficulty may not actually be
@@ -100,6 +101,13 @@ public class AI
         {
             // If victory is uncertain or the AI makes a 'mistake', choose randomly
             rowChoice = rndm.nextInt(populatedRowCount);
+            for(int i = 0; i <= rowChoice; i++)
+            {
+                if(dotCountPerRow.get(i) == 0)
+                {
+                    ++rowChoice;
+                }
+            }
             dotsChoice = rndm.nextInt(dotCountPerRow.get(rowChoice))+1;
         }
         // fullMove.add(rowChoice);
@@ -119,6 +127,8 @@ public class AI
         }
         return fullMove;
     }
+
+
     /**
      * generates a boolean value based on the difficulty to determine whether
      * or not the AI makes a mistake
