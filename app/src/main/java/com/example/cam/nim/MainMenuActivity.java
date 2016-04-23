@@ -16,10 +16,6 @@ public class MainMenuActivity extends Activity {
     }
   //launches the activites based on the button selections
     public void onClick(View view) {
-        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
-        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
-        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
-        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
         switch(view.getId())
         {

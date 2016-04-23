@@ -33,20 +33,18 @@ public class OptionsActivity extends Activity {
     private Dialog changePlayerName;
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
-    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameInfo = new GameInfo();
-        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
-        //call up the database
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
+        gameInfo = new GameInfo();
+        Bundle bundle = getIntent().getBundleExtra("mBundle");
         if (bundle.getBoolean("PlayWithComp"))
         {
             setContentView(R.layout.activity_options);
@@ -73,45 +71,44 @@ public class OptionsActivity extends Activity {
 
                 Intent playIntent = new Intent(v.getContext(), GameActivity.class);
                 Bundle mBundle = new Bundle();
-                getComputerSpeed();
+
                 /*Bundles game info up into type Bundle so that it can be passed when playIntent
                 * is started. GameActivity will then "unbundle" and create a new GameInfo object
                 * with identical values.                                                        */
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn", gameInfo.isBoolPlayerTurn());//Add player turn to bundle
-                mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add player turn to bundle
-                mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
+                mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add if it is a computer player to bundle
+                if(gameInfo.isBoolComputer()) {
+                    SeekBar computerSpeed = (SeekBar)findViewById(R.id.computerSpeedSeekbar);
+                    gameInfo.setComputerSpeed(computerSpeed.getProgress());
+                    mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
+                    mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
+                }
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
-                mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
                 mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
 
                 //Check which database to add to
                 int level = gameInfo.getdifficultyCoversion();
                 if(gameInfo.isBoolComputer()) {
                     if (level == 0) {
-                        if (gameInfo.getUpdatedPlayer1() == null) {
-                            gameInfo.setUpdatedPlayer1("Player"); //assign player name to default name
-                        } else {
-                            dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new data
+                        //check if exist in database
+                        if (dbHandlerEasy.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
                         }
-
                     } else if (level == 1) {
-                        if (gameInfo.getUpdatedPlayer1() == null) {
-                            gameInfo.setUpdatedPlayer1("Player");
-                        } else {
-                            dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
+                        if (dbHandlerMed.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
                         }
-
                     } else {
-                        if (gameInfo.getUpdatedPlayer1() == null) {
-                            gameInfo.setUpdatedPlayer1("Player");
-                        } else {
-                            dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0");
+                        if (dbHandlerHard.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
                         }
                     }
                 }
+
                 startActivity(playIntent);
                 finish();
             }
@@ -128,11 +125,7 @@ public class OptionsActivity extends Activity {
         });
 
     }
-    public void getComputerSpeed()
-    {
-        SeekBar computerSpeed = (SeekBar)findViewById(R.id.computerSpeedSeekbar);
-        gameInfo.setComputerSpeed(computerSpeed.getProgress());
-    }
+
 
     public void setUpRowSpinner()
     {
@@ -243,7 +236,7 @@ public class OptionsActivity extends Activity {
                 imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
                 if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
-                if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
+                else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
                 changePlayerName.dismiss();
             }
@@ -254,6 +247,7 @@ public class OptionsActivity extends Activity {
                 changePlayerName.dismiss();
             }
         });
+
         changePlayerName.show();
     }
     public void ChangeName( View view){
@@ -269,12 +263,12 @@ public class OptionsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-            if (!playerEditText.getText().toString().isEmpty())
-                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+                if (!playerEditText.getText().toString().isEmpty())
+                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
 
-            changePlayerName.dismiss();
+                changePlayerName.dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -319,12 +313,12 @@ public class OptionsActivity extends Activity {
 
         switch (selectedRadio) {
             case (R.id.radioDisable): {
-                    gameInfo.setBoolEnableAudio(false);
-                    break;
+                gameInfo.setBoolEnableAudio(false);
+                break;
             }
             case (R.id.radioEnable): {
-                    gameInfo.setBoolEnableAudio(true);
-                    break;
+                gameInfo.setBoolEnableAudio(true);
+                break;
             }
             default: {
                 gameInfo.setBoolEnableAudio(true);
@@ -333,3 +327,4 @@ public class OptionsActivity extends Activity {
         }
     }
 }
+

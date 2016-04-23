@@ -23,22 +23,13 @@ public class GameInfo {
         this.boolEnableAudio = true;
         this.boolPlayerTurn = true;
         this.nRowAmount = 5;
-        this.mComputerDifficulty = 2.0;
+        this.mComputerDifficulty = 1.0;//intially 2.0
         this.computerSpeed = 1;
         this.totalPieces = findTotal(nRowAmount);
         this.mRemainingDots = new ArrayList<>();
-        this.updatedPlayer1 = null;
-        this.updatePlayer2 = null;
+        this.updatedPlayer1 = "Player";
+        this.updatePlayer2 = "Friend";
 
-    }
-    GameInfo(boolean enableAudio,boolean playerTurn, long computerSpeed,int nRowAmount, double computerDifficulty)
-    {
-        this.boolPlayerTurn = playerTurn;
-        this.boolEnableAudio = enableAudio;
-        this.computerSpeed = computerSpeed;
-        this.nRowAmount = nRowAmount;
-        this.mComputerDifficulty = computerDifficulty;
-        this.mRemainingDots = new ArrayList<>();
     }
 
     public boolean isBoolEnableAudio() {
@@ -148,8 +139,9 @@ public class GameInfo {
     {
         int level=0;
         if(Double.compare(this.mComputerDifficulty,0.0) == 0) {level = 0;}
-        else if(Double.compare(this.mComputerDifficulty,1.0) == 0) {level = 1;}
+        else if(Double.compare(this.mComputerDifficulty,0.5) == 0) {level = 1;}
         else { level = 2;}
         return level;
     }
 }
+

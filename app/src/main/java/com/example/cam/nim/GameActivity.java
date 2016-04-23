@@ -33,12 +33,10 @@ public class GameActivity extends Activity
     private Dialog winDialog,howToPlayDialog;
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
-
-
-   // private DrawerLayout mDrawerLayout;
-   // private ListView mDrawerList;
+    // private DrawerLayout mDrawerLayout;
+    // private ListView mDrawerList;
     private AI mAI;
-   // private String[] choices;
+    // private String[] choices;
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
@@ -47,6 +45,7 @@ public class GameActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
+
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
@@ -109,8 +108,8 @@ public class GameActivity extends Activity
                         ChangePlayerText();
                         mSelectedPieces.clear();
                         mSelectedPieces = new ArrayList<>();
-                       if(mGameInfo.getTotalPieces() > 0)
-                         aiMove();
+                        if(mGameInfo.getTotalPieces() > 0)
+                            aiMove();
                     }
                 }
                 //Player v Player
@@ -132,7 +131,7 @@ public class GameActivity extends Activity
 
         this.mGameInfo.populateGameBoard();
         createGameBoard();
-        
+
         if(!mGameInfo.isBoolPlayerTurn()&& mGameInfo.isBoolComputer())
         {
             if (mGameInfo.getTotalPieces() > 0) {
@@ -150,10 +149,13 @@ public class GameActivity extends Activity
         this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
         this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
         this.mGameInfo.setBoolComputer(extras.getBoolean("boolComputer"));
-        this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+        if(mGameInfo.isBoolComputer()) {
+            this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
+            this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
+        }
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setTotalPieces(this.mGameInfo.findTotal(this.mGameInfo.getnRowAmount()));
-        this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
+
         this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
         this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
@@ -169,7 +171,7 @@ public class GameActivity extends Activity
         final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
         final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
         final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
-        final Button exitButton = (Button) winDialog.findViewById(R.id.exitButton);
+        final Button newGame = (Button) winDialog.findViewById(R.id.newGame);
 
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,11 +181,20 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-        exitButton.setOnClickListener(new View.OnClickListener() {
+        newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
-                startActivity(mainMenuIntent);
+                Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
+                Bundle mBundle = new Bundle();
+                if(mGameInfo.isBoolComputer()){
+                    mBundle.putBoolean("PlayWithComp", true);
+                }
+                else
+                {
+                    mBundle.getBoolean("PlayWithComp",false);
+                }
+                newGameIntent.putExtra("mBundle", mBundle);
+                startActivity(newGameIntent);
                 finish();
             }
         });
@@ -200,6 +211,7 @@ public class GameActivity extends Activity
         winnerName.setText(currentPlayer.getText().toString() + " Wins!");
         winDialog.show();
 
+
         //check winner and update score to database
         getGameInfo();
         int level=mGameInfo.getdifficultyCoversion();
@@ -207,40 +219,35 @@ public class GameActivity extends Activity
 
         switch(level){
             case 0:{
-                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
-                {
+                if(winner.equals(mGameInfo.getUpdatedPlayer1())) {
                     dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1");
                 }
-                else
-                {
+                else {
                     dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
                 }
                 break;
             }
             case 1:{
-                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
-                {
+                if(winner.equals(mGameInfo.getUpdatedPlayer1())) {
                     dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1");
                 }
-                else
-                {
+                else {
                     dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
                 }
                 break;
             }
             case 2:{
-                if(winner.equals(mGameInfo.getUpdatedPlayer1()))
-                {
+                if(winner.equals(mGameInfo.getUpdatedPlayer1())) {
                     dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(),"1","0","1");
                 }
-                else
-                {
+                else {
                     dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
                 }
                 break;
             }
 
         }
+
     }
 
     public void howToPlay() {
@@ -266,14 +273,14 @@ public class GameActivity extends Activity
         {
             if(this.mGameInfo.isBoolComputer())
                 this.currentPlayer.setText(R.string.computerString);
-            else if(mGameInfo.getUpdatePlayer2()!= null && !mGameInfo.isBoolComputer() )
+            else if(!mGameInfo.isBoolComputer() )
                 this.currentPlayer.setText(mGameInfo.getUpdatePlayer2());
             else
                 this.currentPlayer.setText(R.string.friendString);
         }
         //changes it back the the player
         else {
-            if(mGameInfo.getUpdatedPlayer1() != null)
+            if( !mGameInfo.getUpdatedPlayer1().equals("Player"))
                 this.currentPlayer.setText(mGameInfo.getUpdatedPlayer1());
             else
                 this.currentPlayer.setText(R.string.PlayerString);
@@ -352,29 +359,29 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                    if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
-                    {
-                        //If the game piece has already been selected, deselect it and reset image
-                        if(mSelectedPieces.contains(v.getId()))
+                        if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
                         {
-                            v.setBackgroundResource(R.drawable.game_piece);
-                            mSelectedPieces.remove(new Integer(v.getId()));
-                        }
-                        //Only executes code below if game piece was not already selected
-                        else
-                        {
-                            //checkRowSelection(v.getId());
-                            if(!mSelectedPieces.isEmpty())
+                            //If the game piece has already been selected, deselect it and reset image
+                            if(mSelectedPieces.contains(v.getId()))
                             {
-                                checkRowSelect(v.getId());
+                                v.setBackgroundResource(R.drawable.game_piece);
+                                mSelectedPieces.remove(new Integer(v.getId()));
                             }
-                            if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
-                                mSelectedPieces.add(v.getId());
-                            else if(!mGameInfo.isBoolComputer())
-                                mSelectedPieces.add(v.getId());
-                            v.setBackgroundResource(R.drawable.selected_game_piece);
+                            //Only executes code below if game piece was not already selected
+                            else
+                            {
+                                //checkRowSelection(v.getId());
+                                if(!mSelectedPieces.isEmpty())
+                                {
+                                    checkRowSelect(v.getId());
+                                }
+                                if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
+                                else if(!mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
+                                v.setBackgroundResource(R.drawable.selected_game_piece);
+                            }
                         }
-                    }
                     }
                 });
             }
@@ -442,7 +449,7 @@ public class GameActivity extends Activity
 
         for(Integer id:mSelectedPieces) {
             final View tempButton = findViewById(id);
-;
+            ;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
