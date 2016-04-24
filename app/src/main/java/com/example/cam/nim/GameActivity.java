@@ -234,8 +234,8 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-        scoreboardSetup();
         winDialog.show();
+        scoreboardSetup();
     }
 
     public void howToPlay() {

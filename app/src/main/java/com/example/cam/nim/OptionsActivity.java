@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 /*
 Class:Options
 The activity creates the menu to setup the game
@@ -29,9 +32,18 @@ public class OptionsActivity extends Activity {
     private RadioGroup audioGroup;
     private Dialog changePlayerName;
 
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+
         gameInfo = new GameInfo();
         Bundle bundle = getIntent().getBundleExtra("mBundle");
         if (bundle.getBoolean("PlayWithComp"))
@@ -72,12 +84,25 @@ public class OptionsActivity extends Activity {
                     gameInfo.setComputerSpeed(computerSpeed.getProgress());
                     mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                     mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
+                    databaseCheck();
+                }
+                else // Player vs Player
+                {
+                    //check if exist in database
+                    if (dbHandlerPlayer.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                        dbHandlerPlayer.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                    }
+                    if (dbHandlerPlayer.checkName(gameInfo.getUpdatePlayer2()) == null) {
+                        dbHandlerPlayer.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                    }
                 }
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+                //mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
 
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
+
+                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 startActivity(playIntent);
                 finish();
             }
@@ -232,12 +257,12 @@ public class OptionsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-            if (!playerEditText.getText().toString().isEmpty())
-                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+                if (!playerEditText.getText().toString().isEmpty())
+                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
 
-            changePlayerName.dismiss();
+                changePlayerName.dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +297,47 @@ public class OptionsActivity extends Activity {
             }
         }
     }
+    public void databaseCheck()
+    {
+        //Check which database to add to
+        int level = gameInfo.getdifficultyCoversion();
 
+        if (level == 0) {
+            //check if exist in database
+            if (dbHandlerEasy.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+            }
+            if (dbHandlerEasy.checkName("Computer") == null) {
+                gameInfo.setUpdatePlayer2("Computer");
+                dbHandlerEasy.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+            }
+        } else if (level == 1) {
+            if (dbHandlerMed.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+            }
+            if (dbHandlerMed.checkName("Computer") == null) {
+                gameInfo.setUpdatePlayer2("Computer");
+                dbHandlerMed.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+            }
+        } else {
+            if (dbHandlerHard.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+            }
+            if (dbHandlerHard.checkName("Computer") == null) {
+                gameInfo.setUpdatePlayer2("Computer");
+                dbHandlerHard.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+            }
+        }
+        //Computer vs Human database
+        if (dbCompvsHuman.checkName("Human") == null) {
+            dbCompvsHuman.insertData("Human", "0", "0", "0");
+        }
+        if (dbCompvsHuman.checkName("Computer") == null) {
+            dbCompvsHuman.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+        }
+
+
+    }
 
     //Sets if  the audio is on
 
@@ -282,12 +347,12 @@ public class OptionsActivity extends Activity {
 
         switch (selectedRadio) {
             case (R.id.radioDisable): {
-                    gameInfo.setBoolEnableAudio(false);
-                    break;
+                gameInfo.setBoolEnableAudio(false);
+                break;
             }
             case (R.id.radioEnable): {
-                    gameInfo.setBoolEnableAudio(true);
-                    break;
+                gameInfo.setBoolEnableAudio(true);
+                break;
             }
             default: {
                 gameInfo.setBoolEnableAudio(true);

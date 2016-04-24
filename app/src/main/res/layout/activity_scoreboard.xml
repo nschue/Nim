@@ -35,8 +35,9 @@
             android:layout_width="65dp"
             android:layout_height="90dp"
             android:id="@+id/imageView"
-            android:src="@drawable/human"
             android:layout_gravity="center" />
+            <!--android:src="@drawable/human"-->
+
 
         <TextView
             android:layout_width="70dp"
@@ -71,8 +72,9 @@
             android:layout_width="70dp"
             android:layout_height="90dp"
             android:id="@+id/imageView2"
-            android:src="@drawable/robot"
             android:layout_gravity="center" />
+            <!--android:src="@drawable/robot"-->
+
 
     </LinearLayout>
 
