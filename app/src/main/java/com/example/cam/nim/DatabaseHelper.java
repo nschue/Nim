@@ -19,8 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String COL_LOSES = "LOSES";
     public static final String COL_WIN_PERCENT = "WIN_PERCENT";
     public static final String COL_STREAK = "STREAK";
-    DecimalFormat formatter = new DecimalFormat("#0.00");
-
+    DecimalFormat formatter = new DecimalFormat("#00.00");
 
     public DatabaseHelper(Context context, String dataName, String tableName) {
         super(context, dataName, null, 1);
@@ -42,12 +41,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        //String winPercent = String.format("%.2f", (double)(Integer.parseInt(win))/(Integer.parseInt(win)+Integer.parseInt(loses))*100);
         contentValues.put(COL_NAME,name);
         contentValues.put(COL_WIN,win);
         contentValues.put(COL_LOSES,loses);
         contentValues.put(COL_STREAK, streak);
-        contentValues.put(COL_WIN_PERCENT,"0.0");
+        contentValues.put(COL_WIN_PERCENT, "0.0");
         //check if not exist then add new one
         if(checkName(name) == null) {
             this.getWritableDatabase().insertOrThrow(TABLE_NAME, "", contentValues);
@@ -66,6 +64,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL_NAME + "=\"" + playerName + "\";");
     }
+    public void deleteAllData() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_NAME);
+    }
+
     //return string sorted base on winning percentage
     public String databaseToString(String sortBy){
         int count = 1;
@@ -76,9 +79,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         StringBuffer buffer = new StringBuffer();
         while(res.moveToNext())
         {
-            buffer.append(count+".\t\t\t"+res.getString(2)+"\t\t\t\t");
-            buffer.append(res.getString(3)+"\t\t\t\t");
-            buffer.append(formatter.format(res.getDouble(4))+"%\t\t\t\t");
+            buffer.append(count+".\t\t"+res.getString(2)+"\t\t\t\t\t");
+            buffer.append(res.getString(3)+"\t\t\t\t\t\t");
+            buffer.append(String.format("%-7s", formatter.format(res.getDouble(4)))+"%\t\t\t");
             buffer.append(res.getString(5)+"\t\t\t\t");
             buffer.append(res.getString(1)+"\n\n");
             count++;
@@ -117,8 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         if(update_streak <= 0){ update_streak = 0;}
 
-
-        String winPercent = String.format("%.2f", (double)update_win/(update_win+update_loses)*100);
+        String winPercent = String.format("%.2f", (double) update_win / (update_win + update_loses) * 100);
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = checkName(name);
@@ -128,6 +130,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put(COL_STREAK,Integer.toString(update_streak));
         cv.put(COL_WIN_PERCENT,winPercent);
         db.update(TABLE_NAME,cv,"ID="+res.getString(0),null);
+    }
+    public int getWins(String name){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = checkName(name);
+        int wins = res.getInt(2);
+        return wins;
     }
 }
 

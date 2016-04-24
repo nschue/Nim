@@ -32,7 +32,7 @@ public class OptionsActivity extends Activity {
     private RadioGroup audioGroup;
     private Dialog changePlayerName;
 
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class OptionsActivity extends Activity {
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
 
         gameInfo = new GameInfo();
         Bundle bundle = getIntent().getBundleExtra("mBundle");
@@ -86,29 +87,61 @@ public class OptionsActivity extends Activity {
                 }
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+                //mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
 
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
 
                 //Check which database to add to
                 int level = gameInfo.getdifficultyCoversion();
+
                 if(gameInfo.isBoolComputer()) {
                     if (level == 0) {
                         //check if exist in database
                         if (dbHandlerEasy.checkName(gameInfo.getUpdatedPlayer1()) == null) {
                             dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
                         }
+                        if (dbHandlerEasy.checkName("Computer") == null) {
+                            gameInfo.setUpdatePlayer2("Computer");
+                            dbHandlerEasy.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
                     } else if (level == 1) {
                         if (dbHandlerMed.checkName(gameInfo.getUpdatedPlayer1()) == null) {
                             dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                        }
+                        if (dbHandlerMed.checkName("Computer") == null) {
+                            gameInfo.setUpdatePlayer2("Computer");
+                            dbHandlerMed.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
                         }
                     } else {
                         if (dbHandlerHard.checkName(gameInfo.getUpdatedPlayer1()) == null) {
                             dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
                         }
+                        if (dbHandlerHard.checkName("Computer") == null) {
+                            gameInfo.setUpdatePlayer2("Computer");
+                            dbHandlerHard.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
                     }
+                    //Computer vs Human database
+                    if (dbCompvsHuman.checkName("Human") == null) {
+                        dbCompvsHuman.insertData("Human", "0", "0", "0");
+                    }
+                    if (dbCompvsHuman.checkName("Computer") == null) {
+                        dbCompvsHuman.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                    }
+
+                }
+                else // Player vs Player
+                {
+                    //check if exist in database
+                        if (dbHandlerPlayer.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerPlayer.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                        }
+                        if (dbHandlerPlayer.checkName(gameInfo.getUpdatePlayer2()) == null) {
+                            dbHandlerPlayer.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
                 }
 
+                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 startActivity(playIntent);
                 finish();
             }

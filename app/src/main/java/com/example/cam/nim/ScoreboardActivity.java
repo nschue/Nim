@@ -8,9 +8,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 public class ScoreboardActivity extends AppCompatActivity {
-    TextView easytxtText,medtxtText, hardtxtText, playertxtText;
+    TextView easytxtText,medtxtText, hardtxtText, playertxtText, humantxtView, comptxtView;
 
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
 
 
     @Override
@@ -22,6 +22,8 @@ public class ScoreboardActivity extends AppCompatActivity {
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -50,22 +52,48 @@ public class ScoreboardActivity extends AppCompatActivity {
         medtxtText = (TextView) findViewById(R.id.mediumtextView);
         hardtxtText = (TextView) findViewById(R.id.hardtextView);
         playertxtText = (TextView) findViewById(R.id.playertextView);
+        humantxtView =(TextView) findViewById(R.id.HumantextView);
+        comptxtView =(TextView) findViewById(R.id.robotTextView);
 
         //dbHandlerMed.deletePlayer("vicky");
+        //delete all data, testing purpose
+        /*
+        dbHandlerEasy.deleteAllData();
+        dbHandlerMed.deleteAllData();
+        dbHandlerHard.deleteAllData();
+        dbHandlerPlayer.deleteAllData();
+        */
+
         //print out the data
         try {
             printData("easy","WIN DESC");
             printData("med","WIN DESC");
             printData("hard","WIN DESC");
             printData("pvp","WIN DESC");
+            printDataRvC();
         } catch (Exception e) {
             //Log.i("exxxx", e.toString());
         }
 
     }
     public void onClick(View view) {
+
         switch (view.getId()) {
             //onClick for Name Button
+            case(R.id.Clearbutton):
+            {
+                dbHandlerEasy.deleteAllData();
+                dbHandlerMed.deleteAllData();
+                dbHandlerHard.deleteAllData();
+                dbHandlerPlayer.deleteAllData();
+                dbCompvsHuman.deleteAllData();
+
+                printData("easy","WIN DESC");
+                printData("med", "WIN DESC");
+                printData("hard", "WIN DESC");
+                printData("pvp", "WIN DESC");
+                //printDataRvC();
+            }
             case (R.id.namebuttonE):{
                 printData("easy","NAME ASC");
                 break;
@@ -161,8 +189,14 @@ public class ScoreboardActivity extends AppCompatActivity {
 
         }
 
-    }
 
+    }
+    public void printDataRvC(){
+        String human = Integer.toString(dbCompvsHuman.getWins("Human"));
+        humantxtView.setText(human);
+        String comp = Integer.toString(dbCompvsHuman.getWins("Computer"));
+        comptxtView.setText(comp);
+    }
     public void printData(String level, String sortBy){
         switch(level) {
             case("easy"): {

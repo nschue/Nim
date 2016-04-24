@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainMenuActivity extends Activity {
-    //create the initial database
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

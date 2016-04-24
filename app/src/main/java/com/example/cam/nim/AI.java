@@ -100,6 +100,13 @@ public class AI
         {
             // If victory is uncertain or the AI makes a 'mistake', choose randomly
             rowChoice = rndm.nextInt(populatedRowCount);
+            for(int i = 0; i <= rowChoice; i++)
+            {
+                if(dotCountPerRow.get(i) == 0)
+                {
+                    ++rowChoice;
+                }
+            }
             dotsChoice = rndm.nextInt(dotCountPerRow.get(rowChoice))+1;
         }
         // fullMove.add(rowChoice);
