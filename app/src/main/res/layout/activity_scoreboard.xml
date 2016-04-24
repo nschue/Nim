@@ -34,10 +34,11 @@
         android:layout_height="80dp">
 
         <ImageView
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_height="90dp"
             android:id="@+id/imageView"
-            android:src="@drawable/human" />
+            android:src="@drawable/human"
+            android:layout_gravity="center" />
 
         <TextView
             android:layout_width="70dp"
@@ -51,8 +52,8 @@
 
         <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="67dp"
-                android:layout_height="70dp"
+                android:layout_width="70dp"
+                android:layout_height="85dp"
                 android:text="Clear All"
                 android:id="@+id/Clearbutton"
                 android:onClick="onClick"
@@ -69,10 +70,11 @@
             android:layout_gravity="center" />
 
         <ImageView
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="90dp"
             android:id="@+id/imageView2"
-            android:src="@drawable/robot" />
+            android:src="@drawable/robot"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -91,7 +93,7 @@
 
             <TabWidget
                 android:id="@android:id/tabs"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
@@ -113,7 +115,7 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="51dp"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
                             android:text="Wins"
                             android:textSize="11dp"
@@ -153,7 +155,8 @@
                             android:text="Name"
                             android:textSize="11dp"
                             android:id="@+id/namebuttonE"
-                            android:onClick="onClick" />
+                            android:onClick="onClick"
+                            android:layout_gravity="center_horizontal" />
 
                     </LinearLayout>
 
@@ -186,7 +189,7 @@
                         android:layout_height="50dp">
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="51dp"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
                             android:text="Wins"
                             android:textSize="11dp"
@@ -258,7 +261,7 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="51dp"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
                             android:text="Wins"
                             android:textSize="11dp"
@@ -331,7 +334,7 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="51dp"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
                             android:text="Wins"
                             android:textSize="11dp"

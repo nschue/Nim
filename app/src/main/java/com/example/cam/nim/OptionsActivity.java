@@ -93,7 +93,7 @@ public class OptionsActivity extends Activity {
 
                 //Check which database to add to
                 int level = gameInfo.getdifficultyCoversion();
-
+                //if vs computer
                 if(gameInfo.isBoolComputer()) {
                     if (level == 0) {
                         //check if exist in database

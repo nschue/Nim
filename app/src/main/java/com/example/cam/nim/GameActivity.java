@@ -212,7 +212,6 @@ public class GameActivity extends Activity
         winnerName.setText(currentPlayer.getText().toString() + " Wins!");
         winDialog.show();
 
-
         //check winner and update score to database
         //getGameInfo();
         String winner = currentPlayer.getText().toString();
@@ -229,12 +228,11 @@ public class GameActivity extends Activity
                     }
                     //if player 2 wins
                     if (winner.equals("Computer")) {
-                        dbHandlerEasy.updateData(mGameInfo.getUpdatePlayer2(), "1", "0", "1");
+                        dbHandlerEasy.updateData("Computer", "1", "0", "1");
                         dbCompvsHuman.updateData("Computer", "1", "0", "0");
                     } else {
-                        dbHandlerEasy.updateData(mGameInfo.getUpdatePlayer2(), "0", "1", "-1");
+                        dbHandlerEasy.updateData("Computer", "0", "1", "-1");
                     }
-
                     break;
                 }
                 case 1: {
@@ -246,17 +244,17 @@ public class GameActivity extends Activity
                     }
 
                     if (winner.equals("Computer")) {
-                        dbHandlerMed.updateData(mGameInfo.getUpdatePlayer2(), "1", "0", "1");
+                        dbHandlerMed.updateData("Computer", "1", "0", "1");
                         dbCompvsHuman.updateData("Computer", "1", "0", "0");
                     } else {
-                        dbHandlerMed.updateData(mGameInfo.getUpdatePlayer2(), "0", "1", "-1");
+                        dbHandlerMed.updateData("Computer", "0", "1", "-1");
                     }
                     break;
                 }
                 case 2: {
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
                         dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbCompvsHuman.updateData("Human", "1", "0", "0");
                     } else {
                         dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
