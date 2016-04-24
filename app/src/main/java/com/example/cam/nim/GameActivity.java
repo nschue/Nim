@@ -2,8 +2,11 @@ package com.example.cam.nim;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.support.v4.widget.DrawerLayout;
@@ -20,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GameActivity extends Activity
@@ -31,19 +35,28 @@ public class GameActivity extends Activity
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
     private Dialog winDialog,howToPlayDialog;
-
+    private SoundPool soundPool;
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
     private AI mAI;
    // private String[] choices;
-
+    public final static int MAX_NUMBER_STREAMS = 1;
+    public final static int SOURCE_QUALITY = 0;
+    private int blopID;
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
+    private DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         mSelectedPieces = new ArrayList<>();
+
+        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
 
         /*choices = getResources().getStringArray(R.array.NavigatorBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -55,6 +68,8 @@ public class GameActivity extends Activity
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());*/
 
         /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
+        soundPool = new SoundPool(MAX_NUMBER_STREAMS,AudioManager.STREAM_MUSIC,SOURCE_QUALITY);
+        blopID = soundPool.load(this,R.raw.blop,1);
         getGameInfo();
         mAI = new AI(mGameInfo.getComputerDifficulty());
 
@@ -173,7 +188,7 @@ public class GameActivity extends Activity
             @Override
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
-                Bundle mBundle = new Bundle();
+                /*Bundle mBundle = new Bundle();
                 //Stores the Winner
                 mBundle.putString("Winner",currentPlayer.getText().toString());
 
@@ -188,7 +203,7 @@ public class GameActivity extends Activity
                     //Not the Friend , Computer lost
                     else
                         mBundle.putString("Loser","Computer");
-                }
+                }*/
 
                 startActivity(scoreIntent);
                 finish();
@@ -199,12 +214,10 @@ public class GameActivity extends Activity
             public void onClick(View v) {
                 Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
                 Bundle mBundle = new Bundle();
-                if(mGameInfo.isBoolComputer()){
+                if (mGameInfo.isBoolComputer()) {
                     mBundle.putBoolean("PlayWithComp", true);
-                }
-                else
-                {
-                    mBundle.getBoolean("PlayWithComp",false);
+                } else {
+                    mBundle.getBoolean("PlayWithComp", false);
                 }
                 newGameIntent.putExtra("mBundle", mBundle);
                 startActivity(newGameIntent);
@@ -221,7 +234,7 @@ public class GameActivity extends Activity
                 finish();
             }
         });
-
+        scoreboardSetup();
         winDialog.show();
     }
 
@@ -355,6 +368,7 @@ public class GameActivity extends Activity
                             else if(!mGameInfo.isBoolComputer())
                                 mSelectedPieces.add(v.getId());
                             v.setBackgroundResource(R.drawable.selected_game_piece);
+                            soundPool.play(blopID,.5f,.5f,1,1,1);
                         }
                     }
                     }
@@ -477,6 +491,80 @@ public class GameActivity extends Activity
             }
             mSelectedPieces.clear();
             mSelectedPieces = new ArrayList<>();
+        }
+    }
+    public void scoreboardSetup()
+    {
+        //check winner and update score to database
+        //getGameInfo();
+        String winner = currentPlayer.getText().toString();
+        if(mGameInfo.isBoolComputer()) {
+            int level=mGameInfo.getdifficultyCoversion();
+            switch (level) {
+                case 0: {
+                    //if player 1 wins
+                    if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
+                        dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
+                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                    } else {
+                        dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
+                    }
+                    //if player 2 wins
+                    if (winner.equals("Computer")) {
+                        dbHandlerEasy.updateData("Computer", "1", "0", "1");
+                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                    } else {
+                        dbHandlerEasy.updateData("Computer", "0", "1", "-1");
+                    }
+                    break;
+                }
+                case 1: {
+                    if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
+                        dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
+                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                    } else {
+                        dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
+                    }
+
+                    if (winner.equals("Computer")) {
+                        dbHandlerMed.updateData("Computer", "1", "0", "1");
+                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                    } else {
+                        dbHandlerMed.updateData("Computer", "0", "1", "-1");
+                    }
+                    break;
+                }
+                case 2: {
+                    if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
+                        dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
+                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                    } else {
+                        dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
+                    }
+
+                    if (winner.equals("Computer")) {
+                        dbHandlerHard.updateData("Computer", "1", "0", "1");
+                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                    } else {
+                        dbHandlerHard.updateData("Computer", "0", "1", "-1");
+                    }
+                    break;
+                }
+
+            }
+        }
+        else{
+            if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
+            } else {
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
+            }
+            //if player 2 wins
+            if (winner.equals(mGameInfo.getUpdatePlayer2())) {
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "1", "0", "1");
+            } else {
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "0", "1", "-1");
+            }
         }
     }
 }

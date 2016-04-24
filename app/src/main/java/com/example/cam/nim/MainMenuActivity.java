@@ -36,13 +36,13 @@ public class MainMenuActivity extends Activity {
                 break;
             }
 
-            case(R.id.Scoreboard):
+           /* case(R.id.Scoreboard):
             {
                 Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
                 startActivity(scoreIntent);
                 finish();
                 break;
-            }
+            }*/
             case(R.id.Credits):
             {
                 Intent creditsButton = new Intent(this,CreditsActivity.class);
