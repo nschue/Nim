@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,14 +36,10 @@ public class GameActivity extends Activity
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
     private Dialog winDialog,howToPlayDialog;
-    private SoundPool soundPool;
    // private DrawerLayout mDrawerLayout;
    // private ListView mDrawerList;
     private AI mAI;
    // private String[] choices;
-    public final static int MAX_NUMBER_STREAMS = 1;
-    public final static int SOURCE_QUALITY = 0;
-    private int blopID;
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
     private DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
 
@@ -67,9 +64,6 @@ public class GameActivity extends Activity
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());*/
 
-        /*Unbundles extras passed from OptionsActivity to populate local GameInfo object*/
-        soundPool = new SoundPool(MAX_NUMBER_STREAMS,AudioManager.STREAM_MUSIC,SOURCE_QUALITY);
-        blopID = soundPool.load(this,R.raw.blop,1);
         getGameInfo();
         mAI = new AI(mGameInfo.getComputerDifficulty());
 
@@ -344,6 +338,7 @@ public class GameActivity extends Activity
                 //If user clicks button, button is added to a list of buttons to be removed.
                 tempButton.setOnClickListener(new ImageButton.OnClickListener()
                 {
+
                     @Override
                     public void onClick(View v)
                     {
@@ -368,7 +363,6 @@ public class GameActivity extends Activity
                             else if(!mGameInfo.isBoolComputer())
                                 mSelectedPieces.add(v.getId());
                             v.setBackgroundResource(R.drawable.selected_game_piece);
-                            soundPool.play(blopID,.5f,.5f,1,1,1);
                         }
                     }
                     }
