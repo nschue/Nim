@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,13 +8,79 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.cam.nim.ScoreboardActivity">
+    tools:context="com.example.cam.nim.ScoreboardActivity"
+    android:background="#669999"><![CDATA[
+    android:background="#669999">
+    ]]>
+-->
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.cam.nim.ScoreboardActivity"
     android:background="#669999">
 
-    <TabHost
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="65dp"
+            android:layout_height="90dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="center" />
+            <!--android:src="@drawable/human"-->
+
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/HumantextView"
+            android:text="Human"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="70dp"
+            android:layout_height="85dp"
+            android:text="Clear All"
+            android:id="@+id/Clearbutton"
+            android:onClick="onClick"
+            android:singleLine="false" />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/robotTextView"
+            android:text="Robot"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="90dp"
+            android:id="@+id/imageView2"
+            android:layout_gravity="center" />
+            <!--android:src="@drawable/robot"-->
+
+
+    </LinearLayout>
+
+    <TabHost
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/tabHost"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -26,7 +93,7 @@
 
             <TabWidget
                 android:id="@android:id/tabs"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
@@ -48,34 +115,48 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
-                            android:text="Rank"
-                            android:id="@+id/rankbuttonE" />
-
-                        <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:text="Win"
+                            android:text="Wins"
+                            android:textSize="11dp"
                             android:id="@+id/winbuttonE"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="80dp"
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Losses"
+                            android:textSize="11dp"
+                            android:id="@+id/losesbuttonE"
+                            android:onClick="onClick" />
+
+                        <Button
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win %"
+                            android:textSize="11dp"
+                            android:id="@+id/winPercentbuttonE"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Streak"
+                            android:textSize="11dp"
                             android:id="@+id/streakbuttonE"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="120dp"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Name"
+                            android:textSize="11dp"
                             android:id="@+id/namebuttonE"
-                            android:onClick="onClick" />
+                            android:onClick="onClick"
+                            android:layout_gravity="center_horizontal" />
 
                     </LinearLayout>
 
@@ -106,41 +187,51 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
-
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
-                            android:text="Rank"
-                            android:id="@+id/rankbuttonM" />
-
-                        <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:text="Win"
+                            android:text="Wins"
+                            android:textSize="11dp"
                             android:id="@+id/winbuttonM"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="80dp"
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Losses"
+                            android:textSize="11dp"
+                            android:id="@+id/losesbuttonM"
+                            android:onClick="onClick" />
+
+                        <Button
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win %"
+                            android:textSize="11dp"
+                            android:id="@+id/winPercentbuttonM"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Streak"
+                            android:textSize="11dp"
                             android:id="@+id/streakbuttonM"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="120dp"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Name"
+                            android:textSize="11dp"
                             android:id="@+id/namebuttonM"
                             android:onClick="onClick" />
 
                     </LinearLayout>
-
-
 
                     <ScrollView
                         android:layout_width="fill_parent"
@@ -170,35 +261,47 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
-                            android:text="Rank"
-                            android:id="@+id/rankbuttonH" />
-
-                        <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:text="Win"
+                            android:text="Wins"
+                            android:textSize="11dp"
                             android:id="@+id/winbuttonH"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="80dp"
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Losses"
+                            android:textSize="11dp"
+                            android:id="@+id/losesbuttonH"
+                            android:onClick="onClick" />
+
+                        <Button
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win %"
+                            android:textSize="11dp"
+                            android:id="@+id/winPercentbuttonH"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Streak"
+                            android:textSize="11dp"
                             android:id="@+id/streakbuttonH"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="120dp"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Name"
+                            android:textSize="11dp"
                             android:id="@+id/namebuttonH"
                             android:onClick="onClick" />
-
                     </LinearLayout>
 
                     <ScrollView
@@ -231,32 +334,45 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
+                            android:layout_width="54dp"
                             android:layout_height="wrap_content"
-                            android:text="Rank"
-                            android:id="@+id/rankbuttonP" />
-
-                        <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:text="Win"
+                            android:text="Wins"
+                            android:textSize="11dp"
                             android:id="@+id/winbuttonP"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="80dp"
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Losses"
+                            android:textSize="11dp"
+                            android:id="@+id/losesbuttonP"
+                            android:onClick="onClick" />
+
+                        <Button
+                            android:layout_width="66dp"
+                            android:layout_height="wrap_content"
+                            android:text="Win %"
+                            android:textSize="11dp"
+                            android:id="@+id/winPercentbuttonP"
+                            android:onClick="onClick" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Streak"
+                            android:textSize="11dp"
                             android:id="@+id/streakbuttonP"
                             android:onClick="onClick" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="120dp"
+                            android:layout_width="76dp"
                             android:layout_height="wrap_content"
                             android:text="Name"
+                            android:textSize="11dp"
                             android:id="@+id/namebuttonP"
                             android:onClick="onClick" />
 
@@ -278,6 +394,9 @@
                 </LinearLayout>
 
             </FrameLayout>
+
         </LinearLayout>
     </TabHost>
-</RelativeLayout>
+</LinearLayout>
+
+    <!--</RelativeLayout>-->

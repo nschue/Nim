@@ -7,14 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import android.content.ContentValues;
 
+import java.text.DecimalFormat;
+
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     String PLAYER_DATABASE = null;
     String TABLE_NAME = null;
     public static final String COL_ID = "ID";
     public static final String COL_NAME = "NAME";
-    public static final String COL_SCORE = "SCORE";
+    public static final String COL_WIN = "WIN";
+    public static final String COL_LOSES = "LOSES";
+    public static final String COL_WIN_PERCENT = "WIN_PERCENT";
     public static final String COL_STREAK = "STREAK";
+    DecimalFormat formatter = new DecimalFormat("#00.00");
 
     public DatabaseHelper(Context context, String dataName, String tableName) {
         super(context, dataName, null, 1);
@@ -24,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT,SCORE DOUBLE,STREAK INTEGER)");
+        db.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT UNIQUE,WIN INTEGER,LOSES INTEGER,WIN_PERCENT DOUBLE,STREAK INTEGER)");
     }
 
     @Override
@@ -32,86 +37,104 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    public double findWinStreak(int winCount,int gamePlayed)
-    {
-        return  gamePlayed/winCount;
-    }
-    public boolean insertData(String name,String score,String streak) {
+    public boolean insertData(String name,String win,String loses,String streak) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
         contentValues.put(COL_NAME,name);
-        contentValues.put(COL_SCORE,score);
-        contentValues.put(COL_STREAK,streak);
-
-        long result = db.insert(TABLE_NAME,null ,contentValues);
-        if(result == -1)
-            return false;
+        contentValues.put(COL_WIN,win);
+        contentValues.put(COL_LOSES,loses);
+        contentValues.put(COL_STREAK, streak);
+        contentValues.put(COL_WIN_PERCENT, "0.0");
+        //check if not exist then add new one
+        if(checkName(name) == null) {
+            this.getWritableDatabase().insertOrThrow(TABLE_NAME, "", contentValues);
+            db.close();
+            return true;
+        }
         else
-            db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL_SCORE, null);
-        return true;
-
+        {
+            Cursor existname = checkName(name);
+            updateData(name,win,loses,streak);
+            db.close();
+            return true;
+        }
     }
     public void deletePlayer(String playerName){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL_NAME + "=\"" + playerName + "\";");
     }
+    public void deleteAllData() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_NAME);
+    }
+
     //return string sorted base on winning percentage
-    public String databaseToString(){
+    public String databaseToString(String sortBy){
         int count = 1;
         SQLiteDatabase db =  getWritableDatabase();
-        String sortOrder = COL_SCORE + " DESC";
 
-        Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortOrder);
+
+        Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortBy);
         StringBuffer buffer = new StringBuffer();
         while(res.moveToNext())
         {
-            //buffer.append("ID:" +res.getString(0)+"\n");
-            buffer.append(count+".\t\tWin:"+res.getString(2)+"%\t\t");
-            buffer.append("Streak:"+res.getString(3)+"\t\t\t");
+            buffer.append(count+".\t\t"+res.getString(2)+"\t\t\t\t\t");
+            buffer.append(res.getString(3)+"\t\t\t\t\t\t");
+            buffer.append(String.format("%-7s", formatter.format(res.getDouble(4)))+"%\t\t\t");
+            buffer.append(res.getString(5)+"\t\t\t\t");
             buffer.append(res.getString(1)+"\n\n");
             count++;
         }
         db.close();
         return buffer.toString();
     }
-    //return string that is alphabetize by player name
-    public String databaseSortNameToString(){
-        int count = 1;
-        SQLiteDatabase db =  getWritableDatabase();
+    public Cursor checkName(String name)
+    {
+        SQLiteDatabase db = getWritableDatabase();
         String sortOrder = COL_NAME + " ASC";
-
         Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortOrder);
-        StringBuffer buffer = new StringBuffer();
+
         while(res.moveToNext())
         {
-            //buffer.append("ID:" +res.getString(0)+"\n");
-            buffer.append(count+".\t\tWin:"+res.getString(2)+"%\t\t");
-            buffer.append("Streak:"+res.getString(3)+"\t\t\t");
-            buffer.append(res.getString(1)+"\n\n");
-            count++;
+            if(name.equalsIgnoreCase(res.getString(1))){
+                return res;
+            }
         }
-        db.close();
-        return buffer.toString();
+        return null;
     }
+    public void updateData(String name, String win,String loses, String streak)
+    {
+        int update_win = Integer.parseInt(win);
+        int update_loses = Integer.parseInt(loses);
+        int update_streak = Integer.parseInt(streak);
 
-    //return string that sorted by winning streak
-    public String databaseSortStreakToString(){
-        int count = 1;
-        SQLiteDatabase db =  getWritableDatabase();
-        String sortOrder = COL_STREAK + " DESC";
+        Cursor data = checkName(name);
+        int dwin = data.getInt(2);
+        int dloses = data.getInt(3);
+        int dstreak = data.getInt(5);
 
-        Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortOrder);
-        StringBuffer buffer = new StringBuffer();
-        while(res.moveToNext())
-        {
-            //buffer.append("ID:" +res.getString(0)+"\n");
-            buffer.append(count+".\t\tWin:"+res.getString(2)+"%\t\t");
-            buffer.append("Streak:"+res.getString(3)+"\t\t\t");
-            buffer.append(res.getString(1)+"\n\n");
-            count++;
-        }
-        db.close();
-        return buffer.toString();
+        update_win += dwin;
+        update_loses += dloses;
+        update_streak += dstreak;
+
+        if(update_streak <= 0){ update_streak = 0;}
+
+        String winPercent = String.format("%.2f", (double) update_win / (update_win + update_loses) * 100);
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = checkName(name);
+        ContentValues cv = new ContentValues();
+        cv.put(COL_WIN,Integer.toString(update_win));
+        cv.put(COL_LOSES,Integer.toString(update_loses));
+        cv.put(COL_STREAK,Integer.toString(update_streak));
+        cv.put(COL_WIN_PERCENT,winPercent);
+        db.update(TABLE_NAME,cv,"ID="+res.getString(0),null);
+    }
+    public int getWins(String name){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = checkName(name);
+        int wins = res.getInt(2);
+        return wins;
     }
 }
-

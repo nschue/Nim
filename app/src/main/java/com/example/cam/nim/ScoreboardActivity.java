@@ -8,14 +8,22 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 public class ScoreboardActivity extends AppCompatActivity {
-    TextView easytxtText,medtxtText, hardtxtText, playertxtText;
+    TextView easytxtText,medtxtText, hardtxtText, playertxtText, humantxtView, comptxtView;
 
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
+
+        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -41,145 +49,187 @@ public class ScoreboardActivity extends AppCompatActivity {
         tabHost.addTab(tabSpec);
 
         easytxtText = (TextView) findViewById(R.id.easytextView);
-        dbHandlerEasy = new DatabaseHelper(this,"easy2.db","easy_table");
-
-        // In method insertData(name, score,winstreak), will be inserting to different levels
-        // Fake data below for testing. Replace with real data later on
-
-        dbHandlerEasy.insertData("Vincent", "99.6", "1");
-        dbHandlerEasy.insertData("Ken", "99.7", "3");
-        dbHandlerEasy.insertData("Nic", "99.8", "5");
-        dbHandlerEasy.insertData("Cam", "99.9", "2");
-
         medtxtText = (TextView) findViewById(R.id.mediumtextView);
-        dbHandlerMed = new DatabaseHelper(this,"medium2.db", "medium_table");
-
-        dbHandlerMed.insertData("Vincent", "99.6", "1");
-        dbHandlerMed.insertData("Ken", "99.7", "3");
-        dbHandlerMed.insertData("Nic", "99.8", "5");
-        dbHandlerMed.insertData("Cam", "99.9", "2");
-
         hardtxtText = (TextView) findViewById(R.id.hardtextView);
-        dbHandlerHard = new DatabaseHelper(this,"hard2.db", "hard_table");
-
-        dbHandlerHard.insertData("Vincent", "99.6", "1");
-        dbHandlerHard.insertData("Ken", "99.7", "3");
-        dbHandlerHard.insertData("Nic", "99.8", "5");
-        dbHandlerHard.insertData("Cam", "99.9", "2");
-
         playertxtText = (TextView) findViewById(R.id.playertextView);
-        dbHandlerPlayer = new DatabaseHelper(this,"player2.db", "player_table");
+        humantxtView =(TextView) findViewById(R.id.HumantextView);
+        comptxtView =(TextView) findViewById(R.id.robotTextView);
 
-        dbHandlerPlayer.insertData("Vincent", "99.6", "1");
-        dbHandlerPlayer.insertData("Ken", "99.7", "3");
-        dbHandlerPlayer.insertData("Nic", "99.8", "5");
-        dbHandlerPlayer.insertData("Cam", "99.9", "2");
-
-
-        //deleting player, for testing purpose
+        //dbHandlerMed.deletePlayer("vicky");
+        //delete all data, testing purpose
         /*
-        dbHandlerEasy.deletePlayer("Vincent");
-        dbHandlerEasy.deletePlayer("Ken");
-        dbHandlerEasy.deletePlayer("Cam");
-        dbHandlerEasy.deletePlayer("Nic");
-
-        dbHandlerMed.deletePlayer("Vincent");
-        dbHandlerMed.deletePlayer("Ken");
-        dbHandlerMed.deletePlayer("Cam");
-        dbHandlerMed.deletePlayer("Nic");
-
-        dbHandlerHard.deletePlayer("Vincent");
-        dbHandlerHard.deletePlayer("Ken");
-        dbHandlerHard.deletePlayer("Cam");
-        dbHandlerHard.deletePlayer("Nic");
-
-        dbHandlerPlayer.deletePlayer("Vincent");
-        dbHandlerPlayer.deletePlayer("Ken");
-        dbHandlerPlayer.deletePlayer("Cam");
-        dbHandlerPlayer.deletePlayer("Nic");
+        dbHandlerEasy.deleteAllData();
+        dbHandlerMed.deleteAllData();
+        dbHandlerHard.deleteAllData();
+        dbHandlerPlayer.deleteAllData();
         */
-
 
         //print out the data
         try {
-            printDatabase();
+            printData("easy","WIN DESC");
+            printData("med","WIN DESC");
+            printData("hard","WIN DESC");
+            printData("pvp","WIN DESC");
+            printDataRvC();
         } catch (Exception e) {
             //Log.i("exxxx", e.toString());
         }
 
     }
     public void onClick(View view) {
+
         switch (view.getId()) {
-            case (R.id.namebuttonE):
-            case (R.id.namebuttonM):
-            case (R.id.namebuttonH):
+            //onClick for Name Button
+            case(R.id.Clearbutton):
+            {
+                dbHandlerEasy.deleteAllData();
+                dbHandlerMed.deleteAllData();
+                dbHandlerHard.deleteAllData();
+                dbHandlerPlayer.deleteAllData();
+                dbCompvsHuman.deleteAllData();
+
+                printData("easy","WIN DESC");
+                printData("med", "WIN DESC");
+                printData("hard", "WIN DESC");
+                printData("pvp", "WIN DESC");
+                //printDataRvC();
+            }
+            case (R.id.namebuttonE):{
+                printData("easy","NAME ASC");
+                break;
+            }
+            case (R.id.namebuttonM):{
+                printData("med","NAME ASC");
+                break;
+            }
+            case (R.id.namebuttonH):{
+                printData("hard","NAME ASC");
+                break;
+            }
             case (R.id.namebuttonP):
             {
-                printDataSortName();
+                printData("pvp","NAME ASC");
                 break;
             }
-            case (R.id.winbuttonE):
-            case (R.id.winbuttonM):
-            case (R.id.winbuttonH):
-            case (R.id.winbuttonP):
-            {
-                printDatabase();
+
+            //onClick for Win Button
+            case (R.id.winbuttonE):{
+                printData("easy","WIN DESC");
                 break;
             }
-            case (R.id.streakbuttonE):
+            case (R.id.winbuttonM):{
+                printData("med","WIN DESC");
+                break;
+            }
+            case (R.id.winbuttonH):{
+                printData("hard","WIN DESC");
+                break;
+            }
+            case (R.id.winbuttonP): {
+                printData("pvp","WIN DESC");
+                break;
+            }
+
+            //onClick for Streak Button
+            case (R.id.streakbuttonE):{
+                printData("easy","STREAK DESC");
+                break;
+            }
             case (R.id.streakbuttonM):
+            {
+                printData("med","STREAK DESC");
+                break;
+            }
             case (R.id.streakbuttonH):
+            {
+                printData("hard","STREAK DESC");
+                break;
+            }
             case (R.id.streakbuttonP):
             {
-                printDataSortStreak();
+                printData("pvp","STREAK DESC");
+                break;
+            }
+
+            //onClick for Loses Button
+            case (R.id.losesbuttonE):{
+                printData("easy","LOSES DESC");
+                break;
+            }
+            case (R.id.losesbuttonM):{
+                printData("med","LOSES DESC");
+                break;
+            }
+            case (R.id.losesbuttonH):{
+                printData("hard","LOSES DESC");
+                break;
+            }
+            case (R.id.losesbuttonP):{
+                printData("pvp","LOSES DESC");
+                break;
+            }
+
+            //onClick for Win% Button
+            case (R.id.winPercentbuttonE):{
+                printData("easy","WIN_PERCENT DESC");
+                break;
+            }
+            case (R.id.winPercentbuttonM):{
+                printData("med","WIN_PERCENT DESC");
+                break;
+            }
+            case (R.id.winPercentbuttonH):{
+                printData("hard","WIN_PERCENT DESC");
+                break;
+            }
+            case (R.id.winPercentbuttonP):{
+                printData("pvp","WIN_PERCENT DESC");
                 break;
             }
 
         }
 
-    }
-
-    public void printDatabase() {
-        String dbStringE = dbHandlerEasy.databaseToString();
-        easytxtText.setText(dbStringE);
-        String dbStringM = dbHandlerMed.databaseToString();
-        medtxtText.setText(dbStringM);
-        String dbStringH = dbHandlerHard.databaseToString();
-        hardtxtText.setText(dbStringH);
-        String dbStringP = dbHandlerPlayer.databaseToString();
-        playertxtText.setText(dbStringP);
 
     }
-    public void printDataSortName() {
-        String dbStringE = dbHandlerEasy.databaseSortNameToString();
-        easytxtText.setText(dbStringE);
-        String dbStringM = dbHandlerMed.databaseSortNameToString();
-        medtxtText.setText(dbStringM);
-        String dbStringH = dbHandlerHard.databaseSortNameToString();
-        hardtxtText.setText(dbStringH);
-        String dbStringP = dbHandlerPlayer.databaseSortNameToString();
-        playertxtText.setText(dbStringP);
+    public void printDataRvC(){
+        String human = Integer.toString(dbCompvsHuman.getWins("Human"));
+        humantxtView.setText(human);
+        String comp = Integer.toString(dbCompvsHuman.getWins("Computer"));
+        comptxtView.setText(comp);
     }
-    public void printDataSortStreak() {
-        String dbStringE = dbHandlerEasy.databaseSortStreakToString();
-        easytxtText.setText(dbStringE);
-        String dbStringM = dbHandlerMed.databaseSortStreakToString();
-        medtxtText.setText(dbStringM);
-        String dbStringH = dbHandlerHard.databaseSortStreakToString();
-        hardtxtText.setText(dbStringH);
-        String dbStringP = dbHandlerPlayer.databaseSortStreakToString();
-        playertxtText.setText(dbStringP);
-
-    }
-        //Takes the player back to the main menu if the player clicks the back button
-        @Override
-        public void onBackPressed()
-        {
-            super.onBackPressed();
-            Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
-            startActivity(mainMenuIntent);
-            finish();
-
+    public void printData(String level, String sortBy){
+        switch(level) {
+            case("easy"): {
+                String dbStringE = dbHandlerEasy.databaseToString(sortBy);
+                easytxtText.setText(dbStringE);
+                break;
+            }
+            case("med"): {
+                String dbStringM = dbHandlerMed.databaseToString(sortBy);
+                medtxtText.setText(dbStringM);
+                break;
+            }
+            case("hard"): {
+                String dbStringH = dbHandlerHard.databaseToString(sortBy);
+                hardtxtText.setText(dbStringH);
+                break;
+            }
+            case("pvp"): {
+                String dbStringP = dbHandlerPlayer.databaseToString(sortBy);
+                playertxtText.setText(dbStringP);
+                break;
+            }
         }
-}
+    }
 
+    //Takes the player back to the main menu if the player clicks the back button
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
+        startActivity(mainMenuIntent);
+        finish();
+
+    }
+}
