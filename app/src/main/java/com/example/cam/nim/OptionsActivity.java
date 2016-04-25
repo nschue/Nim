@@ -36,6 +36,11 @@ public class OptionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
+        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
+        gameInfo = new GameInfo();
+        Bundle bundle = getIntent().getBundleExtra("mBundle");
+
         super.onCreate(savedInstanceState);
 
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
@@ -44,8 +49,6 @@ public class OptionsActivity extends Activity {
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
         dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
 
-        gameInfo = new GameInfo();
-        Bundle bundle = getIntent().getBundleExtra("mBundle");
         if (bundle.getBoolean("PlayWithComp"))
         {
             setContentView(R.layout.activity_options);
@@ -57,13 +60,7 @@ public class OptionsActivity extends Activity {
             this.gameInfo.setBoolComputer(false);
         }
 
-
-        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
-        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
-
-
         setUpRowSpinner();
-
 
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +93,12 @@ public class OptionsActivity extends Activity {
                         dbHandlerPlayer.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
                     }
                 }
+
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                //mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
-
+                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
 
-                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
                 startActivity(playIntent);
                 finish();
             }
@@ -119,7 +115,6 @@ public class OptionsActivity extends Activity {
         });
 
     }
-
 
     public void setUpRowSpinner()
     {
@@ -177,7 +172,7 @@ public class OptionsActivity extends Activity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.DifficultyArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         difficultySpinner.setAdapter(adapter);
-        difficultySpinner.setSelection(2);
+        difficultySpinner.setSelection(2); //sets the default position of the spinner
         difficultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -217,21 +212,28 @@ public class OptionsActivity extends Activity {
         changePlayerName = new Dialog(OptionsActivity.this);
         changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
         changePlayerName.setContentView(R.layout.dialog_name);
+
         changePlayerName.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         Button applyButton = (Button) changePlayerName.findViewById(R.id.okName);
         Button cancelButton = (Button) changePlayerName.findViewById(R.id.cancelName);
+
         final EditText playerEditText = (EditText) changePlayerName.findViewById(R.id.playerEditName);
         final RadioGroup playerSwitch = (RadioGroup) changePlayerName.findViewById(R.id.PlayerNameGroup);
+
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int choice = playerSwitch.getCheckedRadioButtonId();
+                int choice = playerSwitch.getCheckedRadioButtonId(); //retrives the id for the button that was selected
+
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);//hides the keyboard
+
                 if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+
                 else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
+
                 changePlayerName.dismiss();
             }
         });
@@ -276,7 +278,6 @@ public class OptionsActivity extends Activity {
     }
 
     //Sets who is first
-
     public void onPlayerRadio(View view) {
 
         int selectedRadio = playerGroup.getCheckedRadioButtonId();
@@ -340,7 +341,6 @@ public class OptionsActivity extends Activity {
     }
 
     //Sets if  the audio is on
-
     public void onAudioRadio(View view) {
 
         int selectedRadio = audioGroup.getCheckedRadioButtonId();

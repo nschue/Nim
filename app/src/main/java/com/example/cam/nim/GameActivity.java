@@ -2,12 +2,8 @@ package com.example.cam.nim;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.support.v4.widget.DrawerLayout;
@@ -182,23 +178,6 @@ public class GameActivity extends Activity
             @Override
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
-                /*Bundle mBundle = new Bundle();
-                //Stores the Winner
-                mBundle.putString("Winner",currentPlayer.getText().toString());
-
-                //Player lost is the loser
-                if(!mGameInfo.isBoolPlayerTurn())
-                    mBundle.putString("Loser",mGameInfo.getUpdatedPlayer1());
-                //Player won
-                else
-                {   //Not the computer, Friend lost
-                    if(!mGameInfo.isBoolComputer())
-                        mBundle.putString("Loser",mGameInfo.getUpdatePlayer2());
-                    //Not the Friend , Computer lost
-                    else
-                        mBundle.putString("Loser","Computer");
-                }*/
-
                 startActivity(scoreIntent);
                 finish();
             }
