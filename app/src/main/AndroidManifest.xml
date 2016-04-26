@@ -37,7 +37,6 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_credits"
             android:parentActivityName=".MainMenuActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,7 +45,9 @@
         <activity
             android:name=".ScoreboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BackgroundSound"></activity>
+        <activity android:name=".BackgroundSound">
+
+        </activity>
     </application>
 
 </manifest>
