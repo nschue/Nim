@@ -120,6 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         if(update_streak <= 0){ update_streak = 0;}
 
+
         String winPercent = String.format("%.2f", (double) update_win / (update_win + update_loses) * 100);
 
         SQLiteDatabase db = getWritableDatabase();

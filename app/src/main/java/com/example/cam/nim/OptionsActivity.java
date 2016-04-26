@@ -17,48 +17,47 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 /*
 Class:Options
 The activity creates the menu to setup the game
  */
 public class OptionsActivity extends Activity {
     private GameInfo gameInfo;
-    private Spinner rowSpinner,difficultySpinner;
+    private Spinner rowSpinner, difficultySpinner;
     private Button okStart;
     private Button cancelStart;
     private RadioGroup playerGroup;
     private RadioGroup audioGroup;
     private Dialog changePlayerName;
 
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer, dbCompvsHuman;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
-        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
-        gameInfo = new GameInfo();
-        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
         super.onCreate(savedInstanceState);
 
-        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
-        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
-        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
-        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
-        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
-        if (bundle.getBoolean("PlayWithComp"))
-        {
+        dbHandlerEasy = new DatabaseHelper(this, "easy4.db", "easy_table");
+        dbHandlerMed = new DatabaseHelper(this, "medium4.db", "medium_table");
+        dbHandlerHard = new DatabaseHelper(this, "hard4.db", "hard_table");
+        dbHandlerPlayer = new DatabaseHelper(this, "player4.db", "player_table");
+        dbCompvsHuman = new DatabaseHelper(this, "compvshuman.db", "cvh_table");
+
+        gameInfo = new GameInfo();
+
+
+        if (bundle.getBoolean("PlayWithComp")) {
             setContentView(R.layout.activity_options);
             setUpDifficultySpinner();
             this.gameInfo.setBoolComputer(true);
-        }
-        else
-        {   setContentView(R.layout.activity_friendplaylayout);
+        } else {
+            setContentView(R.layout.activity_friendplaylayout);
             this.gameInfo.setBoolComputer(false);
         }
+        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
+        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
 
         setUpRowSpinner();
 
@@ -76,14 +75,13 @@ public class OptionsActivity extends Activity {
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn", gameInfo.isBoolPlayerTurn());//Add player turn to bundle
                 mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add if it is a computer player to bundle
-                if(gameInfo.isBoolComputer()) {
-                    SeekBar computerSpeed = (SeekBar)findViewById(R.id.computerSpeedSeekbar);
+                if (gameInfo.isBoolComputer()) {
+                    SeekBar computerSpeed = (SeekBar) findViewById(R.id.computerSpeedSeekbar);
                     gameInfo.setComputerSpeed(computerSpeed.getProgress());
                     mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                     mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
                     databaseCheck();
-                }
-                else // Player vs Player
+                } else // Player vs Player
                 {
                     //check if exist in database
                     if (dbHandlerPlayer.checkName(gameInfo.getUpdatedPlayer1()) == null) {
@@ -97,6 +95,7 @@ public class OptionsActivity extends Activity {
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
                 mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
 
                 startActivity(playIntent);
@@ -116,11 +115,10 @@ public class OptionsActivity extends Activity {
 
     }
 
-    public void setUpRowSpinner()
-    {
+    public void setUpRowSpinner() {
         rowSpinner = (Spinner) findViewById(R.id.spinnerRows); // finds the spinner ID
         // Sets the items  defined in the string.xml and layout of the spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.rowArray, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.rowArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rowSpinner.setAdapter(adapter);
         rowSpinner.setSelection(2);
@@ -166,6 +164,7 @@ public class OptionsActivity extends Activity {
 
         });
     }
+
     public void setUpDifficultySpinner() {
         difficultySpinner = (Spinner) findViewById(R.id.spinnerDiffculty); // finds the spinner ID
         // Sets the items  defined in the string.xml and layout of the spinner
@@ -196,19 +195,20 @@ public class OptionsActivity extends Activity {
         });
 
     }
+
     //Takes the player back to the main menu if the player clicks the back button
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
-        Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
+        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
         startActivity(mainMenuIntent);
         finish();
     }
+
     //Displays the dialog for the player to change their name
     // Changes the name that is selected through the radio buttons
     // then disappears
-    public void ChangePlayerName( View view){
+    public void ChangePlayerName(View view) {
         changePlayerName = new Dialog(OptionsActivity.this);
         changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
         changePlayerName.setContentView(R.layout.dialog_name);
@@ -230,7 +230,6 @@ public class OptionsActivity extends Activity {
 
                 if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
-
                 else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
 
@@ -246,7 +245,8 @@ public class OptionsActivity extends Activity {
 
         changePlayerName.show();
     }
-    public void ChangeName( View view){
+
+    public void ChangeName(View view) {
         changePlayerName = new Dialog(OptionsActivity.this);
         changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
         changePlayerName.setContentView(R.layout.dialog_name_pcverison);
@@ -291,15 +291,14 @@ public class OptionsActivity extends Activity {
                 gameInfo.setBoolPlayerTurn(true);
                 break;
             }
-            default:
-            {
+            default: {
                 gameInfo.setBoolEnableAudio(true);
                 break;
             }
         }
     }
-    public void databaseCheck()
-    {
+
+    public void databaseCheck() {
         //Check which database to add to
         int level = gameInfo.getdifficultyCoversion();
 

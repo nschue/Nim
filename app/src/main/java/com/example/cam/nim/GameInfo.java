@@ -23,7 +23,7 @@ public class GameInfo {
         this.boolEnableAudio = true;
         this.boolPlayerTurn = true;
         this.nRowAmount = 5;
-        this.mComputerDifficulty = 2.0;
+        this.mComputerDifficulty = 1.0;//intially 2.0
         this.computerSpeed = 1;
         this.totalPieces = findTotal(nRowAmount);
         this.mRemainingDots = new ArrayList<>();
@@ -133,15 +133,14 @@ public class GameInfo {
     }
 
     //convert difficulty to integer
-    public int getdifficultyCoversion() {
-        int level = 0;
-        if (Double.compare(this.mComputerDifficulty, 0.0) == 0) {
-            level = 0;
-        } else if (Double.compare(this.mComputerDifficulty, 0.5) == 0) {
-            level = 1;
-        } else {
-            level = 2;
-        }
+    public int getdifficultyCoversion()
+    {
+        int level=0;
+        if(Double.compare(this.mComputerDifficulty,0.0) == 0) {
+		level = 0;}
+        else if(Double.compare(this.mComputerDifficulty,0.5) == 0) {level = 1;}
+        else { level = 2;}
         return level;
     }
 }
+

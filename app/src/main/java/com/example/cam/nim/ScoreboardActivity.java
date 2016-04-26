@@ -68,9 +68,10 @@ public class ScoreboardActivity extends AppCompatActivity {
         try {
             printData("easy","WIN DESC");
             printData("med","WIN DESC");
-            printData("hard","WIN DESC");
-            printData("pvp","WIN DESC");
+            printData("hard", "WIN DESC");
+            printData("pvp", "WIN DESC");
             printDataRvC();
+
         } catch (Exception e) {
             //Log.i("exxxx", e.toString());
         }
@@ -88,11 +89,13 @@ public class ScoreboardActivity extends AppCompatActivity {
                 dbHandlerPlayer.deleteAllData();
                 dbCompvsHuman.deleteAllData();
 
-                printData("easy","WIN DESC");
+                printData("easy", "WIN DESC");
                 printData("med", "WIN DESC");
                 printData("hard", "WIN DESC");
                 printData("pvp", "WIN DESC");
-                //printDataRvC();
+
+                humantxtView.setText("0");
+                comptxtView.setText("0");
             }
             case (R.id.namebuttonE):{
                 printData("easy","NAME ASC");
@@ -230,6 +233,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
         startActivity(mainMenuIntent);
         finish();
+
 
     }
 }

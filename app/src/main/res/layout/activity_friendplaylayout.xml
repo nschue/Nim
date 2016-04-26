@@ -120,7 +120,7 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/button"
         android:onClick="ChangePlayerName"
-        android:padding="0dp"
+        android:padding="5dp"
         android:text="Change Player Name">
 
     </Button>

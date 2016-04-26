@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Main layout for game activity -->
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mainRelativeLayout"
         android:layout_width="match_parent"
@@ -35,7 +31,14 @@
             android:padding="10dp"
             android:textColor="@color/textColor"
             android:textSize="30dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/endTurnButton"
+            android:orientation="vertical"
+            android:id="@+id/gameboard_container">
 
+        </LinearLayout>
 
         <!-- End turn button declaration -->
         <Button
@@ -66,23 +69,5 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="52dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/endTurnButton"
-            android:orientation="vertical"
-            android:id="@+id/gameboard_container"></LinearLayout>
-    </RelativeLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></FrameLayout>
-    <ListView android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
 
-</android.support.v4.widget.DrawerLayout>
+    </RelativeLayout>
