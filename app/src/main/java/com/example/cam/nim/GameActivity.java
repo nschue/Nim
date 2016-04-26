@@ -168,14 +168,15 @@ public class GameActivity extends Activity
         if(mGameInfo.isBoolEnableAudio()) {
             if (mGameInfo.isBoolComputer()) {
                 if (mGameInfo.getdifficultyCoversion() == 0) {
-                    mediaPlayer = MediaPlayer.create(this, R.raw.easy);
+                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.easy);
                 } else if (mGameInfo.getdifficultyCoversion() == 1) {
-                    mediaPlayer = MediaPlayer.create(this, R.raw.med);
+                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.med);
                 } else {
-                    mediaPlayer = MediaPlayer.create(this, R.raw.hard);
+                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.hard);
                 }
-            } else {
-                mediaPlayer = MediaPlayer.create(this, R.raw.friend);
+            }
+            else {
+                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.friend);
             }
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
