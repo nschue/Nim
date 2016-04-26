@@ -17,8 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 /*
 Class:Options
 The activity creates the menu to setup the game
@@ -36,10 +34,6 @@ public class OptionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
-        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
-        gameInfo = new GameInfo();
-        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
         super.onCreate(savedInstanceState);
 
@@ -48,6 +42,12 @@ public class OptionsActivity extends Activity {
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
         dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+
+        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
+        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
+
+        gameInfo = new GameInfo();
+        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
         if (bundle.getBoolean("PlayWithComp"))
         {
@@ -81,6 +81,9 @@ public class OptionsActivity extends Activity {
                     gameInfo.setComputerSpeed(computerSpeed.getProgress());
                     mBundle.putLong("computerSpeed", gameInfo.getComputerSpeed());//Add computer speed to bundle
                     mBundle.putDouble("computerDifficulty", gameInfo.getComputerDifficulty());//Add difficulty to bundle
+<<<<<<< HEAD
+                }
+=======
                     databaseCheck();
                 }
                 else // Player vs Player
@@ -94,11 +97,67 @@ public class OptionsActivity extends Activity {
                     }
                 }
 
+>>>>>>> refs/remotes/origin/master
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
-                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+                //mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
 
+<<<<<<< HEAD
+                //Check which database to add to
+                int level = gameInfo.getdifficultyCoversion();
+                //if vs computer
+                if(gameInfo.isBoolComputer()) {
+                    if (level == 0) {
+                        //check if exist in database
+                        if (dbHandlerEasy.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerEasy.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                        }
+                        if (dbHandlerEasy.checkName("Computer") == null) {
+                            gameInfo.setUpdatePlayer2("Computer");
+                            dbHandlerEasy.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
+                    } else if (level == 1) {
+                        if (dbHandlerMed.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerMed.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                        }
+                        if (dbHandlerMed.checkName("Computer") == null) {
+                            gameInfo.setUpdatePlayer2("Computer");
+                            dbHandlerMed.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
+                    } else {
+                        if (dbHandlerHard.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerHard.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                        }
+                        if (dbHandlerHard.checkName("Computer") == null) {
+                            gameInfo.setUpdatePlayer2("Computer");
+                            dbHandlerHard.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
+                    }
+                    //Computer vs Human database
+                    if (dbCompvsHuman.checkName("Human") == null) {
+                        dbCompvsHuman.insertData("Human", "0", "0", "0");
+                    }
+                    if (dbCompvsHuman.checkName("Computer") == null) {
+                        dbCompvsHuman.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                    }
+
+                }
+                else // Player vs Player
+                {
+                    //check if exist in database
+                        if (dbHandlerPlayer.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                            dbHandlerPlayer.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
+                        }
+                        if (dbHandlerPlayer.checkName(gameInfo.getUpdatePlayer2()) == null) {
+                            dbHandlerPlayer.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
+                        }
+                }
+
+                mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
+=======
+>>>>>>> refs/remotes/origin/master
                 startActivity(playIntent);
                 finish();
             }
@@ -115,6 +174,10 @@ public class OptionsActivity extends Activity {
         });
 
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> refs/remotes/origin/master
 
     public void setUpRowSpinner()
     {
@@ -230,7 +293,10 @@ public class OptionsActivity extends Activity {
 
                 if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+<<<<<<< HEAD
+=======
 
+>>>>>>> refs/remotes/origin/master
                 else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
                     gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
 
@@ -360,4 +426,9 @@ public class OptionsActivity extends Activity {
             }
         }
     }
+<<<<<<< HEAD
 }
+
+=======
+}
+>>>>>>> refs/remotes/origin/master
