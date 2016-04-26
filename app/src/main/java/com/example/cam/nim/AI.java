@@ -1,6 +1,7 @@
 package com.example.cam.nim;
 import java.util.ArrayList;
 import java.util.Random;
+import android.util.Log;
 
 /**
  * It should be noted that the "impossible" difficulty may not actually be
@@ -126,6 +127,8 @@ public class AI
         }
         return fullMove;
     }
+
+
     /**
      * generates a boolean value based on the difficulty to determine whether
      * or not the AI makes a mistake

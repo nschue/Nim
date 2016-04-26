@@ -231,6 +231,6 @@ public class ScoreboardActivity extends AppCompatActivity {
         startActivity(mainMenuIntent);
         finish();
 
+
     }
 }
-
