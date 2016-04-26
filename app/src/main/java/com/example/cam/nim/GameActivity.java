@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.support.v4.widget.DrawerLayout;
@@ -40,7 +41,12 @@ public class GameActivity extends Activity
     // private String[] choices;
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
+<<<<<<< HEAD
     private DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
+=======
+    MediaPlayer mediaPlayer;
+
+>>>>>>> origin/Vince
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,7 @@ public class GameActivity extends Activity
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());*/
 
         getGameInfo();
+
         mAI = new AI(mGameInfo.getComputerDifficulty());
 
         this.fadeInPlayerText.setDuration(1000);
@@ -143,6 +150,12 @@ public class GameActivity extends Activity
 
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mediaPlayer.release();
+    }
+
     //Gets information from the Option's bundle and stores into the gameactvity
     private void getGameInfo()
     {
@@ -161,6 +174,21 @@ public class GameActivity extends Activity
         this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
         this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
+        if(extras.getBoolean("boolEnableAudio")) {
+            if (extras.getBoolean("boolComputer")) {
+                if (mGameInfo.getdifficultyCoversion() == 0) {
+                    mediaPlayer = MediaPlayer.create(this, R.raw.easy);
+                } else if (mGameInfo.getdifficultyCoversion() == 1) {
+                    mediaPlayer = MediaPlayer.create(this, R.raw.med);
+                } else {
+                    mediaPlayer = MediaPlayer.create(this, R.raw.hard);
+                }
+            } else {
+                mediaPlayer = MediaPlayer.create(this, R.raw.friend);
+            }
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }
     }
     //Tells the player who won
     // gives them the option to
@@ -193,19 +221,14 @@ public class GameActivity extends Activity
             public void onClick(View v) {
                 Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
                 Bundle mBundle = new Bundle();
-<<<<<<< HEAD
+
                 if(mGameInfo.isBoolComputer()){
                     mBundle.putBoolean("PlayWithComp", true);
                 }
                 else
                 {
                     mBundle.getBoolean("PlayWithComp",false);
-=======
-                if (mGameInfo.isBoolComputer()) {
-                    mBundle.putBoolean("PlayWithComp", true);
-                } else {
-                    mBundle.getBoolean("PlayWithComp", false);
->>>>>>> refs/remotes/origin/master
+
                 }
                 newGameIntent.putExtra("mBundle", mBundle);
                 startActivity(newGameIntent);

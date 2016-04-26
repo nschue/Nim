@@ -17,8 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 /*
 Class:Options
 The activity creates the menu to setup the game
