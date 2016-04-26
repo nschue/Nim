@@ -34,10 +34,7 @@ public class GameActivity extends Activity
     private TextView currentPlayer;
     private Dialog winDialog,howToPlayDialog;
 
-    // private DrawerLayout mDrawerLayout;
-    // private ListView mDrawerList;
     private AI mAI;
-    // private String[] choices;
 
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
 
@@ -61,7 +58,7 @@ public class GameActivity extends Activity
 
 
         getGameInfo();
-
+        setupMusic();
         mAI = new AI(mGameInfo.getComputerDifficulty());
 
         this.fadeInPlayerText.setDuration(1000);
@@ -165,8 +162,11 @@ public class GameActivity extends Activity
         this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
         this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
-        if(extras.getBoolean("boolEnableAudio")) {
-            if (extras.getBoolean("boolComputer")) {
+    }
+    public void setupMusic()
+    {
+        if(mGameInfo.isBoolEnableAudio()) {
+            if (mGameInfo.isBoolComputer()) {
                 if (mGameInfo.getdifficultyCoversion() == 0) {
                     mediaPlayer = MediaPlayer.create(this, R.raw.easy);
                 } else if (mGameInfo.getdifficultyCoversion() == 1) {
@@ -238,7 +238,7 @@ public class GameActivity extends Activity
         winDialog.show();
 
         //check winner and update score to database
-        
+
         scoreboardSetup();
 
     }

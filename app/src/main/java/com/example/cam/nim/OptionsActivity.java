@@ -45,9 +45,6 @@ public class OptionsActivity extends Activity {
         dbHandlerPlayer = new DatabaseHelper(this, "player4.db", "player_table");
         dbCompvsHuman = new DatabaseHelper(this, "compvshuman.db", "cvh_table");
 
-        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
-        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
-
         gameInfo = new GameInfo();
 
 
@@ -59,6 +56,8 @@ public class OptionsActivity extends Activity {
             setContentView(R.layout.activity_friendplaylayout);
             this.gameInfo.setBoolComputer(false);
         }
+        playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
+        audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
 
         setUpRowSpinner();
 
