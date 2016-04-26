@@ -36,12 +36,12 @@ public class OptionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
         gameInfo = new GameInfo();
-        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
-        super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getBundleExtra("mBundle");
 
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
