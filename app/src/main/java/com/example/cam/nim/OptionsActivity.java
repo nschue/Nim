@@ -30,7 +30,7 @@ public class OptionsActivity extends Activity {
     private RadioGroup audioGroup;
     private Dialog changePlayerName;
 
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer, dbCompvsHuman;
+    private DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer, dbCompvsHuman;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

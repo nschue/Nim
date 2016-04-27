@@ -32,22 +32,10 @@
             android:screenOrientation="portrait">
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
-        <activity
-            android:name=".CreditsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_credits"
-            android:parentActivityName=".MainMenuActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainMenuActivity" />
-        </activity>
+
         <activity
             android:name=".ScoreboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BackgroundSound">
-
-        </activity>
     </application>
 
 </manifest>
