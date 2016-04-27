@@ -67,7 +67,7 @@
         android:layout_width="0dp"
         android:layout_height="6dp"/>
 
-    <!-- CreditsActivity -->
+    <!-- CreditsDialog -->
     <Button
         android:id="@+id/Credits"
         android:layout_width="wrap_content"
