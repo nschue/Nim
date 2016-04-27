@@ -9,7 +9,7 @@ public class CreditsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_credits);
+        setContentView(R.layout.dialog_credits);
 
     }
     @Override

@@ -2,7 +2,6 @@
     <string name="app_name">Nim</string>
     <string name="PlayerString">Player</string>
     <string name="playButtonString">Play</string>
-    <string name="optionsButtonString">Options</string>
 
     <string name="howToPlayButtonString">How to Play</string>
     <string name="creditsButtonString">Credits</string>
@@ -13,8 +12,6 @@
     <string name="PlayAgain">Play Again</string>
     <string name="newGame">New Game</string>
     <string name="ViewScoreBoard">View Scoreboard</string>
-
-    <string name="Winner"> Wins!</string>
 
     <string name="title_activity_options">Options</string>
 
@@ -34,10 +31,7 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="ComputerMoveSpeed">Computer Move Speed</string>
-    <string name="creditsString">Developed by Team 10.\n\nGame board and Operations by Nicholas Schuetze\n Main Graphical User Interfaces by Cam Nguyen \n Artificial Intelligence by Kendall Pruit \nScoreboard by Vincent Bui </string>
-
-
-
+    <string name="creditsString"> Team 10.\nGame board by Nicholas Schuetze\n Main GUIs by Cam Nguyen \n AI by Kendall Pruit \nScoreboard by Vincent Bui </string>
 
     <string name="difficultyPrompt">Select Difficulty</string>
     <string-array name="DifficultyArray">
