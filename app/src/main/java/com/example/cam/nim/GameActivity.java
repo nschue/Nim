@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class GameActivity extends Activity
 {
-    private final Handler musicDelay = new Handler();
+
     private GameInfo mGameInfo;
     private Button mEndButton;
     private Button mEndTurnButton,howToPlay;
@@ -349,7 +349,8 @@ public class GameActivity extends Activity
             for(int j = 0; j < i+1; j++)
             {
                 final ImageButton tempButton = new ImageButton(GameActivity.this);
-                tempButton.setBackgroundResource(R.drawable.game_piece);
+                tempButton.setBackgroundResource(R.drawable.selected);
+                //tempButton.setBackgroundResource(R.drawable.game_piece);
                 tempButton.setId(buttonID++);
                 //tempButton.setBackground(null);
                 tempButton.setPadding(0,0,0,0);
@@ -367,7 +368,8 @@ public class GameActivity extends Activity
                     //If the game piece has already been selected, deselect it and reset image
                     if(mSelectedPieces.contains(v.getId()))
                     {
-                        v.setBackgroundResource(R.drawable.game_piece);
+                        //v.setBackgroundResource(R.drawable.game_piece);
+                        v.setBackgroundResource(R.drawable.selected);
                         mSelectedPieces.remove(new Integer(v.getId()));
                     }
                     //Only executes code below if game piece was not already selected
@@ -382,18 +384,12 @@ public class GameActivity extends Activity
                             mSelectedPieces.add(v.getId());
                         else if(!mGameInfo.isBoolComputer())
                             mSelectedPieces.add(v.getId());
-                        v.setBackgroundResource(R.drawable.selected_game_piece);
-
-
-
+                        //v.setBackgroundResource(R.drawable.selected_game_piece);
+                        v.setBackgroundResource(R.drawable.piece);
 
                         clickSounds.pause(computerTone);
                         clickSounds.play(playerTone, 1, 1, 1, 1, 1);
                         clickSounds.pause(playerTone);
-
-
-
-
 
 
                     }
@@ -471,7 +467,8 @@ public class GameActivity extends Activity
                 @Override
                 public void run() {
                     // Do something after .5s = 500ms
-                    tempButton.setBackgroundResource(R.drawable.selected_game_piece);
+                   // tempButton.setBackgroundResource(R.drawable.selected_game_piece);
+                    tempButton.setBackgroundResource(R.drawable.piece);
                     clickSounds.pause(playerTone);
                     clickSounds.play(computerTone, 1, 1, 1, 1, 1);
                     clickSounds.pause(computerTone);
@@ -519,7 +516,8 @@ public class GameActivity extends Activity
             for(Integer id: mSelectedPieces)
             {
                 View tempButton = findViewById(id);
-                tempButton.setBackgroundResource(R.drawable.game_piece);
+                //tempButton.setBackgroundResource(R.drawable.game_piece);
+                tempButton.setBackgroundResource(R.drawable.selected);
             }
             mSelectedPieces.clear();
             mSelectedPieces = new ArrayList<>();

@@ -36,6 +36,8 @@ public class OptionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         Bundle bundle = getIntent().getBundleExtra("mBundle");
 
@@ -46,7 +48,6 @@ public class OptionsActivity extends Activity {
         dbCompvsHuman = new DatabaseHelper(this, "compvshuman.db", "cvh_table");
 
         gameInfo = new GameInfo();
-
 
         if (bundle.getBoolean("PlayWithComp")) {
             setContentView(R.layout.activity_options);
@@ -259,12 +260,12 @@ public class OptionsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-                if (!playerEditText.getText().toString().isEmpty())
-                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+            if (!playerEditText.getText().toString().isEmpty())
+                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
 
-                changePlayerName.dismiss();
+            changePlayerName.dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {

@@ -29,6 +29,7 @@
         </activity>
         <activity
             android:name=".OptionsActivity"
+            android:theme="@style/Animation.AppCompat.Dialog"
             android:screenOrientation="portrait">
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
