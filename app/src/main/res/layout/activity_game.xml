@@ -13,14 +13,6 @@
         android:background="@color/boardColor"
         tools:context=".GameActivity">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/howToPlayButton"
-            android:background="@drawable/button"
-            android:textColor="#FFFFFF"
-            android:text="@string/howToPlayButtonString" />
-
         <!-- Displays the current player -->
         <TextView
             android:id="@+id/currentPlayerTextView"
