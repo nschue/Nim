@@ -23,11 +23,12 @@
             android:text="@string/Preferences" />
         <View
             android:layout_width="0dp"
-            android:layout_height="15dp"></View>
+            android:layout_height="25dp"></View>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:text="@string/stringFirst" />
     <!--Player Selection Radio Group -->
@@ -58,11 +59,12 @@
     </RadioGroup>
     <View
         android:layout_width="0dp"
-        android:layout_height="5dp"></View>
+        android:layout_height="15dp"></View>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:text="@string/Audio" />
 
@@ -89,22 +91,23 @@
             android:onClick="onAudioRadio"
             android:padding="10dp"
             android:textColor="#FFFFFF"
-            android:buttonTint="#FFFFFF"
+
             android:text="@string/disable" />
     </RadioGroup>
     <View
         android:layout_width="0dp"
-        android:layout_height="5dp"></View>
+        android:layout_height="15dp"></View>
 
     <!-- For Row selection-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:text="@string/rowPrompt"/>
     <View
-        android:layout_width="10dp"
-        android:layout_height="0dp"></View>
+        android:layout_width="0dp"
+        android:layout_height="15dp"></View>
     <Spinner
         android:id="@+id/spinnerRows"
         android:layout_width="wrap_content"
@@ -116,7 +119,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="5dp"></View>
+        android:layout_height="15dp"></View>
 
     <Button
         android:id="@+id/NewPlayerOne"
@@ -132,7 +135,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="5dp"></View>
+        android:layout_height="15dp"></View>
     </LinearLayout>
     <!--Container for the buttons to be horizontial -->
     <LinearLayout
@@ -152,7 +155,7 @@
             android:background="@drawable/button"
             android:text="@string/apply" />
         <View
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="0dp">
         </View>
 

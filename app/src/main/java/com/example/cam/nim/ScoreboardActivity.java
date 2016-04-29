@@ -1,9 +1,13 @@
 package com.example.cam.nim;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -11,12 +15,13 @@ public class ScoreboardActivity extends AppCompatActivity {
     TextView easytxtText,medtxtText, hardtxtText, playertxtText, humantxtView, comptxtView;
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
-
+    private Dialog selectScoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
+        showBoardSelection();
 
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
@@ -55,15 +60,6 @@ public class ScoreboardActivity extends AppCompatActivity {
         humantxtView =(TextView) findViewById(R.id.HumantextView);
         comptxtView =(TextView) findViewById(R.id.robotTextView);
 
-        //dbHandlerMed.deletePlayer("vicky");
-        //delete all data, testing purpose
-        /*
-        dbHandlerEasy.deleteAllData();
-        dbHandlerMed.deleteAllData();
-        dbHandlerHard.deleteAllData();
-        dbHandlerPlayer.deleteAllData();
-        */
-
         //print out the data
         try {
             printData("easy","WIN DESC");
@@ -81,22 +77,6 @@ public class ScoreboardActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             //onClick for Name Button
-            case(R.id.Clearbutton):
-            {
-                dbHandlerEasy.deleteAllData();
-                dbHandlerMed.deleteAllData();
-                dbHandlerHard.deleteAllData();
-                dbHandlerPlayer.deleteAllData();
-                dbCompvsHuman.deleteAllData();
-
-                printData("easy", "WIN DESC");
-                printData("med", "WIN DESC");
-                printData("hard", "WIN DESC");
-                printData("pvp", "WIN DESC");
-
-                humantxtView.setText("0");
-                comptxtView.setText("0");
-            }
             case (R.id.namebuttonE):{
                 printData("easy","NAME ASC");
                 break;
@@ -233,7 +213,20 @@ public class ScoreboardActivity extends AppCompatActivity {
         Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
         startActivity(mainMenuIntent);
         finish();
+    }
+    public void showBoardSelection()
+    {
+        selectScoreBoard = new Dialog(ScoreboardActivity.this);
+        selectScoreBoard.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        selectScoreBoard.setContentView(R.layout.dialog_win);
+        selectScoreBoard.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+        final Button easyButton = (Button) selectScoreBoard.findViewById(R.id.easyButton);
+        final Button medButton = (Button) selectScoreBoard.findViewById(R.id.medButton);
+        final Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
+        final Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
 
+        selectScoreBoard.show();
+        selectScoreBoard.setCancelable(false);
     }
 }

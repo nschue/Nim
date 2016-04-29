@@ -34,15 +34,6 @@
             android:textStyle="bold"
             android:layout_gravity="center" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="70dp"
-            android:layout_height="85dp"
-            android:text="Clear All"
-            android:id="@+id/Clearbutton"
-            android:onClick="onClick"
-            android:singleLine="false" />
-
         <TextView
             android:layout_width="70dp"
             android:layout_height="80dp"

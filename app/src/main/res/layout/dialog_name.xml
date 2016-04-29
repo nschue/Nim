@@ -37,6 +37,9 @@
             android:padding="10dp"
             android:text="@string/friendString"/>
     </RadioGroup>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="15dp"/>
 
     <EditText
         android:id="@+id/playerEditName"
