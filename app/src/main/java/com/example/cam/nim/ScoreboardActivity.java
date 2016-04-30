@@ -31,12 +31,12 @@ public class ScoreboardActivity extends Activity {
         setContentView(R.layout.activity_scoreboard);
         Intent intent = getIntent();
         fromGame = intent.getBundleExtra("boolBundle").getBoolean("fromGame");
-        scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
 
         if(!fromGame)
-            showBoardSelection();
+            this.currentBoard = showBoardSelection();
         else
         {
+            scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
             ScoreboardSelection(scoreBoardType);
         }
 
@@ -79,37 +79,21 @@ public class ScoreboardActivity extends Activity {
         spec.setContent(R.id.listByStreak);
         host.addTab(spec);
 
-        host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+        printData(currentBoard, "NAME ASC");
+        customListAdapter adapterName = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        nameList.setAdapter(adapterName);
 
-            @Override
-            public void onTabChanged(String tabId) {
+        printData(currentBoard, "WIN DESC");
+        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        totalList.setAdapter(adapterTotal);
 
-                int i = host.getCurrentTab();
-                switch (i) {
-                    case 0:
-                        printData(currentBoard, "NAME ASC");
-                        customListAdapter adapter = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        nameList.setAdapter(adapter);
-                        break;
-                    case 1:
-                        printData(currentBoard, "WIN DESC");
-                        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        totalList.setAdapter(adapterTotal);
-                        break;
-                    case 2:
-                        printData(currentBoard, "TOTAL DESC");
-                        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        winList.setAdapter(adapterWin);
-                        break;
-                    case 3:
-                        printData(currentBoard, "STREAK DESC");
-                        customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        streakList.setAdapter(adapterStreak);
-                        break;
-                }
+        printData(currentBoard, "TOTAL DESC");
+        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        winList.setAdapter(adapterWin);
 
-            }
-        });
+        printData(currentBoard, "STREAK DESC");
+        customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        streakList.setAdapter(adapterStreak);
 
     }
     public void ScoreboardSelection(int scoreBoardType)
@@ -122,7 +106,7 @@ public class ScoreboardActivity extends Activity {
                 ScoreboardName.setText("Easy Scoreboard");
                 break;
             case 1:
-                currentBoard = "medium";
+                currentBoard = "med";
                 ScoreboardName.setText("Medium Scoreboard");
                 break;
             case 2:
@@ -167,7 +151,7 @@ public class ScoreboardActivity extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-    public void showBoardSelection()
+    public String showBoardSelection()
     {
         selectScoreBoard = new Dialog(ScoreboardActivity.this);
         selectScoreBoard.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -182,38 +166,38 @@ public class ScoreboardActivity extends Activity {
         easyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScoreboardName.setText("Easy Scoreboard");
                 currentBoard = "easy";
-                databaseInfo = dbHandlerEasy.databaseToString("NAME ASC");
+                ScoreboardName.setText("Easy Scoreboard");
                 selectScoreBoard.dismiss();
             }
         });
         medButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScoreboardName.setText("Medium Scoreboard");
                 currentBoard = "med";
+                ScoreboardName.setText("Medium Scoreboard");
                 selectScoreBoard.dismiss();
             }
         });
         hardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScoreboardName.setText("Hard Scoreboard");
                 currentBoard = "hard";
+                ScoreboardName.setText("Hard Scoreboard");
                 selectScoreBoard.dismiss();
             }
         });
         friendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScoreboardName.setText("Friend Scoreboard");
                 currentBoard = "pvp";
+                ScoreboardName.setText("Friend Scoreboard");
                 selectScoreBoard.dismiss();
             }
         });
 
         selectScoreBoard.show();
         selectScoreBoard.setCancelable(false);
+        return currentBoard;
     }
 }
