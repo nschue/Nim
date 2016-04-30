@@ -35,7 +35,7 @@
 
         <activity
             android:name=".ScoreboardActivity"
-
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

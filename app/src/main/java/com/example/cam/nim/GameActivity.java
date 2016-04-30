@@ -47,7 +47,8 @@ public class GameActivity extends Activity
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
-        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+        //dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+
 
         // passes all the information from the bundle in options to gameactivty
         getGameInfo();
@@ -177,6 +178,13 @@ public class GameActivity extends Activity
             @Override
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                Bundle bundleBoolean = new Bundle();
+                bundleBoolean.putBoolean("fromGame",true);
+                if(mGameInfo.isBoolComputer())
+                    bundleBoolean.putInt("gameType",mGameInfo.getdifficultyCoversion());
+                else
+                    bundleBoolean.putInt("gameType",-1);
+                scoreIntent.putExtra("boolBundle",bundleBoolean);
                 startActivity(scoreIntent);
                 finish();
             }
@@ -495,15 +503,15 @@ public class GameActivity extends Activity
                 case 0: {
                     //if player 1 wins
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                        dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                        dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
+                        //dbCompvsHuman.updateData("Human", "1", "1", "0");
                     } else {
                         dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
                     //if player 2 wins
                     if (winner.equals("Computer")) {
-                        dbHandlerEasy.updateData("Computer", "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbHandlerEasy.updateData("Computer", "1", "1", "1");
+                        //dbCompvsHuman.updateData("Computer", "1", "1", "0");
                     } else {
                         dbHandlerEasy.updateData("Computer", "0", "1", "-1");
                     }
@@ -511,15 +519,15 @@ public class GameActivity extends Activity
                 }
                 case 1: {
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                        dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                        dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
+                        //dbCompvsHuman.updateData("Human", "1", "1", "0");
                     } else {
                         dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
 
                     if (winner.equals("Computer")) {
-                        dbHandlerMed.updateData("Computer", "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbHandlerMed.updateData("Computer", "1", "1", "1");
+                        //dbCompvsHuman.updateData("Computer", "1", "1", "0");
                     } else {
                         dbHandlerMed.updateData("Computer", "0", "1", "-1");
                     }
@@ -527,15 +535,15 @@ public class GameActivity extends Activity
                 }
                 case 2: {
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                        dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                        dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
+                        //dbCompvsHuman.updateData("Human", "1", "1", "0");
                     } else {
                         dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
 
                     if (winner.equals("Computer")) {
-                        dbHandlerHard.updateData("Computer", "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbHandlerHard.updateData("Computer", "1", "1", "1");
+                        //dbCompvsHuman.updateData("Computer", "1", "1", "0");
                     } else {
                         dbHandlerHard.updateData("Computer", "0", "1", "-1");
                     }
@@ -546,14 +554,14 @@ public class GameActivity extends Activity
         }
         else{
             if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
             }
             else {
                 dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
             }
             //if player 2 wins
             if (winner.equals(mGameInfo.getUpdatePlayer2())) {
-                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "1", "0", "1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "1", "1", "1");
             }
             else {
                 dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "0", "1", "-1");

@@ -1,209 +1,162 @@
 package com.example.cam.nim;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import java.util.ArrayList;
 
-public class ScoreboardActivity extends AppCompatActivity {
-    TextView easytxtText,medtxtText, hardtxtText, playertxtText, humantxtView, comptxtView;
 
-    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
+public class ScoreboardActivity extends Activity {
+
+    DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
+    private ArrayList<String> databaseInfo = new ArrayList<>();
     private Dialog selectScoreBoard;
+    private TextView ScoreboardName;
+    private String currentBoard = new String();
+    private ListView nameList,streakList,totalList,winList;
+    private boolean fromGame;
+    private int scoreBoardType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-        showBoardSelection();
+        Intent intent = getIntent();
+        fromGame = intent.getBundleExtra("boolBundle").getBoolean("fromGame");
+        scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
 
-        dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
-        dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
-        dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
-        dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
-        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
-
-
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
-        tabHost.setup();
-
-        TabHost.TabSpec tabSpec = tabHost.newTabSpec("easy");
-        tabSpec.setContent(R.id.tabEasy);
-        tabSpec.setIndicator("Easy");
-        tabHost.addTab(tabSpec);
-
-        tabSpec = tabHost.newTabSpec("medium");
-        tabSpec.setContent(R.id.tabMedium);
-        tabSpec.setIndicator("Med");
-        tabHost.addTab(tabSpec);
-
-        tabSpec = tabHost.newTabSpec("hard");
-        tabSpec.setContent(R.id.tabHard);
-        tabSpec.setIndicator("Hard");
-        tabHost.addTab(tabSpec);
-
-        tabSpec = tabHost.newTabSpec("player");
-        tabSpec.setContent(R.id.tabPlayer);
-        tabSpec.setIndicator("PvP");
-        tabHost.addTab(tabSpec);
-
-        easytxtText = (TextView) findViewById(R.id.easytextView);
-        medtxtText = (TextView) findViewById(R.id.mediumtextView);
-        hardtxtText = (TextView) findViewById(R.id.hardtextView);
-        playertxtText = (TextView) findViewById(R.id.playertextView);
-        humantxtView =(TextView) findViewById(R.id.HumantextView);
-        comptxtView =(TextView) findViewById(R.id.robotTextView);
-
-        //print out the data
-        try {
-            printData("easy","WIN DESC");
-            printData("med","WIN DESC");
-            printData("hard", "WIN DESC");
-            printData("pvp", "WIN DESC");
-            printDataRvC();
-
-        } catch (Exception e) {
-            //Log.i("exxxx", e.toString());
+        if(!fromGame)
+            showBoardSelection();
+        else
+        {
+            ScoreboardSelection(scoreBoardType);
         }
 
+        this.nameList = (ListView) findViewById(R.id.listbyName);
+        this.streakList = (ListView) findViewById(R.id.listByStreak);
+        this.totalList = (ListView) findViewById(R.id.listbyTotal);
+        this.winList = (ListView) findViewById(R.id.listbyWins);
+
+        ScoreboardName = (TextView) findViewById(R.id.scoreboardName);
+
+        this.dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
+        this.dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
+        this.dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
+        this.dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
+
+        final TabHost host = (TabHost)findViewById(R.id.tabHost);
+        host.setup();
+
+        //Tab 1
+        TabHost.TabSpec spec = host.newTabSpec("Name");
+        spec.setIndicator("Name");
+        spec.setContent(R.id.listbyName);
+        host.addTab(spec);
+
+        //Tab 2
+        spec = host.newTabSpec("Wins");
+        spec.setIndicator("Wins");
+        spec.setContent(R.id.listbyWins);
+        host.addTab(spec);
+
+        //Tab 3
+        spec = host.newTabSpec("Total");
+        spec.setIndicator("Total");
+        spec.setContent(R.id.listbyTotal);
+        host.addTab(spec);
+
+        //Tab 4
+        spec = host.newTabSpec("Streak");
+        spec.setIndicator("Streak");
+        spec.setContent(R.id.listByStreak);
+        host.addTab(spec);
+
+
+
+        host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+
+                int i = host.getCurrentTab();
+                switch (i) {
+                    case 0:
+                        printData(currentBoard, "NAME ASC");
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1, databaseInfo);
+                        nameList.setAdapter(adapter);
+                        break;
+                    case 1:
+                        printData(currentBoard, "WIN DESC");
+                        ArrayAdapter<String> adapterTotal = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1, databaseInfo);
+                        totalList.setAdapter(adapterTotal);
+                        break;
+                    case 2:
+                        printData(currentBoard, "TOTAL DESC");
+                        ArrayAdapter<String> adapterWin = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1, databaseInfo);
+                        winList.setAdapter(adapterWin);
+                        break;
+                    case 3:
+                        printData(currentBoard, "STREAK DESC");
+                        ArrayAdapter<String> adapterStreak = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1,databaseInfo);
+                        streakList.setAdapter(adapterStreak);
+                        break;
+                }
+
+            }
+        });
+
     }
-    public void onClick(View view) {
-
-        switch (view.getId()) {
-            //onClick for Name Button
-            case (R.id.namebuttonE):{
-                printData("easy","NAME ASC");
+    public void ScoreboardSelection(int scoreBoardType)
+    {
+        switch(scoreBoardType)
+        {
+            case 0:
+                currentBoard="easy";
                 break;
-            }
-            case (R.id.namebuttonM):{
-                printData("med","NAME ASC");
+            case 1:
+                currentBoard = "medium";
                 break;
-            }
-            case (R.id.namebuttonH):{
-                printData("hard","NAME ASC");
+            case 2:
+                currentBoard = "hard";
                 break;
-            }
-            case (R.id.namebuttonP):
-            {
-                printData("pvp","NAME ASC");
+            case -1:
+                currentBoard = "pvp";
                 break;
-            }
-
-            //onClick for Win Button
-            case (R.id.winbuttonE):{
-                printData("easy","WIN DESC");
-                break;
-            }
-            case (R.id.winbuttonM):{
-                printData("med","WIN DESC");
-                break;
-            }
-            case (R.id.winbuttonH):{
-                printData("hard","WIN DESC");
-                break;
-            }
-            case (R.id.winbuttonP): {
-                printData("pvp","WIN DESC");
-                break;
-            }
-
-            //onClick for Streak Button
-            case (R.id.streakbuttonE):{
-                printData("easy","STREAK DESC");
-                break;
-            }
-            case (R.id.streakbuttonM):
-            {
-                printData("med","STREAK DESC");
-                break;
-            }
-            case (R.id.streakbuttonH):
-            {
-                printData("hard","STREAK DESC");
-                break;
-            }
-            case (R.id.streakbuttonP):
-            {
-                printData("pvp","STREAK DESC");
-                break;
-            }
-
-            //onClick for Loses Button
-            case (R.id.losesbuttonE):{
-                printData("easy","LOSES DESC");
-                break;
-            }
-            case (R.id.losesbuttonM):{
-                printData("med","LOSES DESC");
-                break;
-            }
-            case (R.id.losesbuttonH):{
-                printData("hard","LOSES DESC");
-                break;
-            }
-            case (R.id.losesbuttonP):{
-                printData("pvp","LOSES DESC");
-                break;
-            }
-
-            //onClick for Win% Button
-            case (R.id.winPercentbuttonE):{
-                printData("easy","WIN_PERCENT DESC");
-                break;
-            }
-            case (R.id.winPercentbuttonM):{
-                printData("med","WIN_PERCENT DESC");
-                break;
-            }
-            case (R.id.winPercentbuttonH):{
-                printData("hard","WIN_PERCENT DESC");
-                break;
-            }
-            case (R.id.winPercentbuttonP):{
-                printData("pvp","WIN_PERCENT DESC");
-                break;
-            }
-
         }
-
-
     }
-    public void printDataRvC(){
-        String human = Integer.toString(dbCompvsHuman.getWins("Human"));
-        humantxtView.setText(human);
-        String comp = Integer.toString(dbCompvsHuman.getWins("Computer"));
-        comptxtView.setText(comp);
-    }
+
     public void printData(String level, String sortBy){
         switch(level) {
             case("easy"): {
-                String dbStringE = dbHandlerEasy.databaseToString(sortBy);
-                easytxtText.setText(dbStringE);
+                databaseInfo = dbHandlerEasy.databaseToString(sortBy);
                 break;
             }
             case("med"): {
-                String dbStringM = dbHandlerMed.databaseToString(sortBy);
-                medtxtText.setText(dbStringM);
+                databaseInfo = dbHandlerMed.databaseToString(sortBy);
                 break;
             }
             case("hard"): {
-                String dbStringH = dbHandlerHard.databaseToString(sortBy);
-                hardtxtText.setText(dbStringH);
+               databaseInfo = dbHandlerHard.databaseToString(sortBy);
                 break;
             }
             case("pvp"): {
-                String dbStringP = dbHandlerPlayer.databaseToString(sortBy);
-                playertxtText.setText(dbStringP);
+                databaseInfo = dbHandlerPlayer.databaseToString(sortBy);
                 break;
             }
         }
     }
+
+
+
 
     //Takes the player back to the main menu if the player clicks the back button
     @Override
@@ -218,13 +171,47 @@ public class ScoreboardActivity extends AppCompatActivity {
     {
         selectScoreBoard = new Dialog(ScoreboardActivity.this);
         selectScoreBoard.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        selectScoreBoard.setContentView(R.layout.dialog_win);
+        selectScoreBoard.setContentView(R.layout.dailog_scoreboard);
         selectScoreBoard.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         final Button easyButton = (Button) selectScoreBoard.findViewById(R.id.easyButton);
         final Button medButton = (Button) selectScoreBoard.findViewById(R.id.medButton);
         final Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
         final Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
+
+        easyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScoreboardName.setText("Easy Scoreboard");
+                currentBoard = "easy";
+                selectScoreBoard.dismiss();
+
+            }
+        });
+        medButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScoreboardName.setText("Medium Scoreboard");
+                currentBoard = "medium";
+                selectScoreBoard.dismiss();
+            }
+        });
+        hardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScoreboardName.setText("Hard Scoreboard");
+                currentBoard = "hard";
+                selectScoreBoard.dismiss();
+            }
+        });
+        friendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScoreboardName.setText("Friend Scoreboard");
+                currentBoard = "pvp";
+                selectScoreBoard.dismiss();
+            }
+        });
 
         selectScoreBoard.show();
         selectScoreBoard.setCancelable(false);
