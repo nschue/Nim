@@ -118,15 +118,19 @@ public class ScoreboardActivity extends Activity {
         {
             case 0:
                 currentBoard="easy";
+                ScoreboardName.setText("Easy Scoreboard");
                 break;
             case 1:
                 currentBoard = "medium";
+                ScoreboardName.setText("Medium Scoreboard");
                 break;
             case 2:
                 currentBoard = "hard";
+                ScoreboardName.setText("Hard ScoreBoard");
                 break;
             case -1:
                 currentBoard = "pvp";
+                ScoreboardName.setText("Friend Scoreboard");
                 break;
         }
     }
