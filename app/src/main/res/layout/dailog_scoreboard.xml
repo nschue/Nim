@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/dialogs"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:text="@string/dialogBoard"
+        android:id="@+id/Select_Board"
+        android:textSize="30dp"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"/>
+    <Button
+        android:id="@+id/easyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        android:text="@string/easyButton" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"/>
+    <Button
+        android:id="@+id/medButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        android:text="@string/medButton"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"/>
+    <Button
+        android:id="@+id/hardButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        android:text="@string/hardButton" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="5dp"/>
+    <Button
+        android:id="@+id/friendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button"
+        android:text="@string/playWithFriend" />
+
+</LinearLayout>

@@ -44,6 +44,9 @@ public class MainMenuActivity extends Activity {
             case(R.id.Scoreboard):
             {
                 Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putBoolean("fromGame",false);
+                scoreIntent.putExtra("boolBundle", mBundle);
                 startActivity(scoreIntent);
                 finish();
                 break;

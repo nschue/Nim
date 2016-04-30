@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,41 +22,37 @@ import java.util.Objects;
 
 public class GameActivity extends Activity
 {
-    private final Handler musicDelay = new Handler();
     private GameInfo mGameInfo;
-    private Button mEndButton;
-    private Button mEndTurnButton,howToPlay;
+    private Button mEndButton,mEndTurnButton;
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
     private Dialog winDialog,howToPlayDialog;
     private SoundPool clickSounds;
     private int playerTone,computerTone;
-
     private AI mAI;
-
     private final Animation fadeInPlayerText = new AlphaAnimation(0.0f,1.0f);
-
     private DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer,dbCompvsHuman;
-
-    private MediaPlayer mediaPlayer;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        howToPlay();
+
         mSelectedPieces = new ArrayList<>();
 
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
-        dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
+        //dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
 
-        getGameInfo(); // passes all the information from the bundle in options to gameactivty
-        //setupMusic();
+
+        // passes all the information from the bundle in options to gameactivty
+        getGameInfo();
+
         mAI = new AI(mGameInfo.getComputerDifficulty());
         clickSounds = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         playerTone = clickSounds.load(this, R.raw.chime, 1);
@@ -70,15 +65,6 @@ public class GameActivity extends Activity
 
         mGameBoardContainer = (LinearLayout) findViewById(R.id.gameboard_container);
         mGameBoardContainer.removeAllViews();
-
-        howToPlay = (Button) findViewById(R.id.howToPlayButton);
-        howToPlay.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                howToPlay();
-            }
-        });
 
         mEndButton = (Button) findViewById(R.id.end_game_button);
         mEndButton.setOnClickListener(new View.OnClickListener() {
@@ -170,35 +156,17 @@ public class GameActivity extends Activity
         this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
 
     }
-    public void setupMusic()
-    {
-        if(mGameInfo.isBoolEnableAudio()) {
-            if (mGameInfo.isBoolComputer()) {
-                if (mGameInfo.getdifficultyCoversion() == 0) {
-                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.easy);
-                } else if (mGameInfo.getdifficultyCoversion() == 1) {
-                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.med);
-                } else {
-                   // mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.hard);
-                    mediaPlayer = MediaPlayer.create(GameActivity.this,R.raw.soundsong);
-                }
-            }
-            else {
-                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.friend);
-            }
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
-        }
-    }
+
     //Tells the player who won
     // gives them the option to
     //exit, view scoreboard, or play with the same settings
     public void WinDialog(){
+
         winDialog = new Dialog(GameActivity.this);
         winDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         winDialog.setContentView(R.layout.dialog_win);
-
         winDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         final TextView winnerName = (TextView) winDialog.findViewById(R.id.winnerName);
         final Button scoreboard = (Button) winDialog.findViewById(R.id.viewScoreboardButton);
         final Button playAgain = (Button) winDialog.findViewById(R.id.playAgainButton);
@@ -206,13 +174,19 @@ public class GameActivity extends Activity
 
         winnerName.setText(currentPlayer.getText().toString() + " Wins!");
 
-
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
-            startActivity(scoreIntent);
-            finish();
+                Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                Bundle bundleBoolean = new Bundle();
+                bundleBoolean.putBoolean("fromGame",true);
+                if(mGameInfo.isBoolComputer())
+                    bundleBoolean.putInt("gameType",mGameInfo.getdifficultyCoversion());
+                else
+                    bundleBoolean.putInt("gameType",-1);
+                scoreIntent.putExtra("boolBundle",bundleBoolean);
+                startActivity(scoreIntent);
+                finish();
             }
         });
         newGame.setOnClickListener(new View.OnClickListener() {
@@ -221,14 +195,12 @@ public class GameActivity extends Activity
             Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
             Bundle mBundle = new Bundle();
 
-            if(mGameInfo.isBoolComputer()){
+            if (mGameInfo.isBoolComputer())
                 mBundle.putBoolean("PlayWithComp", true);
-            }
-            else
-            {
-                mBundle.getBoolean("PlayWithComp",false);
 
-            }
+            else
+                mBundle.getBoolean("PlayWithComp", false);
+
             newGameIntent.putExtra("mBundle", mBundle);
             startActivity(newGameIntent);
             finish();
@@ -237,23 +209,20 @@ public class GameActivity extends Activity
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
-            Bundle mBundle = getIntent().getBundleExtra("mBundle");
-            playAgainIntent.putExtra("mBundle", mBundle);
-            startActivity(playAgainIntent);
-            finish();
+                Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
+                Bundle mBundle = getIntent().getBundleExtra("mBundle");
+                playAgainIntent.putExtra("mBundle", mBundle);
+                startActivity(playAgainIntent);
+                finish();
             }
         });
         winDialog.show();
-
+        winDialog.setCancelable(false);
         //check winner and update score to database
-
         scoreboardSetup();
-
     }
 
     public void howToPlay() {
-
         howToPlayDialog = new Dialog(GameActivity.this);
         howToPlayDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         howToPlayDialog.setContentView(R.layout.dialog_howtoplay);
@@ -298,7 +267,6 @@ public class GameActivity extends Activity
         }
     }
 
-
     private void updateGameBoard()
     {
         if(mGameInfo.getTotalPieces() > 0) {
@@ -329,7 +297,6 @@ public class GameActivity extends Activity
         {
             currentPlayer.setVisibility(View.GONE);
             WinDialog();
-
         }
     }
 
@@ -349,7 +316,8 @@ public class GameActivity extends Activity
             for(int j = 0; j < i+1; j++)
             {
                 final ImageButton tempButton = new ImageButton(GameActivity.this);
-                tempButton.setBackgroundResource(R.drawable.game_piece);
+                tempButton.setBackgroundResource(R.drawable.selected);
+                //tempButton.setBackgroundResource(R.drawable.game_piece);
                 tempButton.setId(buttonID++);
                 //tempButton.setBackground(null);
                 tempButton.setPadding(0,0,0,0);
@@ -362,41 +330,36 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
-                {
-                    //If the game piece has already been selected, deselect it and reset image
-                    if(mSelectedPieces.contains(v.getId()))
-                    {
-                        v.setBackgroundResource(R.drawable.game_piece);
-                        mSelectedPieces.remove(new Integer(v.getId()));
-                    }
-                    //Only executes code below if game piece was not already selected
-                    else
-                    {
-                        //checkRowSelection(v.getId());
-                        if(!mSelectedPieces.isEmpty())
+                        if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
                         {
-                            checkRowSelect(v.getId());
-                        }
-                        if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
-                            mSelectedPieces.add(v.getId());
-                        else if(!mGameInfo.isBoolComputer())
-                            mSelectedPieces.add(v.getId());
-                        v.setBackgroundResource(R.drawable.selected_game_piece);
+                            //If the game piece has already been selected, deselect it and reset image
+                            if(mSelectedPieces.contains(v.getId()))
+                            {
+                                //v.setBackgroundResource(R.drawable.game_piece);
+                                v.setBackgroundResource(R.drawable.selected);
+                                mSelectedPieces.remove(new Integer(v.getId()));
+                            }
+                            //Only executes code below if game piece was not already selected
+                            else
+                            {
+                                //checkRowSelection(v.getId());
+                                if(!mSelectedPieces.isEmpty())
+                                    checkRowSelect(v.getId());
 
+                                if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
 
+                                else if(!mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
 
+                                v.setBackgroundResource(R.drawable.piece);
 
-                        clickSounds.pause(computerTone);
-                        clickSounds.play(playerTone, 1, 1, 1, 1, 1);
-                        clickSounds.pause(playerTone);
-
-
-
-
-
-
-                    }
+                                if(mGameInfo.isBoolEnableAudio()) {
+                                    clickSounds.pause(computerTone);
+                                    clickSounds.play(playerTone, 1, 1, 1, 1, 1);
+                                    clickSounds.pause(playerTone);
+                                }
+                             }
                 }
                     }
                 });
@@ -471,10 +434,13 @@ public class GameActivity extends Activity
                 @Override
                 public void run() {
                     // Do something after .5s = 500ms
-                    tempButton.setBackgroundResource(R.drawable.selected_game_piece);
-                    clickSounds.pause(playerTone);
-                    clickSounds.play(computerTone, 1, 1, 1, 1, 1);
-                    clickSounds.pause(computerTone);
+                   // tempButton.setBackgroundResource(R.drawable.selected_game_piece);
+                    tempButton.setBackgroundResource(R.drawable.piece);
+                    if(mGameInfo.isBoolEnableAudio())
+                    {   clickSounds.pause(playerTone);
+                        clickSounds.play(computerTone, 1, 1, 1, 1, 1);
+                        clickSounds.pause(computerTone);
+                    }
 
                 }
             }, 500);
@@ -519,7 +485,8 @@ public class GameActivity extends Activity
             for(Integer id: mSelectedPieces)
             {
                 View tempButton = findViewById(id);
-                tempButton.setBackgroundResource(R.drawable.game_piece);
+                //tempButton.setBackgroundResource(R.drawable.game_piece);
+                tempButton.setBackgroundResource(R.drawable.selected);
             }
             mSelectedPieces.clear();
             mSelectedPieces = new ArrayList<>();
@@ -536,15 +503,15 @@ public class GameActivity extends Activity
                 case 0: {
                     //if player 1 wins
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                        dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                        dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
+                        //dbCompvsHuman.updateData("Human", "1", "1", "0");
                     } else {
                         dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
                     //if player 2 wins
                     if (winner.equals("Computer")) {
-                        dbHandlerEasy.updateData("Computer", "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbHandlerEasy.updateData("Computer", "1", "1", "1");
+                        //dbCompvsHuman.updateData("Computer", "1", "1", "0");
                     } else {
                         dbHandlerEasy.updateData("Computer", "0", "1", "-1");
                     }
@@ -552,15 +519,15 @@ public class GameActivity extends Activity
                 }
                 case 1: {
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                        dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                        dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
+                        //dbCompvsHuman.updateData("Human", "1", "1", "0");
                     } else {
                         dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
 
                     if (winner.equals("Computer")) {
-                        dbHandlerMed.updateData("Computer", "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbHandlerMed.updateData("Computer", "1", "1", "1");
+                        //dbCompvsHuman.updateData("Computer", "1", "1", "0");
                     } else {
                         dbHandlerMed.updateData("Computer", "0", "1", "-1");
                     }
@@ -568,15 +535,15 @@ public class GameActivity extends Activity
                 }
                 case 2: {
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                        dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
-                        dbCompvsHuman.updateData("Human", "1", "0", "0");
+                        dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
+                        //dbCompvsHuman.updateData("Human", "1", "1", "0");
                     } else {
                         dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                     }
 
                     if (winner.equals("Computer")) {
-                        dbHandlerHard.updateData("Computer", "1", "0", "1");
-                        dbCompvsHuman.updateData("Computer", "1", "0", "0");
+                        dbHandlerHard.updateData("Computer", "1", "1", "1");
+                        //dbCompvsHuman.updateData("Computer", "1", "1", "0");
                     } else {
                         dbHandlerHard.updateData("Computer", "0", "1", "-1");
                     }
@@ -587,14 +554,14 @@ public class GameActivity extends Activity
         }
         else{
             if (winner.equals(mGameInfo.getUpdatedPlayer1())) {
-                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "1", "0", "1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
             }
             else {
                 dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
             }
             //if player 2 wins
             if (winner.equals(mGameInfo.getUpdatePlayer2())) {
-                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "1", "0", "1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "1", "1", "1");
             }
             else {
                 dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(), "0", "1", "-1");

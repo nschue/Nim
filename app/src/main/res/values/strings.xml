@@ -40,8 +40,13 @@
         <item>Hard</item>
     </string-array>
 
-
     <string name="rowPrompt">Select Rows</string>
+
+    <string name="easyButton">Easy</string>
+    <string name="medButton">Medium</string>
+    <string name="hardButton">Hard</string>
+
+    <string name="dialogBoard">Choose Scoreboard</string>
 
     <!--Selections of Rows-->
     <string-array name="rowArray">
@@ -55,8 +60,4 @@
         <item>10</item>
     </string-array>
     <string name="title_activity_menu">Menu</string>
-    <string name="title_activity_how_to_play">HowToPlay</string>
-    <string name="title_activity_credits">Credits</string>
-
-
 </resources>

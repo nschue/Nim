@@ -37,8 +37,10 @@ public class OptionsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
+        //retrives teh bundle containing which layout to use
         Bundle bundle = getIntent().getBundleExtra("mBundle");
 
+        //Init the databases
         dbHandlerEasy = new DatabaseHelper(this, "easy4.db", "easy_table");
         dbHandlerMed = new DatabaseHelper(this, "medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this, "hard4.db", "hard_table");
@@ -47,7 +49,7 @@ public class OptionsActivity extends Activity {
 
         gameInfo = new GameInfo();
 
-
+        //chooses layouts based on what bool is passed
         if (bundle.getBoolean("PlayWithComp")) {
             setContentView(R.layout.activity_options);
             setUpDifficultySpinner();
@@ -56,11 +58,14 @@ public class OptionsActivity extends Activity {
             setContentView(R.layout.activity_friendplaylayout);
             this.gameInfo.setBoolComputer(false);
         }
+        //connects the radio groups with their ids from the xml
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
 
+        //sets up the spinner functions
         setUpRowSpinner();
 
+        //passes the settings to the game activity
         okStart = (Button) findViewById(R.id.okStart);
         okStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +108,7 @@ public class OptionsActivity extends Activity {
             }
         });
 
+        //brings the player to the main menu on cancel
         cancelStart = (Button) findViewById(R.id.canelStart);
         cancelStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +120,7 @@ public class OptionsActivity extends Activity {
         });
 
     }
-
+//Populates the row spinners and sets the defualt value
     public void setUpRowSpinner() {
         rowSpinner = (Spinner) findViewById(R.id.spinnerRows); // finds the spinner ID
         // Sets the items  defined in the string.xml and layout of the spinner
@@ -207,7 +213,7 @@ public class OptionsActivity extends Activity {
 
     //Displays the dialog for the player to change their name
     // Changes the name that is selected through the radio buttons
-    // then disappears
+    // then disappears for the play with friend
     public void ChangePlayerName(View view) {
         changePlayerName = new Dialog(OptionsActivity.this);
         changePlayerName.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -259,12 +265,12 @@ public class OptionsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
-                if (!playerEditText.getText().toString().isEmpty())
-                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
+            if (!playerEditText.getText().toString().isEmpty())
+                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
 
-                changePlayerName.dismiss();
+            changePlayerName.dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
