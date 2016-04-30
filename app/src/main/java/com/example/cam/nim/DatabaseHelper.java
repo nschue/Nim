@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String COL_TOTAL = "TOTAL";
   //  public static final String COL_WIN_PERCENT = "WIN_PERCENT";
     public static final String COL_STREAK = "STREAK";
-    private ArrayList<String>  databaseInfo = new ArrayList<>();
+    private ArrayList<ScoreItem>  databaseInfo = new ArrayList<>();
 
 
     public DatabaseHelper(Context context, String dataName, String tableName) {
@@ -72,17 +72,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     //return string sorted base on winning percentage
-    public ArrayList<String> databaseToString(String sortBy){
-        int count = 1;
+    public ArrayList<ScoreItem> databaseToString(String sortBy){
+
         SQLiteDatabase db =  getWritableDatabase();
-         String temp = new String();
         databaseInfo = new ArrayList<>();
 
         Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortBy);
-        StringBuffer buffer = new StringBuffer();
+
         while(res.moveToNext())
         {
-            temp = res.getString(1) + res.getString(2) +res.getString(3) + res.getString(4);
+            ScoreItem temp = new ScoreItem(res.getString(1),res.getString(2),res.getString(3),res.getString(4));
             databaseInfo.add(temp);
         }
         db.close();
@@ -118,9 +117,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         update_streak += dstreak;
 
         if(update_streak <= 0){ update_streak = 0;}
-
-
-        //String winPercent = String.format("%.2f", (double) update_win / (update_total) * 100);
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = checkName(name);

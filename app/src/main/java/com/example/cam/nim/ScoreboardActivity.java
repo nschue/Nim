@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 public class ScoreboardActivity extends Activity {
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
-    private ArrayList<String> databaseInfo = new ArrayList<>();
+    private ArrayList<ScoreItem> databaseInfo = new ArrayList<>();
     private Dialog selectScoreBoard;
     private TextView ScoreboardName;
     private String currentBoard = new String();
@@ -80,8 +79,6 @@ public class ScoreboardActivity extends Activity {
         spec.setContent(R.id.listByStreak);
         host.addTab(spec);
 
-
-
         host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
             @Override
@@ -91,22 +88,22 @@ public class ScoreboardActivity extends Activity {
                 switch (i) {
                     case 0:
                         printData(currentBoard, "NAME ASC");
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1, databaseInfo);
+                        customListAdapter adapter = new customListAdapter(ScoreboardActivity.this,databaseInfo);
                         nameList.setAdapter(adapter);
                         break;
                     case 1:
                         printData(currentBoard, "WIN DESC");
-                        ArrayAdapter<String> adapterTotal = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1, databaseInfo);
+                        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,databaseInfo);
                         totalList.setAdapter(adapterTotal);
                         break;
                     case 2:
                         printData(currentBoard, "TOTAL DESC");
-                        ArrayAdapter<String> adapterWin = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1, databaseInfo);
+                        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,databaseInfo);
                         winList.setAdapter(adapterWin);
                         break;
                     case 3:
                         printData(currentBoard, "STREAK DESC");
-                        ArrayAdapter<String> adapterStreak = new ArrayAdapter<>(ScoreboardActivity.this, android.R.layout.simple_list_item_1,databaseInfo);
+                        customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,databaseInfo);
                         streakList.setAdapter(adapterStreak);
                         break;
                 }

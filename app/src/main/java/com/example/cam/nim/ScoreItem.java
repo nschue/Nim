@@ -5,18 +5,17 @@ package com.example.cam.nim;
  */
 public class ScoreItem {
     private String playerName;
-    private int winAmount;
-    private int totalGames;
-    private int streak;
+    private String winAmount;
+    private String totalGames;
+    private String streak;
 
-    ScoreItem(String name, int win, int total, int streak)
+    ScoreItem(String name, String win, String total, String streak)
     {
         this.playerName = name;
         this.winAmount = win;
         this.totalGames = total;
         this.streak = streak;
     }
-
 
     public String getPlayerName() {
         return playerName;
@@ -26,27 +25,27 @@ public class ScoreItem {
         this.playerName = playerName;
     }
 
-    public int getWinAmount() {
+    public String getWinAmount() {
         return winAmount;
     }
 
-    public void setWinAmount(int winAmount) {
+    public void setWinAmount(String winAmount) {
         this.winAmount = winAmount;
     }
 
-    public int getTotalGames() {
+    public String getTotalGames() {
         return totalGames;
     }
 
-    public void setTotalGames(int totalGames) {
+    public void setTotalGames(String totalGames) {
         this.totalGames = totalGames;
     }
 
-    public int getStreak() {
+    public String getStreak() {
         return streak;
     }
 
-    public void setStreak(int streak) {
+    public void setStreak(String streak) {
         this.streak = streak;
     }
 }
