@@ -235,9 +235,9 @@ public class OptionsActivity extends Activity {
                 imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);//hides the keyboard
 
                 if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
-                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString().trim());
                 else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
-                    gameInfo.setUpdatePlayer2(playerEditText.getText().toString());
+                    gameInfo.setUpdatePlayer2(playerEditText.getText().toString().trim());
 
                 changePlayerName.dismiss();
             }
@@ -268,7 +268,7 @@ public class OptionsActivity extends Activity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);
             if (!playerEditText.getText().toString().isEmpty())
-                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString());
+                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString().trim());
 
             changePlayerName.dismiss();
             }

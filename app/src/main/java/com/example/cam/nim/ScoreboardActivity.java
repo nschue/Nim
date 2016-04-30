@@ -153,8 +153,6 @@ public class ScoreboardActivity extends Activity {
     }
 
 
-
-
     //Takes the player back to the main menu if the player clicks the back button
     @Override
     public void onBackPressed()
@@ -181,8 +179,8 @@ public class ScoreboardActivity extends Activity {
             public void onClick(View v) {
                 ScoreboardName.setText("Easy Scoreboard");
                 currentBoard = "easy";
+                databaseInfo = dbHandlerEasy.databaseToString("NAME ASC");
                 selectScoreBoard.dismiss();
-
             }
         });
         medButton.setOnClickListener(new View.OnClickListener() {
