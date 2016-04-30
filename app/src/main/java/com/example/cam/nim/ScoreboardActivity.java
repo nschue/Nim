@@ -114,6 +114,7 @@ public class ScoreboardActivity extends Activity {
     }
     public void ScoreboardSelection(int scoreBoardType)
     {
+        ScoreboardName = (TextView) findViewById(R.id.scoreboardName);
         switch(scoreBoardType)
         {
             case 0:
@@ -191,7 +192,7 @@ public class ScoreboardActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ScoreboardName.setText("Medium Scoreboard");
-                currentBoard = "medium";
+                currentBoard = "med";
                 selectScoreBoard.dismiss();
             }
         });
