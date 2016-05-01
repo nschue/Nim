@@ -18,7 +18,6 @@ public class ScoreboardActivity extends Activity {
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
     private ArrayList<ScoreItem> databaseInfo = new ArrayList<>();
-    private Dialog selectScoreBoard;
     private TextView ScoreboardName;
     private String currentBoard = new String();
     private ListView nameList,streakList,totalList,winList;
@@ -30,7 +29,7 @@ public class ScoreboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         Intent intent = getIntent();
-        fromGame = intent.getBundleExtra("boolBundle").getBoolean("fromGame");
+        scoreBoardType =  intent.getBundleExtra("typeBundle").getInt("gameType");
 
         this.nameList = (ListView) findViewById(R.id.listbyName);
         this.streakList = (ListView) findViewById(R.id.listByStreak);
@@ -44,15 +43,8 @@ public class ScoreboardActivity extends Activity {
         this.dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
         final TabHost host = (TabHost)findViewById(R.id.tabHost);
+        ScoreboardSelection(scoreBoardType);
 
-        if(!fromGame)
-        {   showBoardSelection();
-        }
-        else
-        {
-            scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
-            ScoreboardSelection(scoreBoardType);
-        }
 
         host.setup();
         //Tab Name
@@ -80,53 +72,21 @@ public class ScoreboardActivity extends Activity {
         host.addTab(spec);
 
         printData(currentBoard, "NAME ASC");//sorting by alphabetical
-        customListAdapter adapterName = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterName = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         nameList.setAdapter(adapterName);
 
         printData(currentBoard, "TOTAL DESC");//sort by wins
-        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         totalList.setAdapter(adapterTotal);
 
         printData(currentBoard, "WIN DESC");//sort by totals
-        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         winList.setAdapter(adapterWin);
 
         printData(currentBoard, "STREAK DESC");//sort by streak
-        customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         streakList.setAdapter(adapterStreak);
-        host.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
-        @Override
-           public void onTabChanged(String tabId) {
-
-            int i = host.getCurrentTab();
-            switch (i) {
-               case 0:
-                        printData(currentBoard, "NAME ASC");
-                        customListAdapter adapter = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        nameList.setAdapter(adapter);
-                        break;
-                case 1:
-                        printData(currentBoard, "TOTAL DESC");
-                        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        totalList.setAdapter(adapterTotal);
-                        break;
-                case 2:
-                        printData(currentBoard, "WIN DESC");
-                        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        winList.setAdapter(adapterWin);
-                        break;
-                case 3:
-                        printData(currentBoard, "STREAK DESC");
-                       customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        streakList.setAdapter(adapterStreak);
-                break;
-           }
-
-        }
-                });
-
-
-
+        
     }
     public void ScoreboardSelection(int scoreBoardType)
     {
@@ -173,7 +133,6 @@ public class ScoreboardActivity extends Activity {
         }
     }
 
-
     //Takes the player back to the main menu if the player clicks the back button
     @Override
     public void onBackPressed()
@@ -183,54 +142,7 @@ public class ScoreboardActivity extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-    public void showBoardSelection()
-    {
-        selectScoreBoard = new Dialog(ScoreboardActivity.this);
-        selectScoreBoard.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        selectScoreBoard.setContentView(R.layout.dailog_scoreboard);
-        selectScoreBoard.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        Button easyButton = (Button) selectScoreBoard.findViewById(R.id.easyButton);
-        Button medButton = (Button) selectScoreBoard.findViewById(R.id.medButton);
-        Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
-        Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
-
-        easyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCurrentBoard("easy");
-                ScoreboardName.setText("Easy Scoreboard");
-                selectScoreBoard.dismiss();
-            }
-        });
-        medButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCurrentBoard("med");
-                ScoreboardName.setText("Medium Scoreboard");
-                selectScoreBoard.dismiss();
-            }
-        });
-        hardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCurrentBoard("hard");
-                ScoreboardName.setText("Hard Scoreboard");
-                selectScoreBoard.dismiss();
-            }
-        });
-        friendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCurrentBoard("pvp");
-                ScoreboardName.setText("Friend Scoreboard");
-                selectScoreBoard.dismiss();
-            }
-        });
-
-        selectScoreBoard.show();
-        selectScoreBoard.setCancelable(false);
-    }
     public void setCurrentBoard(String string)
     {
         this.currentBoard = string;

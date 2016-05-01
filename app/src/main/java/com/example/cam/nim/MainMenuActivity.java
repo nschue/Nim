@@ -10,7 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 
 public class MainMenuActivity extends Activity {
-    private Dialog creditsDialog;
+    private Dialog creditsDialog,selectScoreBoard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +43,7 @@ public class MainMenuActivity extends Activity {
 
             case(R.id.Scoreboard):
             {
-                Intent scoreIntent = new Intent(this,ScoreboardActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putBoolean("fromGame",false);
-                scoreIntent.putExtra("boolBundle", mBundle);
-                startActivity(scoreIntent);
-                finish();
+                showBoardSelection();
                 break;
             }
             case(R.id.Credits):
@@ -58,6 +53,67 @@ public class MainMenuActivity extends Activity {
             }
 
         }
+    }
+
+    public void showBoardSelection()
+    {
+        selectScoreBoard = new Dialog(MainMenuActivity.this);
+        selectScoreBoard.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        selectScoreBoard.setContentView(R.layout.dailog_scoreboard);
+        selectScoreBoard.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        Button easyButton = (Button) selectScoreBoard.findViewById(R.id.easyButton);
+        Button medButton = (Button) selectScoreBoard.findViewById(R.id.medButton);
+        Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
+        Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
+
+
+        easyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("gameType",0);
+                scoreIntent.putExtra("typeBundle", mBundle);
+                startActivity(scoreIntent);
+                selectScoreBoard.dismiss();
+            }
+        });
+        medButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("gameType",1);
+                scoreIntent.putExtra("typeBundle", mBundle);
+                startActivity(scoreIntent);
+                selectScoreBoard.dismiss();
+            }
+        });
+        hardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("gameType",2);
+                scoreIntent.putExtra("typeBundle", mBundle);
+                startActivity(scoreIntent);
+                selectScoreBoard.dismiss();
+            }
+        });
+        friendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
+                Bundle mBundle = new Bundle();
+                scoreIntent.putExtra("typeBundle", mBundle);
+                mBundle.putInt("gameType", -1);
+                startActivity(scoreIntent);
+                selectScoreBoard.dismiss();
+            }
+        });
+
+        selectScoreBoard.show();
     }
     public void creditsDialog() {
 
