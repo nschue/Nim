@@ -177,12 +177,11 @@ public class GameActivity extends Activity
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
                 Bundle bundleBoolean = new Bundle();
-                bundleBoolean.putBoolean("fromGame", true);
                 if (mGameInfo.isBoolComputer())//passes the type of match to call the correct score board
                     bundleBoolean.putInt("gameType", mGameInfo.getdifficultyCoversion());
                 else//pvp match
                     bundleBoolean.putInt("gameType", -1);
-                scoreIntent.putExtra("boolBundle", bundleBoolean);
+                scoreIntent.putExtra("typeBundle", bundleBoolean);
                 startActivity(scoreIntent);
                 finish();
             }
