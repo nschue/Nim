@@ -27,7 +27,7 @@ public class GameActivity extends Activity
     private LinearLayout mGameBoardContainer;
     private ArrayList<Integer> mSelectedPieces;
     private TextView currentPlayer;
-    private Dialog winDialog,howToPlayDialog;
+    private Dialog winDialog,howToPlayDialog,quit;
     private SoundPool clickSounds;
     private int playerTone,computerTone;
     private AI mAI;
@@ -70,9 +70,7 @@ public class GameActivity extends Activity
         mEndButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
-                startActivity(menuIntent);
-                finish();
+               quitDialog();
             }
         });
 
@@ -179,12 +177,12 @@ public class GameActivity extends Activity
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
                 Bundle bundleBoolean = new Bundle();
-                bundleBoolean.putBoolean("fromGame",true);
-                if(mGameInfo.isBoolComputer())
-                    bundleBoolean.putInt("gameType",mGameInfo.getdifficultyCoversion());
+                bundleBoolean.putBoolean("fromGame", true);
+                if (mGameInfo.isBoolComputer())
+                    bundleBoolean.putInt("gameType", mGameInfo.getdifficultyCoversion());
                 else
-                    bundleBoolean.putInt("gameType",-1);
-                scoreIntent.putExtra("boolBundle",bundleBoolean);
+                    bundleBoolean.putInt("gameType", -1);
+                scoreIntent.putExtra("boolBundle", bundleBoolean);
                 startActivity(scoreIntent);
                 finish();
             }
@@ -192,18 +190,18 @@ public class GameActivity extends Activity
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
-            Bundle mBundle = new Bundle();
+                Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
+                Bundle mBundle = new Bundle();
 
-            if (mGameInfo.isBoolComputer())
-                mBundle.putBoolean("PlayWithComp", true);
+                if (mGameInfo.isBoolComputer())
+                    mBundle.putBoolean("PlayWithComp", true);
 
-            else
-                mBundle.getBoolean("PlayWithComp", false);
+                else
+                    mBundle.getBoolean("PlayWithComp", false);
 
-            newGameIntent.putExtra("mBundle", mBundle);
-            startActivity(newGameIntent);
-            finish();
+                newGameIntent.putExtra("mBundle", mBundle);
+                startActivity(newGameIntent);
+                finish();
             }
         });
         playAgain.setOnClickListener(new View.OnClickListener() {
@@ -235,6 +233,65 @@ public class GameActivity extends Activity
             }
         });
         howToPlayDialog.show();
+    }
+    public void quitDialog(){
+        quit = new Dialog(GameActivity.this);
+        quit.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        quit.setContentView(R.layout.dialog_end);
+        quit.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Button okayButton = (Button) quit.findViewById(R.id.okay);
+        Button cancelButton = (Button) quit.findViewById(R.id.cancel);
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quit.dismiss();
+                passValues();
+                Intent menuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                startActivity(menuIntent);
+                finish();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quit.dismiss();
+            }
+        });
+        quit.show();
+    }
+
+    public void passValues()
+    {
+        if(mGameInfo.isBoolComputer())
+        {
+            int convertDiff = mGameInfo.getdifficultyCoversion();
+
+            switch(convertDiff)
+            {
+                case 0:
+                    dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
+                    break;
+                case 1:
+                    dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                    break;
+                case 2:
+                    dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                    break;
+            }
+
+        }
+        else{
+            if(currentPlayer.equals(mGameInfo.getUpdatedPlayer1()))//player 1 quits
+            {
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(),"1","1","-1");
+            }
+            else{//player 2 quit
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(),"1","1","-1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(),"0","1","-1");
+            }
+        }
+
     }
 
     //Assigns the correct name to the current player text

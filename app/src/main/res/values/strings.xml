@@ -12,6 +12,9 @@
     <string name="PlayAgain">Play Again</string>
     <string name="newGame">New Game</string>
     <string name="ViewScoreBoard">View Scoreboard</string>
+    <string name="Quitmessage">Are you sure you want to quit?\n You will forfeit the game!</string>
+
+    <string name="ExitGame">Exit Game</string>
 
     <string name="title_activity_options">Options</string>
 
