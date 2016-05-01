@@ -9,6 +9,7 @@ public class GameInfo {
 
     private boolean boolEnableAudio;
     private boolean boolPlayerTurn;
+    private boolean boolShowHTP;
     private boolean boolComputer;
     private String updatedPlayer1;
     private String updatePlayer2;
@@ -22,8 +23,9 @@ public class GameInfo {
     GameInfo() {
         this.boolEnableAudio = true;
         this.boolPlayerTurn = true;
+        this.boolShowHTP = false;
         this.nRowAmount = 5;
-        this.mComputerDifficulty = 1.0;//intially 2.0
+        this.mComputerDifficulty = 1.0;
         this.computerSpeed = 1;
         this.totalPieces = findTotal(nRowAmount);
         this.mRemainingDots = new ArrayList<>();
@@ -141,6 +143,14 @@ public class GameInfo {
         else if(Double.compare(this.mComputerDifficulty,0.5) == 0) {level = 1;}
         else { level = 2;}
         return level;
+    }
+
+    public boolean isBoolShowHTP() {
+        return boolShowHTP;
+    }
+
+    public void setBoolShowHTP(boolean boolShowHTP) {
+        this.boolShowHTP = boolShowHTP;
     }
 }
 

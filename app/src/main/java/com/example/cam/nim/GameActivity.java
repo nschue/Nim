@@ -39,8 +39,6 @@ public class GameActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        howToPlay();
-
         mSelectedPieces = new ArrayList<>();
 
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
@@ -50,6 +48,10 @@ public class GameActivity extends Activity
 
         // passes all the information from the bundle in options to gameactivty
         getGameInfo();
+        if(mGameInfo.isBoolShowHTP())
+        {
+            howToPlay();
+        }
 
         mAI = new AI(mGameInfo.getComputerDifficulty());
         clickSounds = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
@@ -141,6 +143,7 @@ public class GameActivity extends Activity
         this.mGameInfo.setBoolEnableAudio(extras.getBoolean("boolEnableAudio"));
         this.mGameInfo.setBoolPlayerTurn(extras.getBoolean("boolPlayerTurn"));
         this.mGameInfo.setBoolComputer(extras.getBoolean("boolComputer"));
+        this.mGameInfo.setBoolShowHTP(extras.getBoolean("boolShow"));
         if(mGameInfo.isBoolComputer()) {
             this.mGameInfo.setComputerDifficulty(extras.getDouble("computerDifficulty"));
             this.mGameInfo.setComputerSpeed(extras.getLong("computerSpeed"));
@@ -551,7 +554,6 @@ public class GameActivity extends Activity
     public void scoreboardSetup()
     {
         //check winner and update score to database
-
         String winner = currentPlayer.getText().toString();
         if(mGameInfo.isBoolComputer()) {//AI match
             int level = mGameInfo.getdifficultyCoversion();

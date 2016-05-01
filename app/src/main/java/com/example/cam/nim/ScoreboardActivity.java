@@ -38,6 +38,7 @@ public class ScoreboardActivity extends Activity {
         this.dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
         final TabHost host = (TabHost)findViewById(R.id.tabHost);
+
         ScoreboardSelection(scoreBoardType);
 
 
