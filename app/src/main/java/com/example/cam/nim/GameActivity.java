@@ -270,12 +270,15 @@ public class GameActivity extends Activity
             {
                 case 0:
                     dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
+                    dbHandlerEasy.updateData("Computer","1","1","1");
                     break;
                 case 1:
                     dbHandlerMed.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                    dbHandlerMed.updateData("Computer","1","1","1");
                     break;
                 case 2:
                     dbHandlerHard.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
+                    dbHandlerHard.updateData("Computer","1","1","1");
                     break;
             }
 
