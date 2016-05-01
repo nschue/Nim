@@ -136,7 +136,17 @@
     <View
         android:layout_width="0dp"
         android:layout_height="15dp"></View>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/showHowtoPlay"
+        android:onClick="onCheckShowHTP"
+        android:text="@string/showHow"/>
+    <View
+    android:layout_width="0dp"
+    android:layout_height="15dp"></View>
     </LinearLayout>
+
     <!--Container for the buttons to be horizontial -->
     <LinearLayout
         android:layout_width="match_parent"

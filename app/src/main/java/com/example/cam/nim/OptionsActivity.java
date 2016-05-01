@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -62,6 +63,7 @@ public class OptionsActivity extends Activity {
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
 
+
         //sets up the spinner functions
         setUpRowSpinner();
 
@@ -80,6 +82,7 @@ public class OptionsActivity extends Activity {
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn", gameInfo.isBoolPlayerTurn());//Add player turn to bundle
                 mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add if it is a computer player to bundle
+                mBundle.putBoolean("boolShow",gameInfo.isBoolShowHTP());
                 if (gameInfo.isBoolComputer()) {
                     SeekBar computerSpeed = (SeekBar) findViewById(R.id.computerSpeedSeekbar);
                     gameInfo.setComputerSpeed(computerSpeed.getProgress());
@@ -120,6 +123,20 @@ public class OptionsActivity extends Activity {
         });
 
     }
+    public void onCheckShowHTP(View view){
+        CheckBox howtoplaydisplay = (CheckBox) findViewById(R.id.showHowtoPlay);
+        if(howtoplaydisplay.isChecked())
+        {
+            this.gameInfo.setBoolShowHTP(true);
+        }
+        else
+        {
+            this.gameInfo.setBoolShowHTP(false);
+        }
+    }
+
+
+
 //Populates the row spinners and sets the defualt value
     public void setUpRowSpinner() {
         rowSpinner = (Spinner) findViewById(R.id.spinnerRows); // finds the spinner ID
