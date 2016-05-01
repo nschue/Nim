@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db =  getWritableDatabase();
         databaseInfo = new ArrayList<>();
 
-        Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortBy);
+        Cursor res = db.query(TABLE_NAME, null, null, null, null, null,sortBy);
 
         while(res.moveToNext())
         {
