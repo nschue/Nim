@@ -31,7 +31,7 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="ComputerMoveSpeed">Computer Move Speed</string>
-    <string name="creditsString"> Team 10.\nGame board by Nicholas Schuetze\n Main GUIs by Cam Nguyen \n AI by Kendall Pruit \nScoreboard by Vincent Bui </string>
+    <string name="creditsString"> Team 10.\nGame board by Nicholas Schuetze\n Main GUIs by Cam Nguyen \n AI by Kendall Pruitt \nScoreboard by Vincent Bui </string>
 
     <string name="difficultyPrompt">Select Difficulty</string>
     <string-array name="DifficultyArray">

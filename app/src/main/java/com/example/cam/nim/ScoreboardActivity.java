@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -33,20 +32,10 @@ public class ScoreboardActivity extends Activity {
         Intent intent = getIntent();
         fromGame = intent.getBundleExtra("boolBundle").getBoolean("fromGame");
 
-        if(!fromGame)
-        {   showBoardSelection();
-        Log.d("CurrentBoard info: ",currentBoard);}
-        else
-        {
-            scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
-            ScoreboardSelection(scoreBoardType);
-        }
-
         this.nameList = (ListView) findViewById(R.id.listbyName);
         this.streakList = (ListView) findViewById(R.id.listByStreak);
         this.totalList = (ListView) findViewById(R.id.listbyTotal);
         this.winList = (ListView) findViewById(R.id.listbyWins);
-
         ScoreboardName = (TextView) findViewById(R.id.scoreboardName);
 
         this.dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
@@ -55,47 +44,88 @@ public class ScoreboardActivity extends Activity {
         this.dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
 
         final TabHost host = (TabHost)findViewById(R.id.tabHost);
-        host.setup();
 
-        //Tab 1
+        if(!fromGame)
+        {   showBoardSelection();
+        }
+        else
+        {
+            scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
+            ScoreboardSelection(scoreBoardType);
+        }
+
+        host.setup();
+        //Tab Name
         TabHost.TabSpec spec = host.newTabSpec("Name");
         spec.setIndicator("Name");
         spec.setContent(R.id.listbyName);
         host.addTab(spec);
 
-        //Tab 2
+        //Tab Win
         spec = host.newTabSpec("Wins");
         spec.setIndicator("Wins");
         spec.setContent(R.id.listbyWins);
         host.addTab(spec);
 
-        //Tab 3
+        //Tab Total
         spec = host.newTabSpec("Total");
         spec.setIndicator("Total");
         spec.setContent(R.id.listbyTotal);
         host.addTab(spec);
 
-        //Tab 4
+        //Tab Streak
         spec = host.newTabSpec("Streak");
         spec.setIndicator("Streak");
         spec.setContent(R.id.listByStreak);
         host.addTab(spec);
 
-        printData(currentBoard, "NAME ASC");
+        printData(currentBoard, "NAME ASC");//sorting by alphabetical
         customListAdapter adapterName = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         nameList.setAdapter(adapterName);
 
-        printData(currentBoard, "WIN DESC");
+        printData(currentBoard, "TOTAL DESC");//sort by wins
         customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         totalList.setAdapter(adapterTotal);
 
-        printData(currentBoard, "TOTAL DESC");
+        printData(currentBoard, "WIN DESC");//sort by totals
         customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         winList.setAdapter(adapterWin);
 
-        printData(currentBoard, "STREAK DESC");
+        printData(currentBoard, "STREAK DESC");//sort by streak
         customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         streakList.setAdapter(adapterStreak);
+        host.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
+        @Override
+           public void onTabChanged(String tabId) {
+
+            int i = host.getCurrentTab();
+            switch (i) {
+               case 0:
+                        printData(currentBoard, "NAME ASC");
+                        customListAdapter adapter = new customListAdapter(ScoreboardActivity.this,databaseInfo);
+                        nameList.setAdapter(adapter);
+                        break;
+                case 1:
+                        printData(currentBoard, "TOTAL DESC");
+                        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,databaseInfo);
+                        totalList.setAdapter(adapterTotal);
+                        break;
+                case 2:
+                        printData(currentBoard, "WIN DESC");
+                        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,databaseInfo);
+                        winList.setAdapter(adapterWin);
+                        break;
+                case 3:
+                        printData(currentBoard, "STREAK DESC");
+                       customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,databaseInfo);
+                        streakList.setAdapter(adapterStreak);
+                break;
+           }
+
+        }
+                });
+
+
 
     }
     public void ScoreboardSelection(int scoreBoardType)
@@ -160,15 +190,15 @@ public class ScoreboardActivity extends Activity {
         selectScoreBoard.setContentView(R.layout.dailog_scoreboard);
         selectScoreBoard.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        final Button easyButton = (Button) selectScoreBoard.findViewById(R.id.easyButton);
-        final Button medButton = (Button) selectScoreBoard.findViewById(R.id.medButton);
-        final Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
-        final Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
+        Button easyButton = (Button) selectScoreBoard.findViewById(R.id.easyButton);
+        Button medButton = (Button) selectScoreBoard.findViewById(R.id.medButton);
+        Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
+        Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
 
         easyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentBoard = "easy";
+                setCurrentBoard("easy");
                 ScoreboardName.setText("Easy Scoreboard");
                 selectScoreBoard.dismiss();
             }
@@ -176,7 +206,7 @@ public class ScoreboardActivity extends Activity {
         medButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentBoard = "med";
+                setCurrentBoard("med");
                 ScoreboardName.setText("Medium Scoreboard");
                 selectScoreBoard.dismiss();
             }
@@ -184,7 +214,7 @@ public class ScoreboardActivity extends Activity {
         hardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentBoard = "hard";
+                setCurrentBoard("hard");
                 ScoreboardName.setText("Hard Scoreboard");
                 selectScoreBoard.dismiss();
             }
@@ -192,7 +222,7 @@ public class ScoreboardActivity extends Activity {
         friendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentBoard = "pvp";
+                setCurrentBoard("pvp");
                 ScoreboardName.setText("Friend Scoreboard");
                 selectScoreBoard.dismiss();
             }
