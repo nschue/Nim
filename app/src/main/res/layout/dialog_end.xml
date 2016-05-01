@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:textColor="#FFFFFF"
-        android:text="@string/okay"
+        android:text="@string/cancel"
         android:id="@+id/cancel" />
     </LinearLayout>
 </LinearLayout>
