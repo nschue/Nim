@@ -47,8 +47,6 @@ public class GameActivity extends Activity
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
         dbHandlerPlayer = new DatabaseHelper(this,"player4.db", "player_table");
-        //dbCompvsHuman = new DatabaseHelper(this,"compvshuman.db", "cvh_table");
-
 
         // passes all the information from the bundle in options to gameactivty
         getGameInfo();
@@ -285,10 +283,10 @@ public class GameActivity extends Activity
             if(currentPlayer.equals(mGameInfo.getUpdatedPlayer1()))//player 1 quits
             {
                 dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(),"0","1","-1");
-                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(),"1","1","-1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(),"1","1","1");
             }
             else{//player 2 quit
-                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(),"1","1","-1");
+                dbHandlerPlayer.updateData(mGameInfo.getUpdatedPlayer1(),"1","1","1");
                 dbHandlerPlayer.updateData(mGameInfo.getUpdatePlayer2(),"0","1","-1");
             }
         }
