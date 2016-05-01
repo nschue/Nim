@@ -2,6 +2,7 @@ package com.example.cam.nim;
 
 /**
  * Created by Cam on 4/29/2016.
+ * Used to display the Scoreboard in a neat list view
  */
 public class ScoreItem {
     private String playerName;

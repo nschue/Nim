@@ -140,6 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/showHowtoPlay"
+        android:textColor="#FFFFFF"
         android:onClick="onCheckShowHTP"
         android:text="@string/showHow"/>
     <View
@@ -154,7 +155,6 @@
         android:gravity="bottom"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-
 
         <Button
             android:id="@+id/okStart"

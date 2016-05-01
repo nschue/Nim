@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Cam on 3/21/2016.
+ * Stores game information for different activities
  */
 public class GameInfo {
 

@@ -1,7 +1,6 @@
 package com.example.cam.nim;
 import java.util.ArrayList;
 import java.util.Random;
-import android.util.Log;
 
 /**
  * It should be noted that the "impossible" difficulty may not actually be
