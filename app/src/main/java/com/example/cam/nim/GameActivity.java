@@ -40,6 +40,7 @@ public class GameActivity extends Activity
         setContentView(R.layout.activity_game);
 
         mSelectedPieces = new ArrayList<>();
+
         dbHandlerEasy = new DatabaseHelper(this,"easy4.db","easy_table");
         dbHandlerMed = new DatabaseHelper(this,"medium4.db", "medium_table");
         dbHandlerHard = new DatabaseHelper(this,"hard4.db", "hard_table");
@@ -48,7 +49,9 @@ public class GameActivity extends Activity
         // passes all the information from the bundle in options to gameactivty
         getGameInfo();
         if(mGameInfo.isBoolShowHTP())
+        {
             howToPlay();
+        }
 
         mAI = new AI(mGameInfo.getComputerDifficulty());
         clickSounds = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
@@ -79,7 +82,8 @@ public class GameActivity extends Activity
         mEndTurnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //player v computer checks if the computer was the opponent
+            //player v computer
+            //checks if the computer was the opponent
             // checks if it is the player's turn and if the selection list wasn't empty
             if (mGameInfo.isBoolComputer()) {
                 if (mGameInfo.isBoolPlayerTurn() && !mSelectedPieces.isEmpty()) {
@@ -91,8 +95,10 @@ public class GameActivity extends Activity
                         aiMove();
                 }
             }
-            //Player v Player Checks pieces were selected
-            // then changes the current player displayed updates the pieces then clears the selection list
+            //Player v Player
+            //Checks pieces were selected
+            // then changes the current player displayed updates the pieces
+            // then clears the selection list
             else {
                 if (!mSelectedPieces.isEmpty()) {
                     updateGameBoard();
@@ -105,16 +111,23 @@ public class GameActivity extends Activity
 
         });
 
+
         this.mGameInfo.populateGameBoard();
         createGameBoard();
 
         if(!mGameInfo.isBoolPlayerTurn()&& mGameInfo.isBoolComputer())
-            if (mGameInfo.getTotalPieces() > 0)
+        {
+            if (mGameInfo.getTotalPieces() > 0) {
                 aiMove();
+            }
+        }
+
     }
+
     @Override
     protected void onPause(){
         super.onPause();
+       // mediaPlayer.release();
         if(clickSounds != null)
         {
             clickSounds.release();
@@ -137,8 +150,10 @@ public class GameActivity extends Activity
         }
         this.mGameInfo.setnRowAmount(extras.getInt("rowAmount"));
         this.mGameInfo.setTotalPieces(this.mGameInfo.findTotal(this.mGameInfo.getnRowAmount()));
+
         this.mGameInfo.setUpdatedPlayer1(extras.getString("newPlayerName"));
         this.mGameInfo.setUpdatePlayer2(extras.getString("newOtherPlayerName"));
+
     }
 
     //Tells the player who won
@@ -161,42 +176,42 @@ public class GameActivity extends Activity
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
-            Bundle bundleBoolean = new Bundle();
-            if (mGameInfo.isBoolComputer())//passes the type of match to call the correct score board
-                bundleBoolean.putInt("gameType", mGameInfo.getdifficultyCoversion());
-            else//pvp match
-                bundleBoolean.putInt("gameType", -1);
-            scoreIntent.putExtra("typeBundle", bundleBoolean);
-            startActivity(scoreIntent);
-            finish();
+                Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                Bundle bundleBoolean = new Bundle();
+                if (mGameInfo.isBoolComputer())//passes the type of match to call the correct score board
+                    bundleBoolean.putInt("gameType", mGameInfo.getdifficultyCoversion());
+                else//pvp match
+                    bundleBoolean.putInt("gameType", -1);
+                scoreIntent.putExtra("typeBundle", bundleBoolean);
+                startActivity(scoreIntent);
+                finish();
             }
         });
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
-            Bundle mBundle = new Bundle();
+                Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
+                Bundle mBundle = new Bundle();
 
-            if (mGameInfo.isBoolComputer())//creates another AI match by passing true for it to the intent
-                mBundle.putBoolean("PlayWithComp", true);
+                if (mGameInfo.isBoolComputer())//creates another AI match by passing true for it to the intent
+                    mBundle.putBoolean("PlayWithComp", true);
 
-            else
-                mBundle.getBoolean("PlayWithComp", false);//creates a pvp match by passing false
+                else
+                    mBundle.getBoolean("PlayWithComp", false);//creates a pvp match by passing false
 
-            newGameIntent.putExtra("mBundle", mBundle);
-            startActivity(newGameIntent);
-            finish();
+                newGameIntent.putExtra("mBundle", mBundle);
+                startActivity(newGameIntent);
+                finish();
             }
         });
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
-            Bundle mBundle = getIntent().getBundleExtra("mBundle");
-            playAgainIntent.putExtra("mBundle", mBundle);
-            startActivity(playAgainIntent);
-            finish();
+                Intent playAgainIntent = new Intent(GameActivity.this, GameActivity.class);
+                Bundle mBundle = getIntent().getBundleExtra("mBundle");
+                playAgainIntent.putExtra("mBundle", mBundle);
+                startActivity(playAgainIntent);
+                finish();
             }
         });
         winDialog.show();
@@ -333,13 +348,14 @@ public class GameActivity extends Activity
                 View selectedButton = findViewById(id);
                 selectedButton.setEnabled(false);
                 selectedButton.setBackgroundResource(R.drawable.blank_game_piece);
+                //selectedButton.setVisibility(View.GONE);
             }
-            mGameInfo.setTotalPieces(mGameInfo.getTotalPieces() - mSelectedPieces.size()); //Decrements the total pieces
+            mGameInfo.setTotalPieces(mGameInfo.getTotalPieces() - mSelectedPieces.size());
         }
-        if (mGameInfo.getTotalPieces() == 0)// pieces are 0
+        if (mGameInfo.getTotalPieces() == 0)
         {
-            currentPlayer.setVisibility(View.GONE);//Removes the current player text view
-            WinDialog();//shows the winner dialog
+            currentPlayer.setVisibility(View.GONE);
+            WinDialog();
         }
     }
 
@@ -360,7 +376,9 @@ public class GameActivity extends Activity
             {
                 final ImageButton tempButton = new ImageButton(GameActivity.this);
                 tempButton.setBackgroundResource(R.drawable.selected);
+                //tempButton.setBackgroundResource(R.drawable.game_piece);
                 tempButton.setId(buttonID++);
+                //tempButton.setBackground(null);
                 tempButton.setPadding(0,0,0,0);
                 temp.addView(tempButton);
 
@@ -371,35 +389,37 @@ public class GameActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                    if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
-                    {
-                        //If the game piece has already been selected, deselect it and reset image
-                        if(mSelectedPieces.contains(v.getId()))
+                        if(mGameInfo.isBoolPlayerTurn()||!mGameInfo.isBoolComputer())
                         {
-                            v.setBackgroundResource(R.drawable.selected);
-                            mSelectedPieces.remove(new Integer(v.getId()));
-                        }
-                        //Only executes code below if game piece was not already selected
-                        else
-                        {
-                            if(!mSelectedPieces.isEmpty())
-                                checkRowSelect(v.getId());
-
-                            if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
-                                mSelectedPieces.add(v.getId());
-
-                            else if(!mGameInfo.isBoolComputer())
-                                mSelectedPieces.add(v.getId());
-
-                            v.setBackgroundResource(R.drawable.piece);
-
-                            if(mGameInfo.isBoolEnableAudio()) {
-                                clickSounds.pause(computerTone);
-                                clickSounds.play(playerTone, 1, 1, 1, 1, 1);
-                                clickSounds.pause(playerTone);
+                            //If the game piece has already been selected, deselect it and reset image
+                            if(mSelectedPieces.contains(v.getId()))
+                            {
+                                //v.setBackgroundResource(R.drawable.game_piece);
+                                v.setBackgroundResource(R.drawable.selected);
+                                mSelectedPieces.remove(new Integer(v.getId()));
                             }
-                         }
-                    }
+                            //Only executes code below if game piece was not already selected
+                            else
+                            {
+                                //checkRowSelection(v.getId());
+                                if(!mSelectedPieces.isEmpty())
+                                    checkRowSelect(v.getId());
+
+                                if(mGameInfo.isBoolPlayerTurn() && mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
+
+                                else if(!mGameInfo.isBoolComputer())
+                                    mSelectedPieces.add(v.getId());
+
+                                v.setBackgroundResource(R.drawable.piece);
+
+                                if(mGameInfo.isBoolEnableAudio()) {
+                                    clickSounds.pause(computerTone);
+                                    clickSounds.play(playerTone, 1, 1, 1, 1, 1);
+                                    clickSounds.pause(playerTone);
+                                }
+                             }
+                }
                     }
                 });
             }
@@ -434,7 +454,9 @@ public class GameActivity extends Activity
             for(int i = 0; i < mSelectedPieces.size(); i++)
             {
                 if(Objects.equals(convertToGrid(mSelectedPieces.get(i)).get(0), convertToGrid(index).get(0)))
+                {
                     result = false;
+                }
             }
         }
         return result;
@@ -446,7 +468,8 @@ public class GameActivity extends Activity
         {
             for(int i = 0; i < mSelectedPieces.size(); i++)
             {
-                findViewById(i).setBackgroundResource(R.drawable.selected);
+                //ArrayList<Integer> selectedPiece = convertToGrid(mSelectedPieces.get(i))
+                findViewById(i).setBackgroundResource(R.drawable.game_piece);
                 mSelectedPieces.remove(new Integer(index));
             }
         }
@@ -456,10 +479,12 @@ public class GameActivity extends Activity
     {
         // The following returns a linear ArrayList consisting of the AI's choices
         ArrayList<Integer> tempAIList = new ArrayList<>(mAI.calculateNextMove(this.mGameInfo.getRemainingDots()));
-        final Handler handler = new Handler();
-
         for(Integer selectedButton:tempAIList)
+        {
             mSelectedPieces.add(selectedButton);
+
+        }
+        final Handler handler = new Handler();
 
         for(Integer id:mSelectedPieces) {
             final View tempButton = findViewById(id);
@@ -468,12 +493,14 @@ public class GameActivity extends Activity
                 @Override
                 public void run() {
                     // Do something after .5s = 500ms
+                   // tempButton.setBackgroundResource(R.drawable.selected_game_piece);
                     tempButton.setBackgroundResource(R.drawable.piece);
                     if(mGameInfo.isBoolEnableAudio())
                     {   clickSounds.pause(playerTone);
                         clickSounds.play(computerTone, 1, 1, 1, 1, 1);
                         clickSounds.pause(computerTone);
                     }
+
                 }
             }, 500);
         }
@@ -502,11 +529,13 @@ public class GameActivity extends Activity
             for(int column = 0; column <= row; column++)
             {
                 if(i==prevID)
+                {
                     prevRow = row;
-
+                }
                 if(i == currentID)
+                {
                     currentRow = row;
-
+                }
                 i++;
             }
         }
@@ -515,6 +544,7 @@ public class GameActivity extends Activity
             for(Integer id: mSelectedPieces)
             {
                 View tempButton = findViewById(id);
+                //tempButton.setBackgroundResource(R.drawable.game_piece);
                 tempButton.setBackgroundResource(R.drawable.selected);
             }
             mSelectedPieces.clear();

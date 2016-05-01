@@ -25,9 +25,12 @@ The activity creates the menu to setup the game
 public class OptionsActivity extends Activity {
     private GameInfo gameInfo;
     private Spinner rowSpinner, difficultySpinner;
-    private Button okStart,cancelStart;
-    private RadioGroup playerGroup,audioGroup;
+    private Button okStart;
+    private Button cancelStart;
+    private RadioGroup playerGroup;
+    private RadioGroup audioGroup;
     private Dialog changePlayerName;
+
     private DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer, dbCompvsHuman;
 
     @Override
@@ -35,7 +38,7 @@ public class OptionsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        //retrieves the bundle containing which layout to use
+        //retrives teh bundle containing which layout to use
         Bundle bundle = getIntent().getBundleExtra("mBundle");
 
         //Init the databases
@@ -52,14 +55,14 @@ public class OptionsActivity extends Activity {
             setContentView(R.layout.activity_options);
             setUpDifficultySpinner();
             this.gameInfo.setBoolComputer(true);
-        }
-        else {
+        } else {
             setContentView(R.layout.activity_friendplaylayout);
             this.gameInfo.setBoolComputer(false);
         }
         //connects the radio groups with their ids from the xml
         playerGroup = (RadioGroup) findViewById(R.id.PlayerGroup);
         audioGroup = (RadioGroup) findViewById(R.id.AudioGroup);
+
 
         //sets up the spinner functions
         setUpRowSpinner();
@@ -75,8 +78,7 @@ public class OptionsActivity extends Activity {
 
                 /*Bundles game info up into type Bundle so that it can be passed when playIntent
                 * is started. GameActivity will then "unbundle" and create a new GameInfo object
-                * with identical values.
-                * */
+                * with identical values.                                                        */
                 mBundle.putBoolean("boolEnableAudio", gameInfo.isBoolEnableAudio());//Add audio to bundle
                 mBundle.putBoolean("boolPlayerTurn", gameInfo.isBoolPlayerTurn());//Add player turn to bundle
                 mBundle.putBoolean("boolComputer", gameInfo.isBoolComputer());//Add if it is a computer player to bundle
@@ -103,6 +105,7 @@ public class OptionsActivity extends Activity {
                 mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
 
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
+
                 startActivity(playIntent);
                 finish();
             }
@@ -118,16 +121,23 @@ public class OptionsActivity extends Activity {
                 finish();
             }
         });
+
     }
     public void onCheckShowHTP(View view){
         CheckBox howtoplaydisplay = (CheckBox) findViewById(R.id.showHowtoPlay);
         if(howtoplaydisplay.isChecked())
+        {
             this.gameInfo.setBoolShowHTP(true);
+        }
         else
+        {
             this.gameInfo.setBoolShowHTP(false);
+        }
     }
 
-//Populates the row spinners and sets the default value
+
+
+//Populates the row spinners and sets the defualt value
     public void setUpRowSpinner() {
         rowSpinner = (Spinner) findViewById(R.id.spinnerRows); // finds the spinner ID
         // Sets the items  defined in the string.xml and layout of the spinner
@@ -169,8 +179,12 @@ public class OptionsActivity extends Activity {
                         break;
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
         });
     }
 
@@ -196,10 +210,13 @@ public class OptionsActivity extends Activity {
                         break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+
     }
 
     //Takes the player back to the main menu if the player clicks the back button
@@ -229,17 +246,17 @@ public class OptionsActivity extends Activity {
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            int choice = playerSwitch.getCheckedRadioButtonId(); //retrives the id for the button that was selected
+                int choice = playerSwitch.getCheckedRadioButtonId(); //retrives the id for the button that was selected
 
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);//hides the keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(playerEditText.getWindowToken(), 0);//hides the keyboard
 
-            if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
-                gameInfo.setUpdatedPlayer1(playerEditText.getText().toString().trim());
-            else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
-                gameInfo.setUpdatePlayer2(playerEditText.getText().toString().trim());
+                if (choice == R.id.playerOne && !playerEditText.getText().toString().isEmpty())
+                    gameInfo.setUpdatedPlayer1(playerEditText.getText().toString().trim());
+                else if (choice == R.id.playerTwo && !playerEditText.getText().toString().isEmpty())
+                    gameInfo.setUpdatePlayer2(playerEditText.getText().toString().trim());
 
-            changePlayerName.dismiss();
+                changePlayerName.dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -285,6 +302,7 @@ public class OptionsActivity extends Activity {
 
     //Sets who is first
     public void onPlayerRadio(View view) {
+
         int selectedRadio = playerGroup.getCheckedRadioButtonId();
 
         switch (selectedRadio) {
@@ -340,6 +358,8 @@ public class OptionsActivity extends Activity {
         if (dbCompvsHuman.checkName("Computer") == null) {
             dbCompvsHuman.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
         }
+
+
     }
 
     //Sets if  the audio is on

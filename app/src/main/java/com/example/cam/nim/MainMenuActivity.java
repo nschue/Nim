@@ -8,10 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-/*
-*Main Menu for the Game launches dialogs and activities based on user selection
-*
- */
 
 public class MainMenuActivity extends Activity {
     private Dialog creditsDialog,selectScoreBoard;
@@ -20,11 +16,12 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
     }
+  //launches the activites based on the button selections
     public void onClick(View view) {
 
         switch(view.getId())
         {
-            case(R.id.playMenuButton)://Starts the options activity for a AI match
+            case(R.id.playMenuButton):
             {
                 Intent playIntent = new Intent(this,OptionsActivity.class);
                 Bundle mBundle = new Bundle();
@@ -34,7 +31,7 @@ public class MainMenuActivity extends Activity {
                 finish();
                 break;
             }
-            case(R.id.playWithFriend)://starts the options activty for a pvp match
+            case(R.id.playWithFriend):
             {   Intent playIntent = new Intent(this,OptionsActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putBoolean("PlayWithComp",false);
@@ -43,16 +40,18 @@ public class MainMenuActivity extends Activity {
                 finish();
                 break;
             }
-            case(R.id.Scoreboard)://displays a dialog to choose which scoreboard to view and launches the scoreboard activity
+
+            case(R.id.Scoreboard):
             {
                 showBoardSelection();
                 break;
             }
-            case(R.id.Credits)://Shows the Credits dialog
+            case(R.id.Credits):
             {
                 creditsDialog();
                 break;
             }
+
         }
     }
 
@@ -71,7 +70,7 @@ public class MainMenuActivity extends Activity {
 
         easyButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {//Easy scoreboard
+            public void onClick(View v) {
                 Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putInt("gameType",0);
@@ -82,7 +81,7 @@ public class MainMenuActivity extends Activity {
         });
         medButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {//Medium scoreboard
+            public void onClick(View v) {
                 Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putInt("gameType",1);
@@ -93,7 +92,7 @@ public class MainMenuActivity extends Activity {
         });
         hardButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {//hard scoreboard
+            public void onClick(View v) {
                 Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putInt("gameType",2);
@@ -104,7 +103,7 @@ public class MainMenuActivity extends Activity {
         });
         friendButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {//pvp scoreboard
+            public void onClick(View v) {
                 Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
                 Bundle mBundle = new Bundle();
                 scoreIntent.putExtra("typeBundle", mBundle);
@@ -116,7 +115,7 @@ public class MainMenuActivity extends Activity {
 
         selectScoreBoard.show();
     }
-    public void creditsDialog() {//Displays who worked on which items
+    public void creditsDialog() {
 
         creditsDialog = new Dialog(MainMenuActivity.this);
         creditsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

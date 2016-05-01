@@ -4,7 +4,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import android.content.ContentValues;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
@@ -15,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String COL_NAME = "NAME";
     public static final String COL_WIN = "WIN";
     public static final String COL_TOTAL = "TOTAL";
+  //  public static final String COL_WIN_PERCENT = "WIN_PERCENT";
     public static final String COL_STREAK = "STREAK";
     private ArrayList<ScoreItem>  databaseInfo = new ArrayList<>();
 
@@ -43,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(COL_WIN,win);
         contentValues.put(COL_TOTAL,total);
         contentValues.put(COL_STREAK, streak);
+        //contentValues.put(COL_WIN_PERCENT, "0.0");
         //check if not exist then add new one
         if(checkName(name) == null) {
             this.getWritableDatabase().insertOrThrow(TABLE_NAME, "", contentValues);
@@ -89,9 +94,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         Cursor res = db.query(TABLE_NAME, null, null, null, null, null, sortOrder);
 
         while(res.moveToNext())
-            if(name.equalsIgnoreCase(res.getString(1)))
+        {
+            if(name.equalsIgnoreCase(res.getString(1))){
                 return res;
-
+            }
+        }
         return null;
     }
     public void updateData(String name, String win,String total, String streak)

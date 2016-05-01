@@ -8,6 +8,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+
 public class ScoreboardActivity extends Activity {
 
     DatabaseHelper dbHandlerEasy, dbHandlerMed, dbHandlerHard, dbHandlerPlayer;
@@ -15,6 +16,7 @@ public class ScoreboardActivity extends Activity {
     private TextView ScoreboardName;
     private String currentBoard = new String();
     private ListView nameList,streakList,totalList,winList;
+    private boolean fromGame;
     private int scoreBoardType;
 
     @Override
@@ -38,6 +40,7 @@ public class ScoreboardActivity extends Activity {
         final TabHost host = (TabHost)findViewById(R.id.tabHost);
 
         ScoreboardSelection(scoreBoardType);
+
 
         host.setup();
         //Tab Name
@@ -81,7 +84,6 @@ public class ScoreboardActivity extends Activity {
         streakList.setAdapter(adapterStreak);
 
     }
-    //Sets the type of the scoreboard and the title for the scoreboard
     public void ScoreboardSelection(int scoreBoardType)
     {
         ScoreboardName = (TextView) findViewById(R.id.scoreboardName);
@@ -106,7 +108,6 @@ public class ScoreboardActivity extends Activity {
         }
     }
 
-    //Gets the arraylist of information from the subsequent database
     public void printData(String level, String sortBy){
         switch(level) {
             case("easy"): {
@@ -137,7 +138,7 @@ public class ScoreboardActivity extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-    //Sets the string for what board was choosen
+
     public void setCurrentBoard(String string)
     {
         this.currentBoard = string;
