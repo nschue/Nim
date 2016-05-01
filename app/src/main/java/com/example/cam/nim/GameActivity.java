@@ -551,7 +551,6 @@ public class GameActivity extends Activity
     public void scoreboardSetup()
     {
         //check winner and update score to database
-
         String winner = currentPlayer.getText().toString();
         if(mGameInfo.isBoolComputer()) {//AI match
             int level = mGameInfo.getdifficultyCoversion();
