@@ -178,9 +178,9 @@ public class GameActivity extends Activity
                 Intent scoreIntent = new Intent(GameActivity.this, ScoreboardActivity.class);
                 Bundle bundleBoolean = new Bundle();
                 bundleBoolean.putBoolean("fromGame", true);
-                if (mGameInfo.isBoolComputer())
+                if (mGameInfo.isBoolComputer())//passes the type of match to call the correct score board
                     bundleBoolean.putInt("gameType", mGameInfo.getdifficultyCoversion());
-                else
+                else//pvp match
                     bundleBoolean.putInt("gameType", -1);
                 scoreIntent.putExtra("boolBundle", bundleBoolean);
                 startActivity(scoreIntent);
@@ -193,11 +193,11 @@ public class GameActivity extends Activity
                 Intent newGameIntent = new Intent(GameActivity.this, OptionsActivity.class);
                 Bundle mBundle = new Bundle();
 
-                if (mGameInfo.isBoolComputer())
+                if (mGameInfo.isBoolComputer())//creates another AI match by passing true for it to the intent
                     mBundle.putBoolean("PlayWithComp", true);
 
                 else
-                    mBundle.getBoolean("PlayWithComp", false);
+                    mBundle.getBoolean("PlayWithComp", false);//creates a pvp match by passing false
 
                 newGameIntent.putExtra("mBundle", mBundle);
                 startActivity(newGameIntent);
@@ -260,13 +260,13 @@ public class GameActivity extends Activity
         quit.show();
     }
 
-    public void passValues()
+    public void passValues()//passes values if the player quits early
     {
-        if(mGameInfo.isBoolComputer())
+        if(mGameInfo.isBoolComputer())// AI match
         {
             int convertDiff = mGameInfo.getdifficultyCoversion();
 
-            switch(convertDiff)
+            switch(convertDiff)//passes to the diffculty the forfeit information to the database on the dif level
             {
                 case 0:
                     dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
@@ -281,7 +281,6 @@ public class GameActivity extends Activity
                     dbHandlerHard.updateData("Computer","1","1","1");
                     break;
             }
-
         }
         else{
             if(currentPlayer.equals(mGameInfo.getUpdatedPlayer1()))//player 1 quits

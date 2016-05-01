@@ -80,19 +80,19 @@ public class ScoreboardActivity extends Activity {
         host.addTab(spec);
 
         printData(currentBoard, "NAME ASC");//sorting by alphabetical
-        customListAdapter adapterName = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterName = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         nameList.setAdapter(adapterName);
 
         printData(currentBoard, "TOTAL DESC");//sort by wins
-        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         totalList.setAdapter(adapterTotal);
 
         printData(currentBoard, "WIN DESC");//sort by totals
-        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         winList.setAdapter(adapterWin);
 
         printData(currentBoard, "STREAK DESC");//sort by streak
-        customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
+        final customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,this.databaseInfo);
         streakList.setAdapter(adapterStreak);
         host.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
         @Override
@@ -101,24 +101,20 @@ public class ScoreboardActivity extends Activity {
             int i = host.getCurrentTab();
             switch (i) {
                case 0:
-                        printData(currentBoard, "NAME ASC");
-                        customListAdapter adapter = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        nameList.setAdapter(adapter);
-                        break;
+                    printData(currentBoard, "NAME ASC");
+                    adapterName.notifyDataSetChanged();
+                    break;
                 case 1:
-                        printData(currentBoard, "TOTAL DESC");
-                        customListAdapter adapterTotal = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        totalList.setAdapter(adapterTotal);
-                        break;
+                    printData(currentBoard, "TOTAL DESC");
+                    adapterTotal.notifyDataSetChanged();
+                    break;
                 case 2:
-                        printData(currentBoard, "WIN DESC");
-                        customListAdapter adapterWin = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        winList.setAdapter(adapterWin);
-                        break;
+                    printData(currentBoard, "WIN DESC");
+                    adapterWin.notifyDataSetChanged();
+                    break;
                 case 3:
-                        printData(currentBoard, "STREAK DESC");
-                       customListAdapter adapterStreak = new customListAdapter(ScoreboardActivity.this,databaseInfo);
-                        streakList.setAdapter(adapterStreak);
+                    printData(currentBoard, "STREAK DESC");
+                    adapterStreak.notifyDataSetChanged();
                 break;
            }
 
@@ -172,7 +168,6 @@ public class ScoreboardActivity extends Activity {
             }
         }
     }
-
 
     //Takes the player back to the main menu if the player clicks the back button
     @Override
