@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -33,7 +34,8 @@ public class ScoreboardActivity extends Activity {
         fromGame = intent.getBundleExtra("boolBundle").getBoolean("fromGame");
 
         if(!fromGame)
-            this.currentBoard = showBoardSelection();
+        {   showBoardSelection();
+        Log.d("CurrentBoard info: ",currentBoard);}
         else
         {
             scoreBoardType =  intent.getBundleExtra("boolBundle").getInt("gameType");
@@ -102,19 +104,19 @@ public class ScoreboardActivity extends Activity {
         switch(scoreBoardType)
         {
             case 0:
-                currentBoard="easy";
+                setCurrentBoard("easy");
                 ScoreboardName.setText("Easy Scoreboard");
                 break;
             case 1:
-                currentBoard = "med";
+                setCurrentBoard("med");
                 ScoreboardName.setText("Medium Scoreboard");
                 break;
             case 2:
-                currentBoard = "hard";
+                setCurrentBoard("hard");
                 ScoreboardName.setText("Hard ScoreBoard");
                 break;
             case -1:
-                currentBoard = "pvp";
+                setCurrentBoard("pvp");
                 ScoreboardName.setText("Friend Scoreboard");
                 break;
         }
@@ -151,7 +153,7 @@ public class ScoreboardActivity extends Activity {
         startActivity(mainMenuIntent);
         finish();
     }
-    public String showBoardSelection()
+    public void showBoardSelection()
     {
         selectScoreBoard = new Dialog(ScoreboardActivity.this);
         selectScoreBoard.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -198,6 +200,9 @@ public class ScoreboardActivity extends Activity {
 
         selectScoreBoard.show();
         selectScoreBoard.setCancelable(false);
-        return currentBoard;
+    }
+    public void setCurrentBoard(String string)
+    {
+        this.currentBoard = string;
     }
 }
