@@ -2,6 +2,7 @@ package com.example.cam.nim;
 
 /**
  * Created by Cam on 4/29/2016.
+ * Holds the information to be displayed in the listview scoreboard
  */
 public class ScoreItem {
     private String playerName;

@@ -92,20 +92,17 @@ public class OptionsActivity extends Activity {
                 } else // Player vs Player
                 {
                     //check if exist in database
-                    if (dbHandlerPlayer.checkName(gameInfo.getUpdatedPlayer1()) == null) {
+                    if (dbHandlerPlayer.checkName(gameInfo.getUpdatedPlayer1()) == null)
                         dbHandlerPlayer.insertData(gameInfo.getUpdatedPlayer1(), "0", "0", "0"); //insert new player
-                    }
-                    if (dbHandlerPlayer.checkName(gameInfo.getUpdatePlayer2()) == null) {
+
+                    if (dbHandlerPlayer.checkName(gameInfo.getUpdatePlayer2()) == null)
                         dbHandlerPlayer.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
-                    }
                 }
 
                 mBundle.putInt("rowAmount", gameInfo.getnRowAmount());//Add row amount to bundle
                 mBundle.putString("newPlayerName", gameInfo.getUpdatedPlayer1());
                 mBundle.putString("newOtherPlayerName", gameInfo.getUpdatePlayer2());
-
                 playIntent.putExtra("mBundle", mBundle);//Adds bundle to playIntent
-
                 startActivity(playIntent);
                 finish();
             }
@@ -126,16 +123,11 @@ public class OptionsActivity extends Activity {
     public void onCheckShowHTP(View view){
         CheckBox howtoplaydisplay = (CheckBox) findViewById(R.id.showHowtoPlay);
         if(howtoplaydisplay.isChecked())
-        {
             this.gameInfo.setBoolShowHTP(true);
-        }
+
         else
-        {
             this.gameInfo.setBoolShowHTP(false);
-        }
     }
-
-
 
 //Populates the row spinners and sets the defualt value
     public void setUpRowSpinner() {
@@ -182,7 +174,6 @@ public class OptionsActivity extends Activity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
 
         });
@@ -210,7 +201,6 @@ public class OptionsActivity extends Activity {
                         break;
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -358,8 +348,6 @@ public class OptionsActivity extends Activity {
         if (dbCompvsHuman.checkName("Computer") == null) {
             dbCompvsHuman.insertData(gameInfo.getUpdatePlayer2(), "0", "0", "0"); //insert new player
         }
-
-
     }
 
     //Sets if  the audio is on
