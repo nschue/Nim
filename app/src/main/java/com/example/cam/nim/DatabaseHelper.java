@@ -114,9 +114,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         update_win += dwin;
         update_total += dtotal;
-        update_streak += dstreak;
-
-        if(update_streak <= 0){ update_streak = 0;}
+        if(update_total != -1)
+            update_streak += dstreak;
+        else
+            update_streak = 0;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = checkName(name);
