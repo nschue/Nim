@@ -114,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         update_win += dwin;
         update_total += dtotal;
-        if(update_total != -1)
+        if(update_streak != -1)
             update_streak += dstreak;
         else
             update_streak = 0;
