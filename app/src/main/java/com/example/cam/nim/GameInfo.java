@@ -31,7 +31,6 @@ public class GameInfo {
         this.mRemainingDots = new ArrayList<>();
         this.updatedPlayer1 = "Player";
         this.updatePlayer2 = "Friend";
-
     }
 
     public boolean isBoolEnableAudio() {

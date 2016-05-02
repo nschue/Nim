@@ -67,7 +67,7 @@ public class MainMenuActivity extends Activity {
         Button hardButton = (Button) selectScoreBoard.findViewById(R.id.hardButton);
         Button friendButton = (Button) selectScoreBoard.findViewById(R.id.friendButton);
 
-
+        //Launches the Scoreboard Activity and sends the type for easy in a bundle to the scoreboard
         easyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,31 +76,40 @@ public class MainMenuActivity extends Activity {
                 mBundle.putInt("gameType",0);
                 scoreIntent.putExtra("typeBundle", mBundle);
                 startActivity(scoreIntent);
+                finish();
                 selectScoreBoard.dismiss();
             }
         });
+
+        //Launches the Scoreboard Activity and sends the type for easy in a bundle to the scoreboard
         medButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
                 Bundle mBundle = new Bundle();
-                mBundle.putInt("gameType",1);
+                mBundle.putInt("gameType", 1);
                 scoreIntent.putExtra("typeBundle", mBundle);
                 startActivity(scoreIntent);
+                finish();
                 selectScoreBoard.dismiss();
             }
         });
+
+        //Launches the Scoreboard Activity and sends the type for hard in a bundle to the scoreboard
         hardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent scoreIntent = new Intent(MainMenuActivity.this,ScoreboardActivity.class);
                 Bundle mBundle = new Bundle();
-                mBundle.putInt("gameType",2);
+                mBundle.putInt("gameType", 2);
                 scoreIntent.putExtra("typeBundle", mBundle);
                 startActivity(scoreIntent);
+                finish();
                 selectScoreBoard.dismiss();
             }
         });
+
+        //Launches the Scoreboard Activity and sends the type for against another player in a bundle to the scoreboard
         friendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +118,7 @@ public class MainMenuActivity extends Activity {
                 scoreIntent.putExtra("typeBundle", mBundle);
                 mBundle.putInt("gameType", -1);
                 startActivity(scoreIntent);
+                finish();
                 selectScoreBoard.dismiss();
             }
         });
