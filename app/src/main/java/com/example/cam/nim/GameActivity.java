@@ -95,10 +95,8 @@ public class GameActivity extends Activity
                         aiMove();
                 }
             }
-            //Player v Player
-            //Checks pieces were selected
-            // then changes the current player displayed updates the pieces
-            // then clears the selection list
+            //Player v Player Checks pieces were selected then changes
+            // the current player displayed updates the pieces then clears the selection list
             else {
                 if (!mSelectedPieces.isEmpty()) {
                     updateGameBoard();
@@ -561,7 +559,7 @@ public class GameActivity extends Activity
                 case 0: {//easy
                     if (winner.equals(mGameInfo.getUpdatedPlayer1())) {//computer winner
                         dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "1", "1", "1");
-                        dbHandlerEasy.updateData("Computer","0","0","-1");
+                        dbHandlerEasy.updateData("Computer","0","1","-1");
                     } else {//ai winnner
                         dbHandlerEasy.updateData(mGameInfo.getUpdatedPlayer1(), "0", "1", "-1");
                         dbHandlerEasy.updateData("Computer","1","1","1");
