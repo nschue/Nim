@@ -213,7 +213,7 @@ public class GameActivity extends Activity
             }
         });
         winDialog.show();
-        winDialog.setCancelable(false);
+        //winDialog.setCancelable(false);
         //check winner and update score to database
         scoreboardSetup();
     }
